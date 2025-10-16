@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement import (
@@ -37,117 +39,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_export import (
     ApiSettlementExport,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_tax import (
+    ApiSettlementTax,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_settlements_by_uuids_sync_detailed(*, client: StolonClient) -> Response[ApiSettlement | list["ApiSettlement"]]:
-    """Get settlement requests by UUIDs
-
-    Args:
-        settlement_uuids (list[str]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ApiSettlement, list['ApiSettlement']]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiSettlement | list["ApiSettlement"]]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_settlements_by_uuids._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_settlements_by_uuids_sync(*, client: StolonClient) -> ApiSettlement | list["ApiSettlement"] | None:
-    """Get settlement requests by UUIDs
-
-    Args:
-        settlement_uuids (list[str]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ApiSettlement, list['ApiSettlement']]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        ApiSettlement | list["ApiSettlement"] | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_settlements_by_uuids._get_kwargs()
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def get_settlements_by_uuids_asyncio_detailed(
-    *, client: StolonClient
+def get_settlements_by_uuids_sync_detailed(
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> Response[ApiSettlement | list["ApiSettlement"]]:
     """Get settlement requests by UUIDs
 
@@ -166,13 +68,13 @@ def get_settlements_by_uuids_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         Response[ApiSettlement | list["ApiSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements_by_uuids._get_kwargs()
+    kwargs = get_settlements_by_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -210,7 +112,9 @@ def get_settlements_by_uuids_asyncio_detailed(
     )
 
 
-def get_settlements_by_uuids_asyncio(*, client: StolonClient) -> ApiSettlement | list["ApiSettlement"] | None:
+def get_settlements_by_uuids_sync(
+    *, client: StolonClient, settlement_uuids: list[str]
+) -> ApiSettlement | list["ApiSettlement"] | None:
     """Get settlement requests by UUIDs
 
     Args:
@@ -228,13 +132,120 @@ def get_settlements_by_uuids_asyncio(*, client: StolonClient) -> ApiSettlement |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         ApiSettlement | list["ApiSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements_by_uuids._get_kwargs()
+    kwargs = get_settlements_by_uuids._get_kwargs(settlement_uuids=settlement_uuids)
+
+    # Proxy request through stolon server
+    client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+def get_settlements_by_uuids_asyncio_detailed(
+    *, client: StolonClient, settlement_uuids: list[str]
+) -> Response[ApiSettlement | list["ApiSettlement"]]:
+    """Get settlement requests by UUIDs
+
+    Args:
+        settlement_uuids (list[str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ApiSettlement, list['ApiSettlement']]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                settlement_uuids: list[str]
+
+    Returns:
+        Response[ApiSettlement | list["ApiSettlement"]]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_settlements_by_uuids._get_kwargs(settlement_uuids=settlement_uuids)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def get_settlements_by_uuids_asyncio(
+    *, client: StolonClient, settlement_uuids: list[str]
+) -> ApiSettlement | list["ApiSettlement"] | None:
+    """Get settlement requests by UUIDs
+
+    Args:
+        settlement_uuids (list[str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiSettlement, list['ApiSettlement']]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                settlement_uuids: list[str]
+
+    Returns:
+        ApiSettlement | list["ApiSettlement"] | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_settlements_by_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -252,7 +263,12 @@ def get_settlements_by_uuids_asyncio(*, client: StolonClient) -> ApiSettlement |
 
 
 def get_settlement_exports_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    billing_entity_uuids: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiSettlementExport | list["ApiSettlementExport"]]:
     """Get export data for settlement requests
 
@@ -274,13 +290,18 @@ def get_settlement_exports_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        billing_entity_uuids: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiSettlementExport | list["ApiSettlementExport"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_exports._get_kwargs()
+    kwargs = get_settlement_exports._get_kwargs(
+        date=date, billing_entity_uuids=billing_entity_uuids, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -318,7 +339,14 @@ def get_settlement_exports_sync_detailed(
     )
 
 
-def get_settlement_exports_sync(*, client: StolonClient) -> ApiSettlementExport | list["ApiSettlementExport"] | None:
+def get_settlement_exports_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    billing_entity_uuids: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiSettlementExport | list["ApiSettlementExport"] | None:
     """Get export data for settlement requests
 
     Args:
@@ -339,13 +367,18 @@ def get_settlement_exports_sync(*, client: StolonClient) -> ApiSettlementExport 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        billing_entity_uuids: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiSettlementExport | list["ApiSettlementExport"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_exports._get_kwargs()
+    kwargs = get_settlement_exports._get_kwargs(
+        date=date, billing_entity_uuids=billing_entity_uuids, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -363,7 +396,12 @@ def get_settlement_exports_sync(*, client: StolonClient) -> ApiSettlementExport 
 
 
 def get_settlement_exports_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    billing_entity_uuids: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiSettlementExport | list["ApiSettlementExport"]]:
     """Get export data for settlement requests
 
@@ -385,13 +423,18 @@ def get_settlement_exports_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        billing_entity_uuids: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiSettlementExport | list["ApiSettlementExport"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_exports._get_kwargs()
+    kwargs = get_settlement_exports._get_kwargs(
+        date=date, billing_entity_uuids=billing_entity_uuids, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -429,7 +472,14 @@ def get_settlement_exports_asyncio_detailed(
     )
 
 
-def get_settlement_exports_asyncio(*, client: StolonClient) -> ApiSettlementExport | list["ApiSettlementExport"] | None:
+def get_settlement_exports_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    billing_entity_uuids: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiSettlementExport | list["ApiSettlementExport"] | None:
     """Get export data for settlement requests
 
     Args:
@@ -450,13 +500,18 @@ def get_settlement_exports_asyncio(*, client: StolonClient) -> ApiSettlementExpo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        billing_entity_uuids: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiSettlementExport | list["ApiSettlementExport"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_exports._get_kwargs()
+    kwargs = get_settlement_exports._get_kwargs(
+        date=date, billing_entity_uuids=billing_entity_uuids, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -694,7 +749,12 @@ def get_settlement_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiSet
 
 
 def get_reseller_settlement_details_by_invoice_info_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str, invoice_info_uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    invoice_info_uuid: str,
+    include_actions: Union[Unset, bool] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -718,13 +778,15 @@ def get_reseller_settlement_details_by_invoice_info_uuid_sync_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_details_by_invoice_info_uuid._get_kwargs(
-        r_id=r_id, invoice_info_uuid=invoice_info_uuid
+        r_id=r_id, invoice_info_uuid=invoice_info_uuid, include_actions=include_actions, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -764,7 +826,12 @@ def get_reseller_settlement_details_by_invoice_info_uuid_sync_detailed(
 
 
 def get_reseller_settlement_details_by_invoice_info_uuid_sync(
-    *, client: StolonClient, r_id: str, invoice_info_uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    invoice_info_uuid: str,
+    include_actions: Union[Unset, bool] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -788,13 +855,15 @@ def get_reseller_settlement_details_by_invoice_info_uuid_sync(
         client: StolonClient instance for proxying requests
                 r_id: str
         invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_details_by_invoice_info_uuid._get_kwargs(
-        r_id=r_id, invoice_info_uuid=invoice_info_uuid
+        r_id=r_id, invoice_info_uuid=invoice_info_uuid, include_actions=include_actions, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -813,7 +882,12 @@ def get_reseller_settlement_details_by_invoice_info_uuid_sync(
 
 
 def get_reseller_settlement_details_by_invoice_info_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str, invoice_info_uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    invoice_info_uuid: str,
+    include_actions: Union[Unset, bool] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -837,13 +911,15 @@ def get_reseller_settlement_details_by_invoice_info_uuid_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_details_by_invoice_info_uuid._get_kwargs(
-        r_id=r_id, invoice_info_uuid=invoice_info_uuid
+        r_id=r_id, invoice_info_uuid=invoice_info_uuid, include_actions=include_actions, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -883,7 +959,12 @@ def get_reseller_settlement_details_by_invoice_info_uuid_asyncio_detailed(
 
 
 def get_reseller_settlement_details_by_invoice_info_uuid_asyncio(
-    *, client: StolonClient, r_id: str, invoice_info_uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    invoice_info_uuid: str,
+    include_actions: Union[Unset, bool] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -907,13 +988,15 @@ def get_reseller_settlement_details_by_invoice_info_uuid_asyncio(
         client: StolonClient instance for proxying requests
                 r_id: str
         invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_details_by_invoice_info_uuid._get_kwargs(
-        r_id=r_id, invoice_info_uuid=invoice_info_uuid
+        r_id=r_id, invoice_info_uuid=invoice_info_uuid, include_actions=include_actions, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -932,7 +1015,7 @@ def get_reseller_settlement_details_by_invoice_info_uuid_asyncio(
 
 
 def get_settlement_details_by_settlement_uuid_sync_detailed(
-    *, client: StolonClient, settlement_uuid: str
+    *, client: StolonClient, settlement_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -953,12 +1036,15 @@ def get_settlement_details_by_settlement_uuid_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 settlement_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(settlement_uuid=settlement_uuid)
+    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(
+        settlement_uuid=settlement_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -997,7 +1083,7 @@ def get_settlement_details_by_settlement_uuid_sync_detailed(
 
 
 def get_settlement_details_by_settlement_uuid_sync(
-    *, client: StolonClient, settlement_uuid: str
+    *, client: StolonClient, settlement_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1018,12 +1104,15 @@ def get_settlement_details_by_settlement_uuid_sync(
     Args:
         client: StolonClient instance for proxying requests
                 settlement_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(settlement_uuid=settlement_uuid)
+    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(
+        settlement_uuid=settlement_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1041,7 +1130,7 @@ def get_settlement_details_by_settlement_uuid_sync(
 
 
 def get_settlement_details_by_settlement_uuid_asyncio_detailed(
-    *, client: StolonClient, settlement_uuid: str
+    *, client: StolonClient, settlement_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1062,12 +1151,15 @@ def get_settlement_details_by_settlement_uuid_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 settlement_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(settlement_uuid=settlement_uuid)
+    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(
+        settlement_uuid=settlement_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1106,7 +1198,7 @@ def get_settlement_details_by_settlement_uuid_asyncio_detailed(
 
 
 def get_settlement_details_by_settlement_uuid_asyncio(
-    *, client: StolonClient, settlement_uuid: str
+    *, client: StolonClient, settlement_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1127,12 +1219,15 @@ def get_settlement_details_by_settlement_uuid_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 settlement_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(settlement_uuid=settlement_uuid)
+    kwargs = get_settlement_details_by_settlement_uuid._get_kwargs(
+        settlement_uuid=settlement_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1149,7 +1244,15 @@ def get_settlement_details_by_settlement_uuid_asyncio(
     return None
 
 
-def get_settlements_sync_detailed(*, client: StolonClient) -> Response[ApiSettlement | list["ApiSettlement"]]:
+def get_settlements_sync_detailed(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiSettlement | list["ApiSettlement"]]:
     """Get settlement requests
 
     Args:
@@ -1171,13 +1274,23 @@ def get_settlements_sync_detailed(*, client: StolonClient) -> Response[ApiSettle
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiSettlement | list["ApiSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements._get_kwargs()
+    kwargs = get_settlements._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1215,7 +1328,15 @@ def get_settlements_sync_detailed(*, client: StolonClient) -> Response[ApiSettle
     )
 
 
-def get_settlements_sync(*, client: StolonClient) -> ApiSettlement | list["ApiSettlement"] | None:
+def get_settlements_sync(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiSettlement | list["ApiSettlement"] | None:
     """Get settlement requests
 
     Args:
@@ -1237,13 +1358,23 @@ def get_settlements_sync(*, client: StolonClient) -> ApiSettlement | list["ApiSe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiSettlement | list["ApiSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements._get_kwargs()
+    kwargs = get_settlements._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1260,7 +1391,15 @@ def get_settlements_sync(*, client: StolonClient) -> ApiSettlement | list["ApiSe
     return None
 
 
-def get_settlements_asyncio_detailed(*, client: StolonClient) -> Response[ApiSettlement | list["ApiSettlement"]]:
+def get_settlements_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiSettlement | list["ApiSettlement"]]:
     """Get settlement requests
 
     Args:
@@ -1282,13 +1421,23 @@ def get_settlements_asyncio_detailed(*, client: StolonClient) -> Response[ApiSet
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiSettlement | list["ApiSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements._get_kwargs()
+    kwargs = get_settlements._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1326,7 +1475,15 @@ def get_settlements_asyncio_detailed(*, client: StolonClient) -> Response[ApiSet
     )
 
 
-def get_settlements_asyncio(*, client: StolonClient) -> ApiSettlement | list["ApiSettlement"] | None:
+def get_settlements_asyncio(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiSettlement | list["ApiSettlement"] | None:
     """Get settlement requests
 
     Args:
@@ -1348,13 +1505,23 @@ def get_settlements_asyncio(*, client: StolonClient) -> ApiSettlement | list["Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiSettlement | list["ApiSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlements._get_kwargs()
+    kwargs = get_settlements._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1372,7 +1539,7 @@ def get_settlements_asyncio(*, client: StolonClient) -> ApiSettlement | list["Ap
 
 
 def get_settlement_adjustment_info_by_settlement_uuids_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> Response[ResponseError | list["ApiSettlementAdjustInfo"]]:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1391,13 +1558,13 @@ def get_settlement_adjustment_info_by_settlement_uuids_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         Response[ResponseError | list["ApiSettlementAdjustInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1436,7 +1603,7 @@ def get_settlement_adjustment_info_by_settlement_uuids_sync_detailed(
 
 
 def get_settlement_adjustment_info_by_settlement_uuids_sync(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> ResponseError | list["ApiSettlementAdjustInfo"] | None:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1455,13 +1622,13 @@ def get_settlement_adjustment_info_by_settlement_uuids_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         ResponseError | list["ApiSettlementAdjustInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1479,7 +1646,7 @@ def get_settlement_adjustment_info_by_settlement_uuids_sync(
 
 
 def get_settlement_adjustment_info_by_settlement_uuids_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> Response[ResponseError | list["ApiSettlementAdjustInfo"]]:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1498,13 +1665,13 @@ def get_settlement_adjustment_info_by_settlement_uuids_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         Response[ResponseError | list["ApiSettlementAdjustInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1543,7 +1710,7 @@ def get_settlement_adjustment_info_by_settlement_uuids_asyncio_detailed(
 
 
 def get_settlement_adjustment_info_by_settlement_uuids_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> ResponseError | list["ApiSettlementAdjustInfo"] | None:
     """Get fee summary data from settlement requests and invoice info using settlement UUID
 
@@ -1562,13 +1729,13 @@ def get_settlement_adjustment_info_by_settlement_uuids_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         ResponseError | list["ApiSettlementAdjustInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_adjustment_info_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1585,7 +1752,9 @@ def get_settlement_adjustment_info_by_settlement_uuids_asyncio(
     return None
 
 
-def set_settlement_tax_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlement]:
+def set_settlement_tax_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiSettlementTax
+) -> Response[ApiSettlement]:
     """Set tax amounts on a settlement request
 
     Args:
@@ -1605,12 +1774,13 @@ def set_settlement_tax_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiSettlementTax
 
     Returns:
         Response[ApiSettlement]
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax._get_kwargs(uuid=uuid)
+    kwargs = set_settlement_tax._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1648,7 +1818,7 @@ def set_settlement_tax_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def set_settlement_tax_sync(*, client: StolonClient, uuid: str) -> ApiSettlement | None:
+def set_settlement_tax_sync(*, client: StolonClient, uuid: str, body: ApiSettlementTax) -> ApiSettlement | None:
     """Set tax amounts on a settlement request
 
     Args:
@@ -1668,12 +1838,13 @@ def set_settlement_tax_sync(*, client: StolonClient, uuid: str) -> ApiSettlement
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiSettlementTax
 
     Returns:
         ApiSettlement | None
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax._get_kwargs(uuid=uuid)
+    kwargs = set_settlement_tax._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1697,7 +1868,9 @@ def set_settlement_tax_sync(*, client: StolonClient, uuid: str) -> ApiSettlement
     return None
 
 
-def set_settlement_tax_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlement]:
+def set_settlement_tax_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiSettlementTax
+) -> Response[ApiSettlement]:
     """Set tax amounts on a settlement request
 
     Args:
@@ -1717,12 +1890,13 @@ def set_settlement_tax_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiSettlementTax
 
     Returns:
         Response[ApiSettlement]
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax._get_kwargs(uuid=uuid)
+    kwargs = set_settlement_tax._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1760,7 +1934,7 @@ def set_settlement_tax_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def set_settlement_tax_asyncio(*, client: StolonClient, uuid: str) -> ApiSettlement | None:
+def set_settlement_tax_asyncio(*, client: StolonClient, uuid: str, body: ApiSettlementTax) -> ApiSettlement | None:
     """Set tax amounts on a settlement request
 
     Args:
@@ -1780,12 +1954,13 @@ def set_settlement_tax_asyncio(*, client: StolonClient, uuid: str) -> ApiSettlem
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiSettlementTax
 
     Returns:
         ApiSettlement | None
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax._get_kwargs(uuid=uuid)
+    kwargs = set_settlement_tax._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1810,7 +1985,7 @@ def set_settlement_tax_asyncio(*, client: StolonClient, uuid: str) -> ApiSettlem
 
 
 def get_settlement_details_by_invoice_info_uuid_sync_detailed(
-    *, client: StolonClient, invoice_info_uuid: str
+    *, client: StolonClient, invoice_info_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -1831,12 +2006,15 @@ def get_settlement_details_by_invoice_info_uuid_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(invoice_info_uuid=invoice_info_uuid)
+    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(
+        invoice_info_uuid=invoice_info_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1875,7 +2053,7 @@ def get_settlement_details_by_invoice_info_uuid_sync_detailed(
 
 
 def get_settlement_details_by_invoice_info_uuid_sync(
-    *, client: StolonClient, invoice_info_uuid: str
+    *, client: StolonClient, invoice_info_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -1896,12 +2074,15 @@ def get_settlement_details_by_invoice_info_uuid_sync(
     Args:
         client: StolonClient instance for proxying requests
                 invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(invoice_info_uuid=invoice_info_uuid)
+    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(
+        invoice_info_uuid=invoice_info_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1919,7 +2100,7 @@ def get_settlement_details_by_invoice_info_uuid_sync(
 
 
 def get_settlement_details_by_invoice_info_uuid_asyncio_detailed(
-    *, client: StolonClient, invoice_info_uuid: str
+    *, client: StolonClient, invoice_info_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> Response[ApiSettlementDetails | ResponseError]:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -1940,12 +2121,15 @@ def get_settlement_details_by_invoice_info_uuid_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         Response[ApiSettlementDetails | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(invoice_info_uuid=invoice_info_uuid)
+    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(
+        invoice_info_uuid=invoice_info_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1984,7 +2168,7 @@ def get_settlement_details_by_invoice_info_uuid_asyncio_detailed(
 
 
 def get_settlement_details_by_invoice_info_uuid_asyncio(
-    *, client: StolonClient, invoice_info_uuid: str
+    *, client: StolonClient, invoice_info_uuid: str, include_actions: Union[Unset, bool] = UNSET
 ) -> ApiSettlementDetails | ResponseError | None:
     """Get fee summary data from settlement requests and invoice info using invoice info UUID
 
@@ -2005,12 +2189,15 @@ def get_settlement_details_by_invoice_info_uuid_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 invoice_info_uuid: str
+        include_actions: Union[Unset, bool]
 
     Returns:
         ApiSettlementDetails | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(invoice_info_uuid=invoice_info_uuid)
+    kwargs = get_settlement_details_by_invoice_info_uuid._get_kwargs(
+        invoice_info_uuid=invoice_info_uuid, include_actions=include_actions
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -2028,7 +2215,7 @@ def get_settlement_details_by_invoice_info_uuid_asyncio(
 
 
 def set_settlement_tax_for_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, body: list["ApiSettlementTax"]
 ) -> Response[ApiSettlement | list["ApiSettlement"]]:
     """Set tax amounts for a collection of settlement requests for a billing entity
 
@@ -2049,12 +2236,13 @@ def set_settlement_tax_for_billing_entity_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        body: list["ApiSettlementTax"]
 
     Returns:
         Response[ApiSettlement | list["ApiSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2093,7 +2281,7 @@ def set_settlement_tax_for_billing_entity_sync_detailed(
 
 
 def set_settlement_tax_for_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, body: list["ApiSettlementTax"]
 ) -> ApiSettlement | list["ApiSettlement"] | None:
     """Set tax amounts for a collection of settlement requests for a billing entity
 
@@ -2114,12 +2302,13 @@ def set_settlement_tax_for_billing_entity_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        body: list["ApiSettlementTax"]
 
     Returns:
         ApiSettlement | list["ApiSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -2137,7 +2326,7 @@ def set_settlement_tax_for_billing_entity_sync(
 
 
 def set_settlement_tax_for_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, body: list["ApiSettlementTax"]
 ) -> Response[ApiSettlement | list["ApiSettlement"]]:
     """Set tax amounts for a collection of settlement requests for a billing entity
 
@@ -2158,12 +2347,13 @@ def set_settlement_tax_for_billing_entity_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        body: list["ApiSettlementTax"]
 
     Returns:
         Response[ApiSettlement | list["ApiSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2202,7 +2392,7 @@ def set_settlement_tax_for_billing_entity_asyncio_detailed(
 
 
 def set_settlement_tax_for_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, body: list["ApiSettlementTax"]
 ) -> ApiSettlement | list["ApiSettlement"] | None:
     """Set tax amounts for a collection of settlement requests for a billing entity
 
@@ -2223,12 +2413,13 @@ def set_settlement_tax_for_billing_entity_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        body: list["ApiSettlementTax"]
 
     Returns:
         ApiSettlement | list["ApiSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = set_settlement_tax_for_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(

@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_alias import (
@@ -25,7 +26,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def delete_monetary_rule_alias_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
@@ -234,7 +235,13 @@ def delete_monetary_rule_alias_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def get_monetary_rule_aliases_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_aliases_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_alias: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule aliases
 
     Args:
@@ -254,13 +261,15 @@ def get_monetary_rule_aliases_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_alias: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_aliases._get_kwargs()
+    kwargs = get_monetary_rule_aliases._get_kwargs(rule_alias=rule_alias, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -298,7 +307,13 @@ def get_monetary_rule_aliases_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def get_monetary_rule_aliases_sync(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_aliases_sync(
+    *,
+    client: StolonClient,
+    rule_alias: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule aliases
 
     Args:
@@ -318,13 +333,15 @@ def get_monetary_rule_aliases_sync(*, client: StolonClient) -> ResponseError | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_alias: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_aliases._get_kwargs()
+    kwargs = get_monetary_rule_aliases._get_kwargs(rule_alias=rule_alias, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -348,7 +365,13 @@ def get_monetary_rule_aliases_sync(*, client: StolonClient) -> ResponseError | N
     return None
 
 
-def get_monetary_rule_aliases_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_aliases_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_alias: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule aliases
 
     Args:
@@ -368,13 +391,15 @@ def get_monetary_rule_aliases_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_alias: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_aliases._get_kwargs()
+    kwargs = get_monetary_rule_aliases._get_kwargs(rule_alias=rule_alias, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -412,7 +437,13 @@ def get_monetary_rule_aliases_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_monetary_rule_aliases_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_aliases_asyncio(
+    *,
+    client: StolonClient,
+    rule_alias: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule aliases
 
     Args:
@@ -432,13 +463,15 @@ def get_monetary_rule_aliases_asyncio(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_alias: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_aliases._get_kwargs()
+    kwargs = get_monetary_rule_aliases._get_kwargs(rule_alias=rule_alias, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -462,7 +495,9 @@ def get_monetary_rule_aliases_asyncio(*, client: StolonClient) -> ResponseError 
     return None
 
 
-def create_monetary_rule_alias_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_alias_sync_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleAlias
+) -> Response[ResponseError]:
     """Create monetary rule alias
 
     Args:
@@ -480,13 +515,13 @@ def create_monetary_rule_alias_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleAlias
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_alias._get_kwargs()
+    kwargs = create_monetary_rule_alias._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -524,7 +559,7 @@ def create_monetary_rule_alias_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_monetary_rule_alias_sync(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_alias_sync(*, client: StolonClient, body: ApiMonetaryRuleAlias) -> ResponseError | None:
     """Create monetary rule alias
 
     Args:
@@ -542,13 +577,13 @@ def create_monetary_rule_alias_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleAlias
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_alias._get_kwargs()
+    kwargs = create_monetary_rule_alias._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -572,7 +607,9 @@ def create_monetary_rule_alias_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def create_monetary_rule_alias_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_alias_asyncio_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleAlias
+) -> Response[ResponseError]:
     """Create monetary rule alias
 
     Args:
@@ -590,13 +627,13 @@ def create_monetary_rule_alias_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleAlias
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_alias._get_kwargs()
+    kwargs = create_monetary_rule_alias._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -634,7 +671,7 @@ def create_monetary_rule_alias_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_monetary_rule_alias_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_alias_asyncio(*, client: StolonClient, body: ApiMonetaryRuleAlias) -> ResponseError | None:
     """Create monetary rule alias
 
     Args:
@@ -652,13 +689,13 @@ def create_monetary_rule_alias_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleAlias
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_alias._get_kwargs()
+    kwargs = create_monetary_rule_alias._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

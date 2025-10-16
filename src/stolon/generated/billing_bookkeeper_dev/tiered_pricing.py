@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import (
@@ -26,10 +28,10 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_tiered_pricing_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_tiered_pricing_sync_detailed(*, client: StolonClient, body: ApiTieredPricing) -> Response[ResponseError]:
     """Create tiered pricing
 
     Args:
@@ -47,13 +49,13 @@ def create_tiered_pricing_sync_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredPricing
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_pricing._get_kwargs()
+    kwargs = create_tiered_pricing._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +93,7 @@ def create_tiered_pricing_sync_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def create_tiered_pricing_sync(*, client: StolonClient) -> ResponseError | None:
+def create_tiered_pricing_sync(*, client: StolonClient, body: ApiTieredPricing) -> ResponseError | None:
     """Create tiered pricing
 
     Args:
@@ -109,13 +111,13 @@ def create_tiered_pricing_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredPricing
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_pricing._get_kwargs()
+    kwargs = create_tiered_pricing._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +141,7 @@ def create_tiered_pricing_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_tiered_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_tiered_pricing_asyncio_detailed(*, client: StolonClient, body: ApiTieredPricing) -> Response[ResponseError]:
     """Create tiered pricing
 
     Args:
@@ -157,13 +159,13 @@ def create_tiered_pricing_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredPricing
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_pricing._get_kwargs()
+    kwargs = create_tiered_pricing._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +203,7 @@ def create_tiered_pricing_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_tiered_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_tiered_pricing_asyncio(*, client: StolonClient, body: ApiTieredPricing) -> ResponseError | None:
     """Create tiered pricing
 
     Args:
@@ -219,13 +221,13 @@ def create_tiered_pricing_asyncio(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredPricing
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_pricing._get_kwargs()
+    kwargs = create_tiered_pricing._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -459,7 +461,9 @@ def get_tiered_pricing_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def update_tiered_pricing_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_tiered_pricing_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiTieredPricing
+) -> Response[ResponseError]:
     """Update tiered pricing
 
     Args:
@@ -479,12 +483,13 @@ def update_tiered_pricing_sync_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredPricing
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -522,7 +527,7 @@ def update_tiered_pricing_sync_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def update_tiered_pricing_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_tiered_pricing_sync(*, client: StolonClient, uuid: str, body: ApiTieredPricing) -> ResponseError | None:
     """Update tiered pricing
 
     Args:
@@ -542,12 +547,13 @@ def update_tiered_pricing_sync(*, client: StolonClient, uuid: str) -> ResponseEr
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredPricing
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -571,7 +577,9 @@ def update_tiered_pricing_sync(*, client: StolonClient, uuid: str) -> ResponseEr
     return None
 
 
-def update_tiered_pricing_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_tiered_pricing_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiTieredPricing
+) -> Response[ResponseError]:
     """Update tiered pricing
 
     Args:
@@ -591,12 +599,13 @@ def update_tiered_pricing_asyncio_detailed(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredPricing
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -634,7 +643,7 @@ def update_tiered_pricing_asyncio_detailed(*, client: StolonClient, uuid: str) -
     )
 
 
-def update_tiered_pricing_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_tiered_pricing_asyncio(*, client: StolonClient, uuid: str, body: ApiTieredPricing) -> ResponseError | None:
     """Update tiered pricing
 
     Args:
@@ -654,12 +663,13 @@ def update_tiered_pricing_asyncio(*, client: StolonClient, uuid: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredPricing
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_pricing._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -891,7 +901,15 @@ def delete_tiered_pricing_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def get_tiered_pricings_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_tiered_pricings_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get tiered pricings
 
     Args:
@@ -913,13 +931,23 @@ def get_tiered_pricings_sync_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_pricings._get_kwargs()
+    kwargs = get_tiered_pricings._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -957,7 +985,15 @@ def get_tiered_pricings_sync_detailed(*, client: StolonClient) -> Response[Respo
     )
 
 
-def get_tiered_pricings_sync(*, client: StolonClient) -> ResponseError | None:
+def get_tiered_pricings_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get tiered pricings
 
     Args:
@@ -979,13 +1015,23 @@ def get_tiered_pricings_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_pricings._get_kwargs()
+    kwargs = get_tiered_pricings._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1009,7 +1055,15 @@ def get_tiered_pricings_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_tiered_pricings_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_tiered_pricings_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get tiered pricings
 
     Args:
@@ -1031,13 +1085,23 @@ def get_tiered_pricings_asyncio_detailed(*, client: StolonClient) -> Response[Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_pricings._get_kwargs()
+    kwargs = get_tiered_pricings._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1075,7 +1139,15 @@ def get_tiered_pricings_asyncio_detailed(*, client: StolonClient) -> Response[Re
     )
 
 
-def get_tiered_pricings_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_tiered_pricings_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get tiered pricings
 
     Args:
@@ -1097,13 +1169,23 @@ def get_tiered_pricings_asyncio(*, client: StolonClient) -> ResponseError | None
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_pricings._get_kwargs()
+    kwargs = get_tiered_pricings._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

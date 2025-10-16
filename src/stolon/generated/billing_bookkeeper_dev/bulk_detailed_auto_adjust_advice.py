@@ -19,10 +19,21 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import (
     ApiBulkAutoAdjustAdvice,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.create_detailed_bulk_auto_adjust_advice_body import (
+    CreateDetailedBulkAutoAdjustAdviceBody,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_detailed_bulk_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response[ApiBulkAutoAdjustAdvice]:
+def create_detailed_bulk_auto_adjust_advice_sync_detailed(
+    *,
+    client: StolonClient,
+    body: CreateDetailedBulkAutoAdjustAdviceBody,
+    rule_uuid: str,
+    currency: str,
+    reference: str,
+    email_address: str,
+) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -44,13 +55,19 @@ def create_detailed_bulk_auto_adjust_advice_sync_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateDetailedBulkAutoAdjustAdviceBody
+        rule_uuid: str
+        currency: str
+        reference: str
+        email_address: str
 
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs(
+        body=body, rule_uuid=rule_uuid, currency=currency, reference=reference, email_address=email_address
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -88,7 +105,15 @@ def create_detailed_bulk_auto_adjust_advice_sync_detailed(*, client: StolonClien
     )
 
 
-def create_detailed_bulk_auto_adjust_advice_sync(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
+def create_detailed_bulk_auto_adjust_advice_sync(
+    *,
+    client: StolonClient,
+    body: CreateDetailedBulkAutoAdjustAdviceBody,
+    rule_uuid: str,
+    currency: str,
+    reference: str,
+    email_address: str,
+) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -110,13 +135,19 @@ def create_detailed_bulk_auto_adjust_advice_sync(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateDetailedBulkAutoAdjustAdviceBody
+        rule_uuid: str
+        currency: str
+        reference: str
+        email_address: str
 
     Returns:
         ApiBulkAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs(
+        body=body, rule_uuid=rule_uuid, currency=currency, reference=reference, email_address=email_address
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -141,7 +172,13 @@ def create_detailed_bulk_auto_adjust_advice_sync(*, client: StolonClient) -> Api
 
 
 def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    body: CreateDetailedBulkAutoAdjustAdviceBody,
+    rule_uuid: str,
+    currency: str,
+    reference: str,
+    email_address: str,
 ) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk detailed auto-adjust advice
 
@@ -164,13 +201,19 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateDetailedBulkAutoAdjustAdviceBody
+        rule_uuid: str
+        currency: str
+        reference: str
+        email_address: str
 
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs(
+        body=body, rule_uuid=rule_uuid, currency=currency, reference=reference, email_address=email_address
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -208,7 +251,15 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
     )
 
 
-def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
+def create_detailed_bulk_auto_adjust_advice_asyncio(
+    *,
+    client: StolonClient,
+    body: CreateDetailedBulkAutoAdjustAdviceBody,
+    rule_uuid: str,
+    currency: str,
+    reference: str,
+    email_address: str,
+) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -230,13 +281,19 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateDetailedBulkAutoAdjustAdviceBody
+        rule_uuid: str
+        currency: str
+        reference: str
+        email_address: str
 
     Returns:
         ApiBulkAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs(
+        body=body, rule_uuid=rule_uuid, currency=currency, reference=reference, email_address=email_address
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

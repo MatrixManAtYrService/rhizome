@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_rule import (
@@ -30,7 +31,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_auto_adjust_rule_by_uuid_sync_detailed(
@@ -457,7 +458,14 @@ def set_auto_adjust_rule_status_asyncio(*, client: StolonClient, uuid: str) -> A
     return None
 
 
-def get_auto_adjust_rules_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_auto_adjust_rules_sync_detailed(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get auto-adjust rules
 
     Args:
@@ -478,13 +486,18 @@ def get_auto_adjust_rules_sync_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rules._get_kwargs()
+    kwargs = get_auto_adjust_rules._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -522,7 +535,14 @@ def get_auto_adjust_rules_sync_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def get_auto_adjust_rules_sync(*, client: StolonClient) -> ResponseError | None:
+def get_auto_adjust_rules_sync(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get auto-adjust rules
 
     Args:
@@ -543,13 +563,18 @@ def get_auto_adjust_rules_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rules._get_kwargs()
+    kwargs = get_auto_adjust_rules._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -573,7 +598,14 @@ def get_auto_adjust_rules_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_auto_adjust_rules_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_auto_adjust_rules_asyncio_detailed(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get auto-adjust rules
 
     Args:
@@ -594,13 +626,18 @@ def get_auto_adjust_rules_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rules._get_kwargs()
+    kwargs = get_auto_adjust_rules._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -638,7 +675,14 @@ def get_auto_adjust_rules_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def get_auto_adjust_rules_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_auto_adjust_rules_asyncio(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get auto-adjust rules
 
     Args:
@@ -659,13 +703,18 @@ def get_auto_adjust_rules_asyncio(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rules._get_kwargs()
+    kwargs = get_auto_adjust_rules._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -689,7 +738,9 @@ def get_auto_adjust_rules_asyncio(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def update_auto_adjust_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_auto_adjust_rule_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustRuleSet
+) -> Response[ResponseError]:
     """Update auto-adjust rule
 
     Args:
@@ -709,12 +760,13 @@ def update_auto_adjust_rule_sync_detailed(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -752,7 +804,9 @@ def update_auto_adjust_rule_sync_detailed(*, client: StolonClient, uuid: str) ->
     )
 
 
-def update_auto_adjust_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_auto_adjust_rule_sync(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustRuleSet
+) -> ResponseError | None:
     """Update auto-adjust rule
 
     Args:
@@ -772,12 +826,13 @@ def update_auto_adjust_rule_sync(*, client: StolonClient, uuid: str) -> Response
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -801,7 +856,9 @@ def update_auto_adjust_rule_sync(*, client: StolonClient, uuid: str) -> Response
     return None
 
 
-def update_auto_adjust_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_auto_adjust_rule_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustRuleSet
+) -> Response[ResponseError]:
     """Update auto-adjust rule
 
     Args:
@@ -821,12 +878,13 @@ def update_auto_adjust_rule_asyncio_detailed(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -864,7 +922,9 @@ def update_auto_adjust_rule_asyncio_detailed(*, client: StolonClient, uuid: str)
     )
 
 
-def update_auto_adjust_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_auto_adjust_rule_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustRuleSet
+) -> ResponseError | None:
     """Update auto-adjust rule
 
     Args:
@@ -884,12 +944,13 @@ def update_auto_adjust_rule_asyncio(*, client: StolonClient, uuid: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1121,7 +1182,9 @@ def delete_auto_adjust_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def create_auto_adjust_rule_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_auto_adjust_rule_sync_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustRuleSet
+) -> Response[ResponseError]:
     """Create auto-adjust rule
 
     Args:
@@ -1139,13 +1202,13 @@ def create_auto_adjust_rule_sync_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_rule._get_kwargs()
+    kwargs = create_auto_adjust_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1183,7 +1246,7 @@ def create_auto_adjust_rule_sync_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def create_auto_adjust_rule_sync(*, client: StolonClient) -> ResponseError | None:
+def create_auto_adjust_rule_sync(*, client: StolonClient, body: ApiAutoAdjustRuleSet) -> ResponseError | None:
     """Create auto-adjust rule
 
     Args:
@@ -1201,13 +1264,13 @@ def create_auto_adjust_rule_sync(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_rule._get_kwargs()
+    kwargs = create_auto_adjust_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1231,7 +1294,9 @@ def create_auto_adjust_rule_sync(*, client: StolonClient) -> ResponseError | Non
     return None
 
 
-def create_auto_adjust_rule_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_auto_adjust_rule_asyncio_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustRuleSet
+) -> Response[ResponseError]:
     """Create auto-adjust rule
 
     Args:
@@ -1249,13 +1314,13 @@ def create_auto_adjust_rule_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_rule._get_kwargs()
+    kwargs = create_auto_adjust_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1293,7 +1358,7 @@ def create_auto_adjust_rule_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_auto_adjust_rule_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_auto_adjust_rule_asyncio(*, client: StolonClient, body: ApiAutoAdjustRuleSet) -> ResponseError | None:
     """Create auto-adjust rule
 
     Args:
@@ -1311,13 +1376,13 @@ def create_auto_adjust_rule_asyncio(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_rule._get_kwargs()
+    kwargs = create_auto_adjust_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

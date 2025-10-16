@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import (
@@ -23,10 +24,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_word_by_regex_response200 import (
     GetWordByRegexResponse200,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWordByRegexResponse200]:
+def get_word_by_regex_sync_detailed(
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    lexicon: str,
+    regex: str,
+) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -45,13 +53,16 @@ def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWord
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        lexicon: str
+        regex: str
 
     Returns:
         Response[GetWordByRegexResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs()
+    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -89,7 +100,14 @@ def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWord
     )
 
 
-def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200 | None:
+def get_word_by_regex_sync(
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    lexicon: str,
+    regex: str,
+) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -108,13 +126,16 @@ def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        lexicon: str
+        regex: str
 
     Returns:
         GetWordByRegexResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs()
+    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -138,7 +159,14 @@ def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200
     return None
 
 
-def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetWordByRegexResponse200]:
+def get_word_by_regex_asyncio_detailed(
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    lexicon: str,
+    regex: str,
+) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -157,13 +185,16 @@ def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetW
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        lexicon: str
+        regex: str
 
     Returns:
         Response[GetWordByRegexResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs()
+    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +232,14 @@ def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetW
     )
 
 
-def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse200 | None:
+def get_word_by_regex_asyncio(
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    lexicon: str,
+    regex: str,
+) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -220,13 +258,16 @@ def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        lexicon: str
+        regex: str
 
     Returns:
         GetWordByRegexResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs()
+    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -250,7 +291,7 @@ def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse
     return None
 
 
-def get_word_attributes_sync_detailed(*, client: StolonClient) -> Response[list[str]]:
+def get_word_attributes_sync_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[list[str]]:
     """Args:
         lexicon (str):
         word (str):
@@ -267,13 +308,14 @@ def get_word_attributes_sync_detailed(*, client: StolonClient) -> Response[list[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         Response[list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
+    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -311,7 +353,7 @@ def get_word_attributes_sync_detailed(*, client: StolonClient) -> Response[list[
     )
 
 
-def get_word_attributes_sync(*, client: StolonClient) -> list[str] | None:
+def get_word_attributes_sync(*, client: StolonClient, lexicon: str, word: str) -> list[str] | None:
     """Args:
         lexicon (str):
         word (str):
@@ -328,13 +370,14 @@ def get_word_attributes_sync(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
+    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -351,7 +394,7 @@ def get_word_attributes_sync(*, client: StolonClient) -> list[str] | None:
     return None
 
 
-def get_word_attributes_asyncio_detailed(*, client: StolonClient) -> Response[list[str]]:
+def get_word_attributes_asyncio_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[list[str]]:
     """Args:
         lexicon (str):
         word (str):
@@ -368,13 +411,14 @@ def get_word_attributes_asyncio_detailed(*, client: StolonClient) -> Response[li
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         Response[list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
+    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -412,7 +456,7 @@ def get_word_attributes_asyncio_detailed(*, client: StolonClient) -> Response[li
     )
 
 
-def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
+def get_word_attributes_asyncio(*, client: StolonClient, lexicon: str, word: str) -> list[str] | None:
     """Args:
         lexicon (str):
         word (str):
@@ -429,13 +473,14 @@ def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
+    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -452,7 +497,7 @@ def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
     return None
 
 
-def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRules]:
+def get_rules_for_word_sync_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -469,13 +514,14 @@ def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRul
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         Response[AllRules]
     """
     # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs()
+    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -513,7 +559,7 @@ def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRul
     )
 
 
-def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
+def get_rules_for_word_sync(*, client: StolonClient, lexicon: str, word: str) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -530,13 +576,14 @@ def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         AllRules | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs()
+    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -560,7 +607,7 @@ def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
     return None
 
 
-def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[AllRules]:
+def get_rules_for_word_asyncio_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -577,13 +624,14 @@ def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[All
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         Response[AllRules]
     """
     # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs()
+    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -621,7 +669,7 @@ def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[All
     )
 
 
-def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
+def get_rules_for_word_asyncio(*, client: StolonClient, lexicon: str, word: str) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -638,13 +686,14 @@ def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                lexicon: str
+        word: str
 
     Returns:
         AllRules | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs()
+    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -668,7 +717,7 @@ def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
     return None
 
 
-def get_lexicons_for_word_sync_detailed(*, client: StolonClient) -> Response[list[str]]:
+def get_lexicons_for_word_sync_detailed(*, client: StolonClient, word: str) -> Response[list[str]]:
     """Args:
         word (str):
 
@@ -684,13 +733,13 @@ def get_lexicons_for_word_sync_detailed(*, client: StolonClient) -> Response[lis
 
     Args:
         client: StolonClient instance for proxying requests
-
+                word: str
 
     Returns:
         Response[list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
+    kwargs = get_lexicons_for_word._get_kwargs(word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -728,7 +777,7 @@ def get_lexicons_for_word_sync_detailed(*, client: StolonClient) -> Response[lis
     )
 
 
-def get_lexicons_for_word_sync(*, client: StolonClient) -> list[str] | None:
+def get_lexicons_for_word_sync(*, client: StolonClient, word: str) -> list[str] | None:
     """Args:
         word (str):
 
@@ -744,13 +793,13 @@ def get_lexicons_for_word_sync(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                word: str
 
     Returns:
         list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
+    kwargs = get_lexicons_for_word._get_kwargs(word=word)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -767,7 +816,7 @@ def get_lexicons_for_word_sync(*, client: StolonClient) -> list[str] | None:
     return None
 
 
-def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient) -> Response[list[str]]:
+def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient, word: str) -> Response[list[str]]:
     """Args:
         word (str):
 
@@ -783,13 +832,13 @@ def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                word: str
 
     Returns:
         Response[list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
+    kwargs = get_lexicons_for_word._get_kwargs(word=word)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -827,7 +876,7 @@ def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
+def get_lexicons_for_word_asyncio(*, client: StolonClient, word: str) -> list[str] | None:
     """Args:
         word (str):
 
@@ -843,13 +892,13 @@ def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                word: str
 
     Returns:
         list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
+    kwargs = get_lexicons_for_word._get_kwargs(word=word)
 
     # Proxy request through stolon server
     client.proxy_request(

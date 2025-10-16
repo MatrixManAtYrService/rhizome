@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import (
@@ -20,13 +21,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_revenue_share_groups,
     update_revenue_share_group,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_share_group import (
+    ApiRevenueShareGroup,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_revenue_share_group_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_revenue_share_group_sync_detailed(
+    *, client: StolonClient, body: ApiRevenueShareGroup
+) -> Response[ResponseError]:
     """Create revenue share group
 
     Args:
@@ -44,13 +50,13 @@ def create_revenue_share_group_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs()
+    kwargs = create_revenue_share_group._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -88,7 +94,7 @@ def create_revenue_share_group_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_revenue_share_group_sync(*, client: StolonClient) -> ResponseError | None:
+def create_revenue_share_group_sync(*, client: StolonClient, body: ApiRevenueShareGroup) -> ResponseError | None:
     """Create revenue share group
 
     Args:
@@ -106,13 +112,13 @@ def create_revenue_share_group_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs()
+    kwargs = create_revenue_share_group._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -136,7 +142,9 @@ def create_revenue_share_group_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def create_revenue_share_group_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_revenue_share_group_asyncio_detailed(
+    *, client: StolonClient, body: ApiRevenueShareGroup
+) -> Response[ResponseError]:
     """Create revenue share group
 
     Args:
@@ -154,13 +162,13 @@ def create_revenue_share_group_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs()
+    kwargs = create_revenue_share_group._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -198,7 +206,7 @@ def create_revenue_share_group_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_revenue_share_group_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_revenue_share_group_asyncio(*, client: StolonClient, body: ApiRevenueShareGroup) -> ResponseError | None:
     """Create revenue share group
 
     Args:
@@ -216,13 +224,13 @@ def create_revenue_share_group_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs()
+    kwargs = create_revenue_share_group._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -466,7 +474,9 @@ def get_revenue_share_group_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def update_revenue_share_group_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_revenue_share_group_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
+) -> Response[ResponseError]:
     """Update revenue share group
 
     Args:
@@ -486,12 +496,13 @@ def update_revenue_share_group_sync_detailed(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -529,7 +540,9 @@ def update_revenue_share_group_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
 
-def update_revenue_share_group_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_revenue_share_group_sync(
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
+) -> ResponseError | None:
     """Update revenue share group
 
     Args:
@@ -549,12 +562,13 @@ def update_revenue_share_group_sync(*, client: StolonClient, uuid: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -578,7 +592,9 @@ def update_revenue_share_group_sync(*, client: StolonClient, uuid: str) -> Respo
     return None
 
 
-def update_revenue_share_group_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_revenue_share_group_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
+) -> Response[ResponseError]:
     """Update revenue share group
 
     Args:
@@ -598,12 +614,13 @@ def update_revenue_share_group_asyncio_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -641,7 +658,9 @@ def update_revenue_share_group_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def update_revenue_share_group_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_revenue_share_group_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
+) -> ResponseError | None:
     """Update revenue share group
 
     Args:
@@ -661,12 +680,13 @@ def update_revenue_share_group_asyncio(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -910,7 +930,9 @@ def delete_revenue_share_group_by_uuid_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def get_revenue_share_groups_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_revenue_share_groups_sync_detailed(
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -928,13 +950,13 @@ def get_revenue_share_groups_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                revenue_share_group: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs()
+    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -972,7 +994,9 @@ def get_revenue_share_groups_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def get_revenue_share_groups_sync(*, client: StolonClient) -> ResponseError | None:
+def get_revenue_share_groups_sync(
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -990,13 +1014,13 @@ def get_revenue_share_groups_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                revenue_share_group: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs()
+    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1020,7 +1044,9 @@ def get_revenue_share_groups_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def get_revenue_share_groups_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_revenue_share_groups_asyncio_detailed(
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -1038,13 +1064,13 @@ def get_revenue_share_groups_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                revenue_share_group: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs()
+    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1082,7 +1108,9 @@ def get_revenue_share_groups_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def get_revenue_share_groups_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_revenue_share_groups_asyncio(
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -1100,13 +1128,13 @@ def get_revenue_share_groups_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                revenue_share_group: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs()
+    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

@@ -17,13 +17,16 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     create_adjustment,
     reseller_create_adjustment,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjustment import (
+    ApiAdjustment,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -41,13 +44,13 @@ def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustment
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjustment._get_kwargs()
+    kwargs = create_adjustment._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -85,7 +88,7 @@ def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[Respons
     )
 
 
-def create_adjustment_sync(*, client: StolonClient) -> ResponseError | None:
+def create_adjustment_sync(*, client: StolonClient, body: ApiAdjustment) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -103,13 +106,13 @@ def create_adjustment_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustment
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjustment._get_kwargs()
+    kwargs = create_adjustment._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -133,7 +136,7 @@ def create_adjustment_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustment) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -151,13 +154,13 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustment
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjustment._get_kwargs()
+    kwargs = create_adjustment._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -195,7 +198,7 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def create_adjustment_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_adjustment_asyncio(*, client: StolonClient, body: ApiAdjustment) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -213,13 +216,13 @@ def create_adjustment_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustment
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjustment._get_kwargs()
+    kwargs = create_adjustment._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -243,7 +246,9 @@ def create_adjustment_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def reseller_create_adjustment_sync_detailed(
+    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -264,12 +269,14 @@ def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str)
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        body: ApiAdjustment
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
+    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -307,7 +314,9 @@ def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str)
     )
 
 
-def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def reseller_create_adjustment_sync(
+    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -328,12 +337,14 @@ def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        body: ApiAdjustment
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
+    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -357,7 +368,9 @@ def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> Respo
     return None
 
 
-def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def reseller_create_adjustment_asyncio_detailed(
+    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -378,12 +391,14 @@ def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: s
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        body: ApiAdjustment
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
+    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -421,7 +436,9 @@ def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: s
     )
 
 
-def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def reseller_create_adjustment_asyncio(
+    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -442,12 +459,14 @@ def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        body: ApiAdjustment
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
+    kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

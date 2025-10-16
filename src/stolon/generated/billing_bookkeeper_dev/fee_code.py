@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import (
@@ -24,10 +25,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_fee_codes_by_category_and_code_contains_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
+def get_fee_codes_by_category_and_code_contains_sync_detailed(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiFeeCode]:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -48,13 +56,18 @@ def get_fee_codes_by_category_and_code_contains_sync_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs()
+    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -92,7 +105,14 @@ def get_fee_codes_by_category_and_code_contains_sync_detailed(*, client: StolonC
     )
 
 
-def get_fee_codes_by_category_and_code_contains_sync(*, client: StolonClient) -> ApiFeeCode | None:
+def get_fee_codes_by_category_and_code_contains_sync(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiFeeCode | None:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -113,13 +133,18 @@ def get_fee_codes_by_category_and_code_contains_sync(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs()
+    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -143,7 +168,14 @@ def get_fee_codes_by_category_and_code_contains_sync(*, client: StolonClient) ->
     return None
 
 
-def get_fee_codes_by_category_and_code_contains_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
+def get_fee_codes_by_category_and_code_contains_asyncio_detailed(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiFeeCode]:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -164,13 +196,18 @@ def get_fee_codes_by_category_and_code_contains_asyncio_detailed(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs()
+    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -208,7 +245,14 @@ def get_fee_codes_by_category_and_code_contains_asyncio_detailed(*, client: Stol
     )
 
 
-def get_fee_codes_by_category_and_code_contains_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
+def get_fee_codes_by_category_and_code_contains_asyncio(
+    *,
+    client: StolonClient,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiFeeCode | None:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -229,13 +273,18 @@ def get_fee_codes_by_category_and_code_contains_asyncio(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs()
+    kwargs = get_fee_codes_by_category_and_code_contains._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -479,7 +528,7 @@ def get_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCo
     return None
 
 
-def create_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
+def create_fee_code_sync_detailed(*, client: StolonClient, body: ApiFeeCode) -> Response[ApiFeeCode]:
     """Create fee code
 
     Args:
@@ -497,13 +546,13 @@ def create_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCod
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCode
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code._get_kwargs()
+    kwargs = create_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -541,7 +590,7 @@ def create_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCod
     )
 
 
-def create_fee_code_sync(*, client: StolonClient) -> ApiFeeCode | None:
+def create_fee_code_sync(*, client: StolonClient, body: ApiFeeCode) -> ApiFeeCode | None:
     """Create fee code
 
     Args:
@@ -559,13 +608,13 @@ def create_fee_code_sync(*, client: StolonClient) -> ApiFeeCode | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCode
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code._get_kwargs()
+    kwargs = create_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -589,7 +638,7 @@ def create_fee_code_sync(*, client: StolonClient) -> ApiFeeCode | None:
     return None
 
 
-def create_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
+def create_fee_code_asyncio_detailed(*, client: StolonClient, body: ApiFeeCode) -> Response[ApiFeeCode]:
     """Create fee code
 
     Args:
@@ -607,13 +656,13 @@ def create_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiFee
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCode
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code._get_kwargs()
+    kwargs = create_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -651,7 +700,7 @@ def create_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiFee
     )
 
 
-def create_fee_code_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
+def create_fee_code_asyncio(*, client: StolonClient, body: ApiFeeCode) -> ApiFeeCode | None:
     """Create fee code
 
     Args:
@@ -669,13 +718,13 @@ def create_fee_code_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCode
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code._get_kwargs()
+    kwargs = create_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -699,7 +748,7 @@ def create_fee_code_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
     return None
 
 
-def update_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
+def update_fee_code_sync_detailed(*, client: StolonClient, uuid: str, body: ApiFeeCode) -> Response[ApiFeeCode]:
     """Update fee code
 
     Args:
@@ -719,12 +768,13 @@ def update_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCode
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -762,7 +812,7 @@ def update_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     )
 
 
-def update_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
+def update_fee_code_sync(*, client: StolonClient, uuid: str, body: ApiFeeCode) -> ApiFeeCode | None:
     """Update fee code
 
     Args:
@@ -782,12 +832,13 @@ def update_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiFeeCode | Non
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCode
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -811,7 +862,7 @@ def update_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiFeeCode | Non
     return None
 
 
-def update_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
+def update_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiFeeCode) -> Response[ApiFeeCode]:
     """Update fee code
 
     Args:
@@ -831,12 +882,13 @@ def update_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCode
 
     Returns:
         Response[ApiFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -874,7 +926,7 @@ def update_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def update_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
+def update_fee_code_asyncio(*, client: StolonClient, uuid: str, body: ApiFeeCode) -> ApiFeeCode | None:
     """Update fee code
 
     Args:
@@ -894,12 +946,13 @@ def update_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCode | 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCode
 
     Returns:
         ApiFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

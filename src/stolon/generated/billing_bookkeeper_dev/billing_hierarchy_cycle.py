@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import (
@@ -31,10 +33,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_billing_hierarchy_cycle_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_cycle_sync_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchyCycle
+) -> Response[ResponseError]:
     """Create billing hierarchy cycle entry
 
     Args:
@@ -52,13 +56,13 @@ def create_billing_hierarchy_cycle_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyCycle
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_cycle._get_kwargs()
+    kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -96,7 +100,9 @@ def create_billing_hierarchy_cycle_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def create_billing_hierarchy_cycle_sync(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_cycle_sync(
+    *, client: StolonClient, body: ApiBillingHierarchyCycle
+) -> ResponseError | None:
     """Create billing hierarchy cycle entry
 
     Args:
@@ -114,13 +120,13 @@ def create_billing_hierarchy_cycle_sync(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyCycle
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_cycle._get_kwargs()
+    kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -144,7 +150,9 @@ def create_billing_hierarchy_cycle_sync(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def create_billing_hierarchy_cycle_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_cycle_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchyCycle
+) -> Response[ResponseError]:
     """Create billing hierarchy cycle entry
 
     Args:
@@ -162,13 +170,13 @@ def create_billing_hierarchy_cycle_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyCycle
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_cycle._get_kwargs()
+    kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -206,7 +214,9 @@ def create_billing_hierarchy_cycle_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def create_billing_hierarchy_cycle_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_cycle_asyncio(
+    *, client: StolonClient, body: ApiBillingHierarchyCycle
+) -> ResponseError | None:
     """Create billing hierarchy cycle entry
 
     Args:
@@ -224,13 +234,13 @@ def create_billing_hierarchy_cycle_asyncio(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyCycle
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_cycle._get_kwargs()
+    kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -255,7 +265,11 @@ def create_billing_hierarchy_cycle_asyncio(*, client: StolonClient) -> ResponseE
 
 
 def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -276,13 +290,17 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -320,7 +338,13 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
     )
 
 
-def populate_merchant_cycle_entries_for_processing_group_sync(*, client: StolonClient) -> ResponseError | None:
+def populate_merchant_cycle_entries_for_processing_group_sync(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
     Args:
@@ -340,13 +364,17 @@ def populate_merchant_cycle_entries_for_processing_group_sync(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -371,7 +399,11 @@ def populate_merchant_cycle_entries_for_processing_group_sync(*, client: StolonC
 
 
 def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -392,13 +424,17 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -436,7 +472,13 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
 
-def populate_merchant_cycle_entries_for_processing_group_asyncio(*, client: StolonClient) -> ResponseError | None:
+def populate_merchant_cycle_entries_for_processing_group_asyncio(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
     Args:
@@ -456,13 +498,17 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -487,7 +533,12 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(*, client: Stol
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -510,13 +561,16 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -556,7 +610,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -579,13 +638,16 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -611,7 +673,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -634,13 +701,16 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -680,7 +750,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -703,13 +778,16 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -735,7 +813,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -758,13 +841,16 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -804,7 +890,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -827,13 +918,16 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -859,7 +953,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -882,13 +981,16 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -928,7 +1030,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -951,13 +1058,16 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -983,7 +1093,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
 ) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1007,13 +1122,16 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        page_size: Union[Unset, int]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
     kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
     )
 
     # Proxy request through stolon server
@@ -1053,7 +1171,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
 ) -> int | None:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1077,13 +1200,16 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        page_size: Union[Unset, int]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
     kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
     )
 
     # Proxy request through stolon server
@@ -1102,7 +1228,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
 ) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1126,13 +1257,16 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        page_size: Union[Unset, int]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
     kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
     )
 
     # Proxy request through stolon server
@@ -1172,7 +1306,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
 ) -> int | None:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1196,13 +1335,16 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        page_size: Union[Unset, int]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
     kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
     )
 
     # Proxy request through stolon server
@@ -1221,7 +1363,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1244,13 +1391,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        cycle_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs()
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1288,7 +1440,14 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
     )
 
 
-def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(*, client: StolonClient) -> ResponseError | None:
+def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
 
@@ -1310,13 +1469,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(*, client: S
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        cycle_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs()
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1341,7 +1505,12 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(*, client: S
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1364,13 +1533,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        cycle_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs()
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1408,7 +1582,14 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
     )
 
 
-def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
 
@@ -1430,13 +1611,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(*, client
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        cycle_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs()
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1675,7 +1861,12 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio(
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1698,13 +1889,16 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -1744,7 +1938,12 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1767,13 +1966,16 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -1799,7 +2001,12 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1822,13 +2029,16 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -1868,7 +2078,12 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
-    *, client: StolonClient, processing_group_uuid: str
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    cycle_date: datetime.date,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1891,13 +2106,16 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 processing_group_uuid: str
+        cycle_date: datetime.date
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid
+        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
     )
 
     # Proxy request through stolon server
@@ -1923,7 +2141,11 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
 
 
 def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -1944,13 +2166,17 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1988,7 +2214,13 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
     )
 
 
-def populate_reseller_cycle_entries_for_processing_group_sync(*, client: StolonClient) -> ResponseError | None:
+def populate_reseller_cycle_entries_for_processing_group_sync(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
     Args:
@@ -2008,13 +2240,17 @@ def populate_reseller_cycle_entries_for_processing_group_sync(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2039,7 +2275,11 @@ def populate_reseller_cycle_entries_for_processing_group_sync(*, client: StolonC
 
 
 def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -2060,13 +2300,17 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2104,7 +2348,13 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
 
-def populate_reseller_cycle_entries_for_processing_group_asyncio(*, client: StolonClient) -> ResponseError | None:
+def populate_reseller_cycle_entries_for_processing_group_asyncio(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
     Args:
@@ -2124,13 +2374,17 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2155,7 +2409,11 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(*, client: Stol
 
 
 def populate_developer_cycle_entries_for_processing_group_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2176,13 +2434,17 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2220,7 +2482,13 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
     )
 
 
-def populate_developer_cycle_entries_for_processing_group_sync(*, client: StolonClient) -> ResponseError | None:
+def populate_developer_cycle_entries_for_processing_group_sync(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -2240,13 +2508,17 @@ def populate_developer_cycle_entries_for_processing_group_sync(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2271,7 +2543,11 @@ def populate_developer_cycle_entries_for_processing_group_sync(*, client: Stolon
 
 
 def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2292,13 +2568,17 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2336,7 +2616,13 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
 
-def populate_developer_cycle_entries_for_processing_group_asyncio(*, client: StolonClient) -> ResponseError | None:
+def populate_developer_cycle_entries_for_processing_group_asyncio(
+    *,
+    client: StolonClient,
+    processing_group_uuid: str,
+    chunk_size: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -2356,13 +2642,17 @@ def populate_developer_cycle_entries_for_processing_group_asyncio(*, client: Sto
 
     Args:
         client: StolonClient instance for proxying requests
-
+                processing_group_uuid: str
+        chunk_size: Union[Unset, int]
+        chunk_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs()
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
+        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

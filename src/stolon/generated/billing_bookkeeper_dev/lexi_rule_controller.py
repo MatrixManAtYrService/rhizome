@@ -22,8 +22,16 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_rule,
     get_rules_by_lexicon,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.activation_rule import (
+    ActivationRule,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.all_rules import AllRules
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.base_rule import BaseRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.conditional_rule import (
+    ConditionalRule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.simple_rule import SimpleRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.unit_rule import UnitRule
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
@@ -649,7 +657,7 @@ def get_rule_asyncio(*, client: StolonClient, uuid: str) -> AllRules | None:
     return None
 
 
-def create_simple_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_simple_rule_sync_detailed(*, client: StolonClient, body: SimpleRule) -> Response[BaseRule]:
     """Args:
         body (SimpleRule):
 
@@ -665,13 +673,13 @@ def create_simple_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRu
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule._get_kwargs()
+    kwargs = create_simple_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -709,7 +717,7 @@ def create_simple_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRu
     )
 
 
-def create_simple_rule_sync(*, client: StolonClient) -> BaseRule | None:
+def create_simple_rule_sync(*, client: StolonClient, body: SimpleRule) -> BaseRule | None:
     """Args:
         body (SimpleRule):
 
@@ -725,13 +733,13 @@ def create_simple_rule_sync(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule._get_kwargs()
+    kwargs = create_simple_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -755,7 +763,7 @@ def create_simple_rule_sync(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_simple_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_simple_rule_asyncio_detailed(*, client: StolonClient, body: SimpleRule) -> Response[BaseRule]:
     """Args:
         body (SimpleRule):
 
@@ -771,13 +779,13 @@ def create_simple_rule_asyncio_detailed(*, client: StolonClient) -> Response[Bas
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule._get_kwargs()
+    kwargs = create_simple_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -815,7 +823,7 @@ def create_simple_rule_asyncio_detailed(*, client: StolonClient) -> Response[Bas
     )
 
 
-def create_simple_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
+def create_simple_rule_asyncio(*, client: StolonClient, body: SimpleRule) -> BaseRule | None:
     """Args:
         body (SimpleRule):
 
@@ -831,13 +839,13 @@ def create_simple_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule._get_kwargs()
+    kwargs = create_simple_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -861,7 +869,7 @@ def create_simple_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_activation_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_activation_rule_sync_detailed(*, client: StolonClient, body: ActivationRule) -> Response[BaseRule]:
     """Args:
         body (ActivationRule):
 
@@ -877,13 +885,13 @@ def create_activation_rule_sync_detailed(*, client: StolonClient) -> Response[Ba
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule._get_kwargs()
+    kwargs = create_activation_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -921,7 +929,7 @@ def create_activation_rule_sync_detailed(*, client: StolonClient) -> Response[Ba
     )
 
 
-def create_activation_rule_sync(*, client: StolonClient) -> BaseRule | None:
+def create_activation_rule_sync(*, client: StolonClient, body: ActivationRule) -> BaseRule | None:
     """Args:
         body (ActivationRule):
 
@@ -937,13 +945,13 @@ def create_activation_rule_sync(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule._get_kwargs()
+    kwargs = create_activation_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -967,7 +975,7 @@ def create_activation_rule_sync(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_activation_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_activation_rule_asyncio_detailed(*, client: StolonClient, body: ActivationRule) -> Response[BaseRule]:
     """Args:
         body (ActivationRule):
 
@@ -983,13 +991,13 @@ def create_activation_rule_asyncio_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule._get_kwargs()
+    kwargs = create_activation_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1027,7 +1035,7 @@ def create_activation_rule_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
 
-def create_activation_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
+def create_activation_rule_asyncio(*, client: StolonClient, body: ActivationRule) -> BaseRule | None:
     """Args:
         body (ActivationRule):
 
@@ -1043,13 +1051,13 @@ def create_activation_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule._get_kwargs()
+    kwargs = create_activation_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1073,7 +1081,7 @@ def create_activation_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_unit_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_unit_rule_sync_detailed(*, client: StolonClient, body: UnitRule) -> Response[BaseRule]:
     """Args:
         body (UnitRule):
 
@@ -1089,13 +1097,13 @@ def create_unit_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule._get_kwargs()
+    kwargs = create_unit_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1133,7 +1141,7 @@ def create_unit_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule
     )
 
 
-def create_unit_rule_sync(*, client: StolonClient) -> BaseRule | None:
+def create_unit_rule_sync(*, client: StolonClient, body: UnitRule) -> BaseRule | None:
     """Args:
         body (UnitRule):
 
@@ -1149,13 +1157,13 @@ def create_unit_rule_sync(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule._get_kwargs()
+    kwargs = create_unit_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1179,7 +1187,7 @@ def create_unit_rule_sync(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_unit_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_unit_rule_asyncio_detailed(*, client: StolonClient, body: UnitRule) -> Response[BaseRule]:
     """Args:
         body (UnitRule):
 
@@ -1195,13 +1203,13 @@ def create_unit_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseR
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule._get_kwargs()
+    kwargs = create_unit_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1239,7 +1247,7 @@ def create_unit_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseR
     )
 
 
-def create_unit_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
+def create_unit_rule_asyncio(*, client: StolonClient, body: UnitRule) -> BaseRule | None:
     """Args:
         body (UnitRule):
 
@@ -1255,13 +1263,13 @@ def create_unit_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule._get_kwargs()
+    kwargs = create_unit_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1285,7 +1293,7 @@ def create_unit_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_conditional_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_conditional_rule_sync_detailed(*, client: StolonClient, body: ConditionalRule) -> Response[BaseRule]:
     """Args:
         body (ConditionalRule):
 
@@ -1301,13 +1309,13 @@ def create_conditional_rule_sync_detailed(*, client: StolonClient) -> Response[B
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule._get_kwargs()
+    kwargs = create_conditional_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1345,7 +1353,7 @@ def create_conditional_rule_sync_detailed(*, client: StolonClient) -> Response[B
     )
 
 
-def create_conditional_rule_sync(*, client: StolonClient) -> BaseRule | None:
+def create_conditional_rule_sync(*, client: StolonClient, body: ConditionalRule) -> BaseRule | None:
     """Args:
         body (ConditionalRule):
 
@@ -1361,13 +1369,13 @@ def create_conditional_rule_sync(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule._get_kwargs()
+    kwargs = create_conditional_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1391,7 +1399,7 @@ def create_conditional_rule_sync(*, client: StolonClient) -> BaseRule | None:
     return None
 
 
-def create_conditional_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
+def create_conditional_rule_asyncio_detailed(*, client: StolonClient, body: ConditionalRule) -> Response[BaseRule]:
     """Args:
         body (ConditionalRule):
 
@@ -1407,13 +1415,13 @@ def create_conditional_rule_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
 
     Returns:
         Response[BaseRule]
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule._get_kwargs()
+    kwargs = create_conditional_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1451,7 +1459,7 @@ def create_conditional_rule_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_conditional_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
+def create_conditional_rule_asyncio(*, client: StolonClient, body: ConditionalRule) -> BaseRule | None:
     """Args:
         body (ConditionalRule):
 
@@ -1467,13 +1475,13 @@ def create_conditional_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
 
     Returns:
         BaseRule | None
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule._get_kwargs()
+    kwargs = create_conditional_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

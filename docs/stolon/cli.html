@@ -196,18 +196,33 @@
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="nd">@sync_app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="k">def</span><span class="w"> </span><span class="nf">spec</span><span class="p">(</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment to sync (e.g., &#39;dev&#39;, &#39;demo&#39;, &#39;prod&#39;)&quot;</span><span class="p">)],</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service to sync (e.g., &#39;billing-bookkeeper&#39;)&quot;</span><span class="p">)],</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment: dev, demo, or prod&quot;</span><span class="p">)],</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)&quot;</span><span class="p">)],</span>
 </span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">overwrite</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Overwrite existing generated client&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a Python client from an OpenAPI specification.&quot;&quot;&quot;</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">sync_spec</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="n">sync_spec</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="n">app</span><span class="p">()</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a Python client from an OpenAPI specification.</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">    Available environments:</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">      - dev:  Development environment (dev1.dev.clover.com)</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">      - demo: Demo environment (demo.clover.com)</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">      - prod: Production environment (www.clover.com)</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">    Common services:</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">      - billing-bookkeeper</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">      - billing-event</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">      - agreement-k8s</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">    Examples:</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a><span class="sd">      stolon sync spec --env dev --service billing-bookkeeper</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a><span class="sd">      stolon sync spec --env prod --service billing-event --overwrite</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">sync_spec</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="n">sync_spec</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="n">app</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -442,18 +457,53 @@
     <a class="headerlink" href="#spec"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="spec-118"><a href="#spec-118"><span class="linenos">118</span></a><span class="nd">@sync_app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 </span><span id="spec-119"><a href="#spec-119"><span class="linenos">119</span></a><span class="k">def</span><span class="w"> </span><span class="nf">spec</span><span class="p">(</span>
-</span><span id="spec-120"><a href="#spec-120"><span class="linenos">120</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment to sync (e.g., &#39;dev&#39;, &#39;demo&#39;, &#39;prod&#39;)&quot;</span><span class="p">)],</span>
-</span><span id="spec-121"><a href="#spec-121"><span class="linenos">121</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service to sync (e.g., &#39;billing-bookkeeper&#39;)&quot;</span><span class="p">)],</span>
+</span><span id="spec-120"><a href="#spec-120"><span class="linenos">120</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment: dev, demo, or prod&quot;</span><span class="p">)],</span>
+</span><span id="spec-121"><a href="#spec-121"><span class="linenos">121</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)&quot;</span><span class="p">)],</span>
 </span><span id="spec-122"><a href="#spec-122"><span class="linenos">122</span></a>    <span class="n">overwrite</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Overwrite existing generated client&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span id="spec-123"><a href="#spec-123"><span class="linenos">123</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="spec-124"><a href="#spec-124"><span class="linenos">124</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a Python client from an OpenAPI specification.&quot;&quot;&quot;</span>
-</span><span id="spec-125"><a href="#spec-125"><span class="linenos">125</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">sync_spec</span>
-</span><span id="spec-126"><a href="#spec-126"><span class="linenos">126</span></a>
-</span><span id="spec-127"><a href="#spec-127"><span class="linenos">127</span></a>    <span class="n">sync_spec</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+</span><span id="spec-124"><a href="#spec-124"><span class="linenos">124</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a Python client from an OpenAPI specification.</span>
+</span><span id="spec-125"><a href="#spec-125"><span class="linenos">125</span></a>
+</span><span id="spec-126"><a href="#spec-126"><span class="linenos">126</span></a><span class="sd">    Available environments:</span>
+</span><span id="spec-127"><a href="#spec-127"><span class="linenos">127</span></a><span class="sd">      - dev:  Development environment (dev1.dev.clover.com)</span>
+</span><span id="spec-128"><a href="#spec-128"><span class="linenos">128</span></a><span class="sd">      - demo: Demo environment (demo.clover.com)</span>
+</span><span id="spec-129"><a href="#spec-129"><span class="linenos">129</span></a><span class="sd">      - prod: Production environment (www.clover.com)</span>
+</span><span id="spec-130"><a href="#spec-130"><span class="linenos">130</span></a>
+</span><span id="spec-131"><a href="#spec-131"><span class="linenos">131</span></a><span class="sd">    Common services:</span>
+</span><span id="spec-132"><a href="#spec-132"><span class="linenos">132</span></a><span class="sd">      - billing-bookkeeper</span>
+</span><span id="spec-133"><a href="#spec-133"><span class="linenos">133</span></a><span class="sd">      - billing-event</span>
+</span><span id="spec-134"><a href="#spec-134"><span class="linenos">134</span></a><span class="sd">      - agreement-k8s</span>
+</span><span id="spec-135"><a href="#spec-135"><span class="linenos">135</span></a>
+</span><span id="spec-136"><a href="#spec-136"><span class="linenos">136</span></a><span class="sd">    Examples:</span>
+</span><span id="spec-137"><a href="#spec-137"><span class="linenos">137</span></a><span class="sd">      stolon sync spec --env dev --service billing-bookkeeper</span>
+</span><span id="spec-138"><a href="#spec-138"><span class="linenos">138</span></a><span class="sd">      stolon sync spec --env prod --service billing-event --overwrite</span>
+</span><span id="spec-139"><a href="#spec-139"><span class="linenos">139</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="spec-140"><a href="#spec-140"><span class="linenos">140</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">sync_spec</span>
+</span><span id="spec-141"><a href="#spec-141"><span class="linenos">141</span></a>
+</span><span id="spec-142"><a href="#spec-142"><span class="linenos">142</span></a>    <span class="n">sync_spec</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Generate a Python client from an OpenAPI specification.</p>
+
+<p>Available environments:</p>
+
+<ul>
+<li>dev:  Development environment (dev1.dev.clover.com)</li>
+<li>demo: Demo environment (demo.clover.com)</li>
+<li>prod: Production environment (<a href="www.clover.com">www.clover.com</a>)</li>
+</ul>
+
+<p>Common services:</p>
+
+<ul>
+<li>billing-bookkeeper</li>
+<li>billing-event</li>
+<li>agreement-k8s</li>
+</ul>
+
+<p>Examples:
+  stolon sync spec --env dev --service billing-bookkeeper
+  stolon sync spec --env prod --service billing-event --overwrite</p>
 </div>
 
 
@@ -469,8 +519,8 @@
 
     </div>
     <a class="headerlink" href="#main"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="main-130"><a href="#main-130"><span class="linenos">130</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="main-131"><a href="#main-131"><span class="linenos">131</span></a>    <span class="n">app</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="main-145"><a href="#main-145"><span class="linenos">145</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="main-146"><a href="#main-146"><span class="linenos">146</span></a>    <span class="n">app</span><span class="p">()</span>
 </span></pre></div>
 
 

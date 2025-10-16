@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.device_type import (
@@ -24,7 +25,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_device_type_by_serial_number_sync_detailed(
@@ -241,7 +242,9 @@ def get_device_type_by_serial_number_asyncio(
     return None
 
 
-def get_device_types_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_device_types_sync_detailed(
+    *, client: StolonClient, is_group: Union[Unset, bool] = UNSET
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -259,13 +262,13 @@ def get_device_types_sync_detailed(*, client: StolonClient) -> Response[Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_group: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_device_types._get_kwargs()
+    kwargs = get_device_types._get_kwargs(is_group=is_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -303,7 +306,7 @@ def get_device_types_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
 
-def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
+def get_device_types_sync(*, client: StolonClient, is_group: Union[Unset, bool] = UNSET) -> ResponseError | None:
     """Get all device types for devices and device groups
 
     Args:
@@ -321,13 +324,13 @@ def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_group: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_device_types._get_kwargs()
+    kwargs = get_device_types._get_kwargs(is_group=is_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -351,7 +354,9 @@ def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_device_types_asyncio_detailed(
+    *, client: StolonClient, is_group: Union[Unset, bool] = UNSET
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -369,13 +374,13 @@ def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_group: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_device_types._get_kwargs()
+    kwargs = get_device_types._get_kwargs(is_group=is_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -413,7 +418,7 @@ def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
 
-def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_device_types_asyncio(*, client: StolonClient, is_group: Union[Unset, bool] = UNSET) -> ResponseError | None:
     """Get all device types for devices and device groups
 
     Args:
@@ -431,13 +436,13 @@ def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_group: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_device_types._get_kwargs()
+    kwargs = get_device_types._get_kwargs(is_group=is_group)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

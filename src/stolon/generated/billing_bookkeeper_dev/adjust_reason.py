@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import (
@@ -19,13 +20,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_adjust_reason_by_uuid,
     get_adjust_reasons,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_reason import (
+    ApiAdjustReason,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_reasons_sync_detailed(
+    *, client: StolonClient, adjust_reason: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -43,13 +49,13 @@ def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                adjust_reason: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_reasons._get_kwargs()
+    kwargs = get_adjust_reasons._get_kwargs(adjust_reason=adjust_reason)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +93,7 @@ def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[Respon
     )
 
 
-def get_adjust_reasons_sync(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_reasons_sync(*, client: StolonClient, adjust_reason: Union[Unset, str] = UNSET) -> ResponseError | None:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -105,13 +111,13 @@ def get_adjust_reasons_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                adjust_reason: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_reasons._get_kwargs()
+    kwargs = get_adjust_reasons._get_kwargs(adjust_reason=adjust_reason)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +141,9 @@ def get_adjust_reasons_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_reasons_asyncio_detailed(
+    *, client: StolonClient, adjust_reason: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -153,13 +161,13 @@ def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                adjust_reason: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_reasons._get_kwargs()
+    kwargs = get_adjust_reasons._get_kwargs(adjust_reason=adjust_reason)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -197,7 +205,9 @@ def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def get_adjust_reasons_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_reasons_asyncio(
+    *, client: StolonClient, adjust_reason: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -215,13 +225,13 @@ def get_adjust_reasons_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                adjust_reason: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_reasons._get_kwargs()
+    kwargs = get_adjust_reasons._get_kwargs(adjust_reason=adjust_reason)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -465,7 +475,7 @@ def get_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Res
     return None
 
 
-def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_reason_sync_detailed(*, client: StolonClient, body: ApiAdjustReason) -> Response[ResponseError]:
     """Create adjustment reason
 
     Args:
@@ -483,13 +493,13 @@ def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustReason
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_reason._get_kwargs()
+    kwargs = create_adjust_reason._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -527,7 +537,7 @@ def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def create_adjust_reason_sync(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_reason_sync(*, client: StolonClient, body: ApiAdjustReason) -> ResponseError | None:
     """Create adjustment reason
 
     Args:
@@ -545,13 +555,13 @@ def create_adjust_reason_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustReason
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_reason._get_kwargs()
+    kwargs = create_adjust_reason._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -575,7 +585,7 @@ def create_adjust_reason_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_reason_asyncio_detailed(*, client: StolonClient, body: ApiAdjustReason) -> Response[ResponseError]:
     """Create adjustment reason
 
     Args:
@@ -593,13 +603,13 @@ def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustReason
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_reason._get_kwargs()
+    kwargs = create_adjust_reason._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -637,7 +647,7 @@ def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def create_adjust_reason_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_reason_asyncio(*, client: StolonClient, body: ApiAdjustReason) -> ResponseError | None:
     """Create adjustment reason
 
     Args:
@@ -655,13 +665,13 @@ def create_adjust_reason_asyncio(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustReason
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_reason._get_kwargs()
+    kwargs = create_adjust_reason._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

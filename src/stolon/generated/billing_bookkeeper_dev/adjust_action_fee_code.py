@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action_fee_code import (
@@ -20,13 +22,28 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_adjust_action_fee_codes,
     update_adjust_action_fee_code,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_action_fee_code import (
+    ApiAdjustActionFeeCode,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_adjust_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get adjustment action fee codes
 
     Args:
@@ -52,13 +69,31 @@ def get_adjust_action_fee_codes_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_action_fee_codes._get_kwargs()
+    kwargs = get_adjust_action_fee_codes._get_kwargs(
+        date=date,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        adjust_action_type=adjust_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -96,7 +131,19 @@ def get_adjust_action_fee_codes_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def get_adjust_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_action_fee_codes_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get adjustment action fee codes
 
     Args:
@@ -122,13 +169,31 @@ def get_adjust_action_fee_codes_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_action_fee_codes._get_kwargs()
+    kwargs = get_adjust_action_fee_codes._get_kwargs(
+        date=date,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        adjust_action_type=adjust_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -152,7 +217,19 @@ def get_adjust_action_fee_codes_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def get_adjust_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get adjustment action fee codes
 
     Args:
@@ -178,13 +255,31 @@ def get_adjust_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_action_fee_codes._get_kwargs()
+    kwargs = get_adjust_action_fee_codes._get_kwargs(
+        date=date,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        adjust_action_type=adjust_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -222,7 +317,19 @@ def get_adjust_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def get_adjust_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_action_fee_codes_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get adjustment action fee codes
 
     Args:
@@ -248,13 +355,31 @@ def get_adjust_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_action_fee_codes._get_kwargs()
+    kwargs = get_adjust_action_fee_codes._get_kwargs(
+        date=date,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        adjust_action_type=adjust_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -278,7 +403,9 @@ def get_adjust_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def update_adjust_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_adjust_action_fee_code_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAdjustActionFeeCode
+) -> Response[ResponseError]:
     """Update adjustment action fee code mapping
 
     Args:
@@ -298,12 +425,13 @@ def update_adjust_action_fee_code_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAdjustActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -341,7 +469,9 @@ def update_adjust_action_fee_code_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def update_adjust_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_adjust_action_fee_code_sync(
+    *, client: StolonClient, uuid: str, body: ApiAdjustActionFeeCode
+) -> ResponseError | None:
     """Update adjustment action fee code mapping
 
     Args:
@@ -361,12 +491,13 @@ def update_adjust_action_fee_code_sync(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAdjustActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -390,7 +521,9 @@ def update_adjust_action_fee_code_sync(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def update_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_adjust_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAdjustActionFeeCode
+) -> Response[ResponseError]:
     """Update adjustment action fee code mapping
 
     Args:
@@ -410,12 +543,13 @@ def update_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAdjustActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -453,7 +587,9 @@ def update_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid
     )
 
 
-def update_adjust_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_adjust_action_fee_code_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiAdjustActionFeeCode
+) -> ResponseError | None:
     """Update adjustment action fee code mapping
 
     Args:
@@ -473,12 +609,13 @@ def update_adjust_action_fee_code_asyncio(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAdjustActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_adjust_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -944,7 +1081,9 @@ def get_adjust_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def create_adjust_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_action_fee_code_sync_detailed(
+    *, client: StolonClient, body: ApiAdjustActionFeeCode
+) -> Response[ResponseError]:
     """Create adjustment action fee code mapping
 
     Args:
@@ -962,13 +1101,13 @@ def create_adjust_action_fee_code_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action_fee_code._get_kwargs()
+    kwargs = create_adjust_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1006,7 +1145,7 @@ def create_adjust_action_fee_code_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_adjust_action_fee_code_sync(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_action_fee_code_sync(*, client: StolonClient, body: ApiAdjustActionFeeCode) -> ResponseError | None:
     """Create adjustment action fee code mapping
 
     Args:
@@ -1024,13 +1163,13 @@ def create_adjust_action_fee_code_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action_fee_code._get_kwargs()
+    kwargs = create_adjust_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1054,7 +1193,9 @@ def create_adjust_action_fee_code_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def create_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, body: ApiAdjustActionFeeCode
+) -> Response[ResponseError]:
     """Create adjustment action fee code mapping
 
     Args:
@@ -1072,13 +1213,13 @@ def create_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action_fee_code._get_kwargs()
+    kwargs = create_adjust_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1116,7 +1257,9 @@ def create_adjust_action_fee_code_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_adjust_action_fee_code_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_action_fee_code_asyncio(
+    *, client: StolonClient, body: ApiAdjustActionFeeCode
+) -> ResponseError | None:
     """Create adjustment action fee code mapping
 
     Args:
@@ -1134,13 +1277,13 @@ def create_adjust_action_fee_code_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action_fee_code._get_kwargs()
+    kwargs = create_adjust_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

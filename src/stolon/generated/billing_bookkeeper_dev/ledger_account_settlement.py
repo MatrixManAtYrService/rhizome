@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import (
@@ -26,10 +28,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_ledger_account_settlement_sync_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountSettlement
+) -> Response[ResponseError]:
     """Create ledger account settlement configuration
 
     Args:
@@ -47,13 +51,13 @@ def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountSettlement
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_settlement._get_kwargs()
+    kwargs = create_ledger_account_settlement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +95,9 @@ def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_ledger_account_settlement_sync(*, client: StolonClient) -> ResponseError | None:
+def create_ledger_account_settlement_sync(
+    *, client: StolonClient, body: ApiLedgerAccountSettlement
+) -> ResponseError | None:
     """Create ledger account settlement configuration
 
     Args:
@@ -109,13 +115,13 @@ def create_ledger_account_settlement_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountSettlement
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_settlement._get_kwargs()
+    kwargs = create_ledger_account_settlement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +145,9 @@ def create_ledger_account_settlement_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_ledger_account_settlement_asyncio_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountSettlement
+) -> Response[ResponseError]:
     """Create ledger account settlement configuration
 
     Args:
@@ -157,13 +165,13 @@ def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountSettlement
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_settlement._get_kwargs()
+    kwargs = create_ledger_account_settlement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +209,9 @@ def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def create_ledger_account_settlement_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_ledger_account_settlement_asyncio(
+    *, client: StolonClient, body: ApiLedgerAccountSettlement
+) -> ResponseError | None:
     """Create ledger account settlement configuration
 
     Args:
@@ -219,13 +229,13 @@ def create_ledger_account_settlement_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountSettlement
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_settlement._get_kwargs()
+    kwargs = create_ledger_account_settlement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -460,7 +470,12 @@ def delete_ledger_account_settlement_by_uuid_asyncio(*, client: StolonClient, uu
 
 
 def get_ledger_account_settlements_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerAccountSettlement"]]:
     """Get ledger account settlement configurations using the ledger account key
 
@@ -482,13 +497,18 @@ def get_ledger_account_settlements_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerAccountSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_settlements._get_kwargs()
+    kwargs = get_ledger_account_settlements._get_kwargs(
+        date=date, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -527,7 +547,12 @@ def get_ledger_account_settlements_sync_detailed(
 
 
 def get_ledger_account_settlements_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerAccountSettlement"] | None:
     """Get ledger account settlement configurations using the ledger account key
 
@@ -549,13 +574,18 @@ def get_ledger_account_settlements_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerAccountSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_settlements._get_kwargs()
+    kwargs = get_ledger_account_settlements._get_kwargs(
+        date=date, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -573,7 +603,12 @@ def get_ledger_account_settlements_sync(
 
 
 def get_ledger_account_settlements_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerAccountSettlement"]]:
     """Get ledger account settlement configurations using the ledger account key
 
@@ -595,13 +630,18 @@ def get_ledger_account_settlements_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerAccountSettlement"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_settlements._get_kwargs()
+    kwargs = get_ledger_account_settlements._get_kwargs(
+        date=date, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -640,7 +680,12 @@ def get_ledger_account_settlements_asyncio_detailed(
 
 
 def get_ledger_account_settlements_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerAccountSettlement"] | None:
     """Get ledger account settlement configurations using the ledger account key
 
@@ -662,13 +707,18 @@ def get_ledger_account_settlements_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerAccountSettlement"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_settlements._get_kwargs()
+    kwargs = get_ledger_account_settlements._get_kwargs(
+        date=date, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -686,7 +736,7 @@ def get_ledger_account_settlements_asyncio(
 
 
 def update_ledger_account_settlement_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountSettlement
 ) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Update ledger account settlement configuration
 
@@ -707,12 +757,13 @@ def update_ledger_account_settlement_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountSettlement
 
     Returns:
         Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -751,7 +802,7 @@ def update_ledger_account_settlement_sync_detailed(
 
 
 def update_ledger_account_settlement_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountSettlement
 ) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Update ledger account settlement configuration
 
@@ -772,12 +823,13 @@ def update_ledger_account_settlement_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountSettlement
 
     Returns:
         ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -795,7 +847,7 @@ def update_ledger_account_settlement_sync(
 
 
 def update_ledger_account_settlement_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountSettlement
 ) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Update ledger account settlement configuration
 
@@ -816,12 +868,13 @@ def update_ledger_account_settlement_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountSettlement
 
     Returns:
         Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -860,7 +913,7 @@ def update_ledger_account_settlement_asyncio_detailed(
 
 
 def update_ledger_account_settlement_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountSettlement
 ) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Update ledger account settlement configuration
 
@@ -881,12 +934,13 @@ def update_ledger_account_settlement_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountSettlement
 
     Returns:
         ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(

@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import (
@@ -26,11 +28,11 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def update_revenue_action_fee_code_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiRevenueActionFeeCode
 ) -> Response[ApiRevenueActionFeeCode]:
     """Update revenue-action-to-fee-code mapping
 
@@ -52,12 +54,13 @@ def update_revenue_action_fee_code_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueActionFeeCode
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -95,7 +98,9 @@ def update_revenue_action_fee_code_sync_detailed(
     )
 
 
-def update_revenue_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
+def update_revenue_action_fee_code_sync(
+    *, client: StolonClient, uuid: str, body: ApiRevenueActionFeeCode
+) -> ApiRevenueActionFeeCode | None:
     """Update revenue-action-to-fee-code mapping
 
     Args:
@@ -116,12 +121,13 @@ def update_revenue_action_fee_code_sync(*, client: StolonClient, uuid: str) -> A
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueActionFeeCode
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -146,7 +152,7 @@ def update_revenue_action_fee_code_sync(*, client: StolonClient, uuid: str) -> A
 
 
 def update_revenue_action_fee_code_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiRevenueActionFeeCode
 ) -> Response[ApiRevenueActionFeeCode]:
     """Update revenue-action-to-fee-code mapping
 
@@ -168,12 +174,13 @@ def update_revenue_action_fee_code_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueActionFeeCode
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -211,7 +218,9 @@ def update_revenue_action_fee_code_asyncio_detailed(
     )
 
 
-def update_revenue_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
+def update_revenue_action_fee_code_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiRevenueActionFeeCode
+) -> ApiRevenueActionFeeCode | None:
     """Update revenue-action-to-fee-code mapping
 
     Args:
@@ -232,12 +241,13 @@ def update_revenue_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiRevenueActionFeeCode
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_revenue_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -261,7 +271,9 @@ def update_revenue_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -
     return None
 
 
-def create_revenue_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
+def create_revenue_action_fee_code_sync_detailed(
+    *, client: StolonClient, body: ApiRevenueActionFeeCode
+) -> Response[ApiRevenueActionFeeCode]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -280,13 +292,13 @@ def create_revenue_action_fee_code_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionFeeCode
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_fee_code._get_kwargs()
+    kwargs = create_revenue_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -324,7 +336,9 @@ def create_revenue_action_fee_code_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def create_revenue_action_fee_code_sync(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
+def create_revenue_action_fee_code_sync(
+    *, client: StolonClient, body: ApiRevenueActionFeeCode
+) -> ApiRevenueActionFeeCode | None:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -343,13 +357,13 @@ def create_revenue_action_fee_code_sync(*, client: StolonClient) -> ApiRevenueAc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionFeeCode
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_fee_code._get_kwargs()
+    kwargs = create_revenue_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -373,7 +387,9 @@ def create_revenue_action_fee_code_sync(*, client: StolonClient) -> ApiRevenueAc
     return None
 
 
-def create_revenue_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
+def create_revenue_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, body: ApiRevenueActionFeeCode
+) -> Response[ApiRevenueActionFeeCode]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -392,13 +408,13 @@ def create_revenue_action_fee_code_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionFeeCode
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_fee_code._get_kwargs()
+    kwargs = create_revenue_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -436,7 +452,9 @@ def create_revenue_action_fee_code_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def create_revenue_action_fee_code_asyncio(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
+def create_revenue_action_fee_code_asyncio(
+    *, client: StolonClient, body: ApiRevenueActionFeeCode
+) -> ApiRevenueActionFeeCode | None:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -455,13 +473,13 @@ def create_revenue_action_fee_code_asyncio(*, client: StolonClient) -> ApiRevenu
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionFeeCode
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_fee_code._get_kwargs()
+    kwargs = create_revenue_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -709,7 +727,24 @@ def get_revenue_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: s
     return None
 
 
-def get_revenue_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
+def get_revenue_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    revenue_action_type: Union[Unset, str] = UNSET,
+    fee_category_group: Union[Unset, str] = UNSET,
+    revenue_group: Union[Unset, str] = UNSET,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_subscription_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    plan_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -740,13 +775,41 @@ def get_revenue_action_fee_codes_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        revenue_action_type: Union[Unset, str]
+        fee_category_group: Union[Unset, str]
+        revenue_group: Union[Unset, str]
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        app_subscription_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        plan_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_fee_codes._get_kwargs()
+    kwargs = get_revenue_action_fee_codes._get_kwargs(
+        date=date,
+        revenue_action_type=revenue_action_type,
+        fee_category_group=fee_category_group,
+        revenue_group=revenue_group,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        app_subscription_uuid=app_subscription_uuid,
+        app_metered_uuid=app_metered_uuid,
+        plan_uuid=plan_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -784,7 +847,24 @@ def get_revenue_action_fee_codes_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_revenue_action_fee_codes_sync(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_codes_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    revenue_action_type: Union[Unset, str] = UNSET,
+    fee_category_group: Union[Unset, str] = UNSET,
+    revenue_group: Union[Unset, str] = UNSET,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_subscription_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    plan_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -815,13 +895,41 @@ def get_revenue_action_fee_codes_sync(*, client: StolonClient) -> ApiRevenueActi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        revenue_action_type: Union[Unset, str]
+        fee_category_group: Union[Unset, str]
+        revenue_group: Union[Unset, str]
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        app_subscription_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        plan_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_fee_codes._get_kwargs()
+    kwargs = get_revenue_action_fee_codes._get_kwargs(
+        date=date,
+        revenue_action_type=revenue_action_type,
+        fee_category_group=fee_category_group,
+        revenue_group=revenue_group,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        app_subscription_uuid=app_subscription_uuid,
+        app_metered_uuid=app_metered_uuid,
+        plan_uuid=plan_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -845,7 +953,24 @@ def get_revenue_action_fee_codes_sync(*, client: StolonClient) -> ApiRevenueActi
     return None
 
 
-def get_revenue_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
+def get_revenue_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    revenue_action_type: Union[Unset, str] = UNSET,
+    fee_category_group: Union[Unset, str] = UNSET,
+    revenue_group: Union[Unset, str] = UNSET,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_subscription_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    plan_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -876,13 +1001,41 @@ def get_revenue_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        revenue_action_type: Union[Unset, str]
+        fee_category_group: Union[Unset, str]
+        revenue_group: Union[Unset, str]
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        app_subscription_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        plan_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiRevenueActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_fee_codes._get_kwargs()
+    kwargs = get_revenue_action_fee_codes._get_kwargs(
+        date=date,
+        revenue_action_type=revenue_action_type,
+        fee_category_group=fee_category_group,
+        revenue_group=revenue_group,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        app_subscription_uuid=app_subscription_uuid,
+        app_metered_uuid=app_metered_uuid,
+        plan_uuid=plan_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -920,7 +1073,24 @@ def get_revenue_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def get_revenue_action_fee_codes_asyncio(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_codes_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    revenue_action_type: Union[Unset, str] = UNSET,
+    fee_category_group: Union[Unset, str] = UNSET,
+    revenue_group: Union[Unset, str] = UNSET,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_subscription_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    plan_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -951,13 +1121,41 @@ def get_revenue_action_fee_codes_asyncio(*, client: StolonClient) -> ApiRevenueA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        revenue_action_type: Union[Unset, str]
+        fee_category_group: Union[Unset, str]
+        revenue_group: Union[Unset, str]
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        app_subscription_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        plan_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiRevenueActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_fee_codes._get_kwargs()
+    kwargs = get_revenue_action_fee_codes._get_kwargs(
+        date=date,
+        revenue_action_type=revenue_action_type,
+        fee_category_group=fee_category_group,
+        revenue_group=revenue_group,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        app_subscription_uuid=app_subscription_uuid,
+        app_metered_uuid=app_metered_uuid,
+        plan_uuid=plan_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

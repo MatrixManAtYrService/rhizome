@@ -11,7 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import (
@@ -27,10 +27,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_merchant_plan_by_id,
     get_merchant_properties_by_uuid,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_merchant_gateway_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_gateway_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -48,12 +50,13 @@ def get_merchant_gateway_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +94,9 @@ def get_merchant_gateway_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
 
-def get_merchant_gateway_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_gateway_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -109,12 +114,13 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -152,7 +158,9 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
 
-def get_developer_app_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_developer_app_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -170,12 +178,13 @@ def get_developer_app_sync_detailed(*, client: StolonClient, uuid: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_app._get_kwargs(uuid=uuid)
+    kwargs = get_developer_app._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -213,7 +222,9 @@ def get_developer_app_sync_detailed(*, client: StolonClient, uuid: str) -> Respo
     )
 
 
-def get_developer_app_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_developer_app_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -231,12 +242,13 @@ def get_developer_app_asyncio_detailed(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_app._get_kwargs(uuid=uuid)
+    kwargs = get_developer_app._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -274,7 +286,9 @@ def get_developer_app_asyncio_detailed(*, client: StolonClient, uuid: str) -> Re
     )
 
 
-def get_ebb_common_merchant_model_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_ebb_common_merchant_model_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -292,12 +306,13 @@ def get_ebb_common_merchant_model_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid)
+    kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -335,7 +350,9 @@ def get_ebb_common_merchant_model_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def get_ebb_common_merchant_model_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_ebb_common_merchant_model_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -353,12 +370,13 @@ def get_ebb_common_merchant_model_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid)
+    kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -397,7 +415,12 @@ def get_ebb_common_merchant_model_asyncio_detailed(*, client: StolonClient, uuid
 
 
 def get_latest_acceptance_sync_detailed(
-    *, client: StolonClient, agreement_type: str, merchant_uuid: str, owner_account_uuid: str
+    *,
+    client: StolonClient,
+    agreement_type: str,
+    merchant_uuid: str,
+    owner_account_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         agreement_type (str):
@@ -420,13 +443,17 @@ def get_latest_acceptance_sync_detailed(
                 agreement_type: str
         merchant_uuid: str
         owner_account_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(
-        agreement_type=agreement_type, merchant_uuid=merchant_uuid, owner_account_uuid=owner_account_uuid
+        agreement_type=agreement_type,
+        merchant_uuid=merchant_uuid,
+        owner_account_uuid=owner_account_uuid,
+        x_clover_appenv=x_clover_appenv,
     )
 
     # Proxy request through stolon server
@@ -466,7 +493,12 @@ def get_latest_acceptance_sync_detailed(
 
 
 def get_latest_acceptance_asyncio_detailed(
-    *, client: StolonClient, agreement_type: str, merchant_uuid: str, owner_account_uuid: str
+    *,
+    client: StolonClient,
+    agreement_type: str,
+    merchant_uuid: str,
+    owner_account_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         agreement_type (str):
@@ -489,13 +521,17 @@ def get_latest_acceptance_asyncio_detailed(
                 agreement_type: str
         merchant_uuid: str
         owner_account_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(
-        agreement_type=agreement_type, merchant_uuid=merchant_uuid, owner_account_uuid=owner_account_uuid
+        agreement_type=agreement_type,
+        merchant_uuid=merchant_uuid,
+        owner_account_uuid=owner_account_uuid,
+        x_clover_appenv=x_clover_appenv,
     )
 
     # Proxy request through stolon server
@@ -534,7 +570,9 @@ def get_latest_acceptance_asyncio_detailed(
     )
 
 
-def get_developer_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_developer_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -552,12 +590,13 @@ def get_developer_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -595,7 +634,9 @@ def get_developer_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def get_developer_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_developer_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -613,12 +654,13 @@ def get_developer_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -656,7 +698,9 @@ def get_developer_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -
     )
 
 
-def get_merchant_address_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_address_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -674,12 +718,13 @@ def get_merchant_address_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -717,7 +762,9 @@ def get_merchant_address_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
 
-def get_merchant_address_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_address_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -735,12 +782,13 @@ def get_merchant_address_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -778,7 +826,16 @@ def get_merchant_address_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
 
-def calculate_tax_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[Any]:
+def calculate_tax_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, str] = UNSET,
+    product_code: str,
+    amount: str,
+    currency: str,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (str):
         date (Union[Unset, str]):
@@ -800,12 +857,24 @@ def calculate_tax_sync_detailed(*, client: StolonClient, billing_entity_uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, str]
+        product_code: str
+        amount: str
+        currency: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = calculate_tax._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = calculate_tax._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        date=date,
+        product_code=product_code,
+        amount=amount,
+        currency=currency,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -843,7 +912,16 @@ def calculate_tax_sync_detailed(*, client: StolonClient, billing_entity_uuid: st
     )
 
 
-def calculate_tax_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[Any]:
+def calculate_tax_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, str] = UNSET,
+    product_code: str,
+    amount: str,
+    currency: str,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (str):
         date (Union[Unset, str]):
@@ -865,12 +943,24 @@ def calculate_tax_asyncio_detailed(*, client: StolonClient, billing_entity_uuid:
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, str]
+        product_code: str
+        amount: str
+        currency: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = calculate_tax._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = calculate_tax._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        date=date,
+        product_code=product_code,
+        amount=amount,
+        currency=currency,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -908,7 +998,9 @@ def calculate_tax_asyncio_detailed(*, client: StolonClient, billing_entity_uuid:
     )
 
 
-def get_merchant_boarding_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_boarding_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -926,12 +1018,13 @@ def get_merchant_boarding_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -969,7 +1062,9 @@ def get_merchant_boarding_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def get_merchant_boarding_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_boarding_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -987,12 +1082,13 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1030,7 +1126,9 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
 
-def get_merchant_plan_by_id_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_plan_by_id_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1048,12 +1146,13 @@ def get_merchant_plan_by_id_sync_detailed(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1091,7 +1190,9 @@ def get_merchant_plan_by_id_sync_detailed(*, client: StolonClient, uuid: str) ->
     )
 
 
-def get_merchant_plan_by_id_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_plan_by_id_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1109,12 +1210,13 @@ def get_merchant_plan_by_id_asyncio_detailed(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1152,7 +1254,9 @@ def get_merchant_plan_by_id_asyncio_detailed(*, client: StolonClient, uuid: str)
     )
 
 
-def get_merchant_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1170,12 +1274,13 @@ def get_merchant_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1213,7 +1318,9 @@ def get_merchant_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Re
     )
 
 
-def get_merchant_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1231,12 +1338,13 @@ def get_merchant_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1274,7 +1382,9 @@ def get_merchant_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) ->
     )
 
 
-def get_merchant_properties_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_properties_by_uuid_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1292,12 +1402,13 @@ def get_merchant_properties_by_uuid_sync_detailed(*, client: StolonClient, uuid:
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1335,7 +1446,9 @@ def get_merchant_properties_by_uuid_sync_detailed(*, client: StolonClient, uuid:
     )
 
 
-def get_merchant_properties_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_merchant_properties_by_uuid_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         uuid (str):
         x_clover_appenv (Union[Unset, str]):
@@ -1353,12 +1466,13 @@ def get_merchant_properties_by_uuid_asyncio_detailed(*, client: StolonClient, uu
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

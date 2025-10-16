@@ -26,13 +26,33 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     kill_job_1,
     query_job_1,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_date_params import (
+    CheckDateParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_db_relational_integrity_params import (
+    CheckDbRelationalIntegrityParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_developer_entities_exist_params import (
+    CheckDeveloperEntitiesExistParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_category_names_params import (
+    CheckFeeCategoryNamesParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_code_missing_lexi_attribute_params import (
+    CheckFeeCodeMissingLexiAttributeParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_hidden_system_apps_exist_params import (
+    CheckHiddenSystemAppsExistParams,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_response import (
     CheckResponse,
 )
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def check_fee_category_names_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_fee_category_names_sync_detailed(
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCategoryNamesParams):
 
@@ -48,13 +68,13 @@ def check_fee_category_names_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCategoryNamesParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs()
+    kwargs = check_fee_category_names._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -92,7 +112,7 @@ def check_fee_category_names_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def check_fee_category_names_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_fee_category_names_sync(*, client: StolonClient, body: CheckFeeCategoryNamesParams) -> CheckResponse | None:
     """Args:
         body (CheckFeeCategoryNamesParams):
 
@@ -108,13 +128,13 @@ def check_fee_category_names_sync(*, client: StolonClient) -> CheckResponse | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCategoryNamesParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs()
+    kwargs = check_fee_category_names._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -138,7 +158,9 @@ def check_fee_category_names_sync(*, client: StolonClient) -> CheckResponse | No
     return None
 
 
-def check_fee_category_names_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_fee_category_names_asyncio_detailed(
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCategoryNamesParams):
 
@@ -154,13 +176,13 @@ def check_fee_category_names_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCategoryNamesParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs()
+    kwargs = check_fee_category_names._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -198,7 +220,9 @@ def check_fee_category_names_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def check_fee_category_names_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_fee_category_names_asyncio(
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
+) -> CheckResponse | None:
     """Args:
         body (CheckFeeCategoryNamesParams):
 
@@ -214,13 +238,13 @@ def check_fee_category_names_asyncio(*, client: StolonClient) -> CheckResponse |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCategoryNamesParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs()
+    kwargs = check_fee_category_names._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -442,7 +466,9 @@ def job_exe_results_asyncio(*, client: StolonClient, request_uuid: str) -> str |
     return None
 
 
-def check_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_processing_group_dates_sync_detailed(
+    *, client: StolonClient, body: CheckDateParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDateParams):
 
@@ -458,13 +484,13 @@ def check_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDateParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs()
+    kwargs = check_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -502,7 +528,7 @@ def check_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def check_processing_group_dates_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_processing_group_dates_sync(*, client: StolonClient, body: CheckDateParams) -> CheckResponse | None:
     """Args:
         body (CheckDateParams):
 
@@ -518,13 +544,13 @@ def check_processing_group_dates_sync(*, client: StolonClient) -> CheckResponse 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDateParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs()
+    kwargs = check_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -548,7 +574,9 @@ def check_processing_group_dates_sync(*, client: StolonClient) -> CheckResponse 
     return None
 
 
-def check_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_processing_group_dates_asyncio_detailed(
+    *, client: StolonClient, body: CheckDateParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDateParams):
 
@@ -564,13 +592,13 @@ def check_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDateParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs()
+    kwargs = check_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -608,7 +636,7 @@ def check_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def check_processing_group_dates_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_processing_group_dates_asyncio(*, client: StolonClient, body: CheckDateParams) -> CheckResponse | None:
     """Args:
         body (CheckDateParams):
 
@@ -624,13 +652,13 @@ def check_processing_group_dates_asyncio(*, client: StolonClient) -> CheckRespon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDateParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs()
+    kwargs = check_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -654,7 +682,9 @@ def check_processing_group_dates_asyncio(*, client: StolonClient) -> CheckRespon
     return None
 
 
-def check_developer_entities_exist_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_developer_entities_exist_sync_detailed(
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
 
@@ -670,13 +700,13 @@ def check_developer_entities_exist_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDeveloperEntitiesExistParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs()
+    kwargs = check_developer_entities_exist._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -714,7 +744,9 @@ def check_developer_entities_exist_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def check_developer_entities_exist_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_developer_entities_exist_sync(
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
 
@@ -730,13 +762,13 @@ def check_developer_entities_exist_sync(*, client: StolonClient) -> CheckRespons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDeveloperEntitiesExistParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs()
+    kwargs = check_developer_entities_exist._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -760,7 +792,9 @@ def check_developer_entities_exist_sync(*, client: StolonClient) -> CheckRespons
     return None
 
 
-def check_developer_entities_exist_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_developer_entities_exist_asyncio_detailed(
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
 
@@ -776,13 +810,13 @@ def check_developer_entities_exist_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDeveloperEntitiesExistParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs()
+    kwargs = check_developer_entities_exist._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -820,7 +854,9 @@ def check_developer_entities_exist_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def check_developer_entities_exist_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_developer_entities_exist_asyncio(
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
 
@@ -836,13 +872,13 @@ def check_developer_entities_exist_asyncio(*, client: StolonClient) -> CheckResp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDeveloperEntitiesExistParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs()
+    kwargs = check_developer_entities_exist._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -866,7 +902,9 @@ def check_developer_entities_exist_asyncio(*, client: StolonClient) -> CheckResp
     return None
 
 
-def check_db_relational_integrity_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_db_relational_integrity_sync_detailed(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -882,13 +920,13 @@ def check_db_relational_integrity_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs()
+    kwargs = check_db_relational_integrity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -926,7 +964,9 @@ def check_db_relational_integrity_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def check_db_relational_integrity_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_db_relational_integrity_sync(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -942,13 +982,13 @@ def check_db_relational_integrity_sync(*, client: StolonClient) -> CheckResponse
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs()
+    kwargs = check_db_relational_integrity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -972,7 +1012,9 @@ def check_db_relational_integrity_sync(*, client: StolonClient) -> CheckResponse
     return None
 
 
-def check_db_relational_integrity_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_db_relational_integrity_asyncio_detailed(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -988,13 +1030,13 @@ def check_db_relational_integrity_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs()
+    kwargs = check_db_relational_integrity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1032,7 +1074,9 @@ def check_db_relational_integrity_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def check_db_relational_integrity_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_db_relational_integrity_asyncio(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -1048,13 +1092,13 @@ def check_db_relational_integrity_asyncio(*, client: StolonClient) -> CheckRespo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs()
+    kwargs = check_db_relational_integrity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1290,7 +1334,9 @@ def query_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckResp
     return None
 
 
-def check_missing_hidden_system_apps_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_missing_hidden_system_apps_sync_detailed(
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
 
@@ -1306,13 +1352,13 @@ def check_missing_hidden_system_apps_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckHiddenSystemAppsExistParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs()
+    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1350,7 +1396,9 @@ def check_missing_hidden_system_apps_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def check_missing_hidden_system_apps_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_missing_hidden_system_apps_sync(
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
+) -> CheckResponse | None:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
 
@@ -1366,13 +1414,13 @@ def check_missing_hidden_system_apps_sync(*, client: StolonClient) -> CheckRespo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckHiddenSystemAppsExistParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs()
+    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1396,7 +1444,9 @@ def check_missing_hidden_system_apps_sync(*, client: StolonClient) -> CheckRespo
     return None
 
 
-def check_missing_hidden_system_apps_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_missing_hidden_system_apps_asyncio_detailed(
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
 
@@ -1412,13 +1462,13 @@ def check_missing_hidden_system_apps_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckHiddenSystemAppsExistParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs()
+    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1456,7 +1506,9 @@ def check_missing_hidden_system_apps_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def check_missing_hidden_system_apps_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_missing_hidden_system_apps_asyncio(
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
+) -> CheckResponse | None:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
 
@@ -1472,13 +1524,13 @@ def check_missing_hidden_system_apps_asyncio(*, client: StolonClient) -> CheckRe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckHiddenSystemAppsExistParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs()
+    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1502,7 +1554,9 @@ def check_missing_hidden_system_apps_asyncio(*, client: StolonClient) -> CheckRe
     return None
 
 
-def check_db_relational_integrity_2_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_db_relational_integrity_2_sync_detailed(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -1518,13 +1572,13 @@ def check_db_relational_integrity_2_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs()
+    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1562,7 +1616,9 @@ def check_db_relational_integrity_2_sync_detailed(*, client: StolonClient) -> Re
     )
 
 
-def check_db_relational_integrity_2_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_db_relational_integrity_2_sync(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -1578,13 +1634,13 @@ def check_db_relational_integrity_2_sync(*, client: StolonClient) -> CheckRespon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs()
+    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1608,7 +1664,9 @@ def check_db_relational_integrity_2_sync(*, client: StolonClient) -> CheckRespon
     return None
 
 
-def check_db_relational_integrity_2_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_db_relational_integrity_2_asyncio_detailed(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -1624,13 +1682,13 @@ def check_db_relational_integrity_2_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs()
+    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1668,7 +1726,9 @@ def check_db_relational_integrity_2_asyncio_detailed(*, client: StolonClient) ->
     )
 
 
-def check_db_relational_integrity_2_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_db_relational_integrity_2_asyncio(
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
+) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
 
@@ -1684,13 +1744,13 @@ def check_db_relational_integrity_2_asyncio(*, client: StolonClient) -> CheckRes
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs()
+    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2126,7 +2186,9 @@ def kill_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckRespo
     return None
 
 
-def check_fee_code_missing_lexi_attribute_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_fee_code_missing_lexi_attribute_sync_detailed(
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
 
@@ -2142,13 +2204,13 @@ def check_fee_code_missing_lexi_attribute_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs()
+    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2186,7 +2248,9 @@ def check_fee_code_missing_lexi_attribute_sync_detailed(*, client: StolonClient)
     )
 
 
-def check_fee_code_missing_lexi_attribute_sync(*, client: StolonClient) -> CheckResponse | None:
+def check_fee_code_missing_lexi_attribute_sync(
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
+) -> CheckResponse | None:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
 
@@ -2202,13 +2266,13 @@ def check_fee_code_missing_lexi_attribute_sync(*, client: StolonClient) -> Check
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs()
+    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2232,7 +2296,9 @@ def check_fee_code_missing_lexi_attribute_sync(*, client: StolonClient) -> Check
     return None
 
 
-def check_fee_code_missing_lexi_attribute_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
+def check_fee_code_missing_lexi_attribute_asyncio_detailed(
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
+) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
 
@@ -2248,13 +2314,13 @@ def check_fee_code_missing_lexi_attribute_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         Response[CheckResponse]
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs()
+    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2292,7 +2358,9 @@ def check_fee_code_missing_lexi_attribute_asyncio_detailed(*, client: StolonClie
     )
 
 
-def check_fee_code_missing_lexi_attribute_asyncio(*, client: StolonClient) -> CheckResponse | None:
+def check_fee_code_missing_lexi_attribute_asyncio(
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
+) -> CheckResponse | None:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
 
@@ -2308,13 +2376,13 @@ def check_fee_code_missing_lexi_attribute_asyncio(*, client: StolonClient) -> Ch
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         CheckResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs()
+    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

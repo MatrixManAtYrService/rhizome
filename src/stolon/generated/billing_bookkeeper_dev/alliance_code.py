@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
@@ -19,13 +21,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_invoice_alliance_codes,
     resolve_invoice_alliance_code,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_alliance_code import (
+    ApiInvoiceAllianceCode,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_invoice_alliance_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_invoice_alliance_code_sync_detailed(
+    *, client: StolonClient, body: ApiInvoiceAllianceCode
+) -> Response[ResponseError]:
     """Create invoice alliance codes
 
     Args:
@@ -43,13 +50,13 @@ def create_invoice_alliance_code_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiInvoiceAllianceCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
+    kwargs = create_invoice_alliance_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +94,7 @@ def create_invoice_alliance_code_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_invoice_alliance_code_sync(*, client: StolonClient) -> ResponseError | None:
+def create_invoice_alliance_code_sync(*, client: StolonClient, body: ApiInvoiceAllianceCode) -> ResponseError | None:
     """Create invoice alliance codes
 
     Args:
@@ -105,13 +112,13 @@ def create_invoice_alliance_code_sync(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiInvoiceAllianceCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
+    kwargs = create_invoice_alliance_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +142,9 @@ def create_invoice_alliance_code_sync(*, client: StolonClient) -> ResponseError 
     return None
 
 
-def create_invoice_alliance_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_invoice_alliance_code_asyncio_detailed(
+    *, client: StolonClient, body: ApiInvoiceAllianceCode
+) -> Response[ResponseError]:
     """Create invoice alliance codes
 
     Args:
@@ -153,13 +162,13 @@ def create_invoice_alliance_code_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiInvoiceAllianceCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
+    kwargs = create_invoice_alliance_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -197,7 +206,7 @@ def create_invoice_alliance_code_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_invoice_alliance_code_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_invoice_alliance_code_asyncio(*, client: StolonClient, body: ApiInvoiceAllianceCode) -> ResponseError | None:
     """Create invoice alliance codes
 
     Args:
@@ -215,13 +224,13 @@ def create_invoice_alliance_code_asyncio(*, client: StolonClient) -> ResponseErr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiInvoiceAllianceCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
+    kwargs = create_invoice_alliance_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -465,7 +474,14 @@ def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def get_invoice_alliance_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_invoice_alliance_codes_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    alliance_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get invoice alliance codes
 
     Args:
@@ -486,13 +502,21 @@ def get_invoice_alliance_codes_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        alliance_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs()
+    kwargs = get_invoice_alliance_codes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        alliance_code=alliance_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -530,7 +554,14 @@ def get_invoice_alliance_codes_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_invoice_alliance_codes_sync(*, client: StolonClient) -> ResponseError | None:
+def get_invoice_alliance_codes_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    alliance_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get invoice alliance codes
 
     Args:
@@ -551,13 +582,21 @@ def get_invoice_alliance_codes_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        alliance_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs()
+    kwargs = get_invoice_alliance_codes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        alliance_code=alliance_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -581,7 +620,14 @@ def get_invoice_alliance_codes_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def get_invoice_alliance_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_invoice_alliance_codes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    alliance_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get invoice alliance codes
 
     Args:
@@ -602,13 +648,21 @@ def get_invoice_alliance_codes_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        alliance_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs()
+    kwargs = get_invoice_alliance_codes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        alliance_code=alliance_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -646,7 +700,14 @@ def get_invoice_alliance_codes_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_invoice_alliance_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_invoice_alliance_codes_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    alliance_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get invoice alliance codes
 
     Args:
@@ -667,13 +728,21 @@ def get_invoice_alliance_codes_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        alliance_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs()
+    kwargs = get_invoice_alliance_codes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        alliance_code=alliance_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -698,7 +767,7 @@ def get_invoice_alliance_codes_asyncio(*, client: StolonClient) -> ResponseError
 
 
 def resolve_invoice_alliance_code_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -719,12 +788,13 @@ def resolve_invoice_alliance_code_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -762,7 +832,9 @@ def resolve_invoice_alliance_code_sync_detailed(
     )
 
 
-def resolve_invoice_alliance_code_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def resolve_invoice_alliance_code_sync(
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
     Args:
@@ -782,12 +854,13 @@ def resolve_invoice_alliance_code_sync(*, client: StolonClient, billing_entity_u
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -812,7 +885,7 @@ def resolve_invoice_alliance_code_sync(*, client: StolonClient, billing_entity_u
 
 
 def resolve_invoice_alliance_code_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -833,12 +906,13 @@ def resolve_invoice_alliance_code_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -876,7 +950,9 @@ def resolve_invoice_alliance_code_asyncio_detailed(
     )
 
 
-def resolve_invoice_alliance_code_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def resolve_invoice_alliance_code_asyncio(
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
     Args:
@@ -896,12 +972,13 @@ def resolve_invoice_alliance_code_asyncio(*, client: StolonClient, billing_entit
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

@@ -16,6 +16,9 @@ from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import (
     compute_fee_estimate_for_merchant,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import (
+    ApiBillingEvent,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_estimate import (
     ApiFeeEstimate,
 )
@@ -26,7 +29,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 
 
 def compute_fee_estimate_for_merchant_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiBillingEvent
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -45,13 +48,13 @@ def compute_fee_estimate_for_merchant_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         Response[ApiFeeEstimate | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = compute_fee_estimate_for_merchant._get_kwargs()
+    kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -89,7 +92,9 @@ def compute_fee_estimate_for_merchant_sync_detailed(
     )
 
 
-def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEstimate | ResponseError | None:
+def compute_fee_estimate_for_merchant_sync(
+    *, client: StolonClient, body: ApiBillingEvent
+) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -107,13 +112,13 @@ def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEst
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         ApiFeeEstimate | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = compute_fee_estimate_for_merchant._get_kwargs()
+    kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -131,7 +136,7 @@ def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEst
 
 
 def compute_fee_estimate_for_merchant_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiBillingEvent
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -150,13 +155,13 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         Response[ApiFeeEstimate | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = compute_fee_estimate_for_merchant._get_kwargs()
+    kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -194,7 +199,9 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
     )
 
 
-def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFeeEstimate | ResponseError | None:
+def compute_fee_estimate_for_merchant_asyncio(
+    *, client: StolonClient, body: ApiBillingEvent
+) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -212,13 +219,13 @@ def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFee
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         ApiFeeEstimate | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = compute_fee_estimate_for_merchant._get_kwargs()
+    kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(

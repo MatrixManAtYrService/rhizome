@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
@@ -24,14 +26,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     list_processing_group_dates,
     resolve_processing_group_dates_for_child,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import (
+    ApiProcessingGroupDates,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def resolve_processing_group_dates_for_child_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -53,12 +58,13 @@ def resolve_processing_group_dates_for_child_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -97,7 +103,7 @@ def resolve_processing_group_dates_for_child_sync_detailed(
 
 
 def resolve_processing_group_dates_for_child_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -119,12 +125,13 @@ def resolve_processing_group_dates_for_child_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -149,7 +156,7 @@ def resolve_processing_group_dates_for_child_sync(
 
 
 def resolve_processing_group_dates_for_child_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -171,12 +178,13 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -215,7 +223,7 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
 
 
 def resolve_processing_group_dates_for_child_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -237,12 +245,13 @@ def resolve_processing_group_dates_for_child_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -266,7 +275,14 @@ def resolve_processing_group_dates_for_child_asyncio(
     return None
 
 
-def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def list_processing_group_dates_sync_detailed(
+    *,
+    client: StolonClient,
+    name: Union[Unset, str] = UNSET,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -287,13 +303,18 @@ def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                name: Union[Unset, str]
+        hierarchy_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs()
+    kwargs = list_processing_group_dates._get_kwargs(
+        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -331,7 +352,14 @@ def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def list_processing_group_dates_sync(*, client: StolonClient) -> ResponseError | None:
+def list_processing_group_dates_sync(
+    *,
+    client: StolonClient,
+    name: Union[Unset, str] = UNSET,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -352,13 +380,18 @@ def list_processing_group_dates_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                name: Union[Unset, str]
+        hierarchy_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs()
+    kwargs = list_processing_group_dates._get_kwargs(
+        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -382,7 +415,14 @@ def list_processing_group_dates_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def list_processing_group_dates_asyncio_detailed(
+    *,
+    client: StolonClient,
+    name: Union[Unset, str] = UNSET,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -403,13 +443,18 @@ def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                name: Union[Unset, str]
+        hierarchy_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs()
+    kwargs = list_processing_group_dates._get_kwargs(
+        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -447,7 +492,14 @@ def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def list_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseError | None:
+def list_processing_group_dates_asyncio(
+    *,
+    client: StolonClient,
+    name: Union[Unset, str] = UNSET,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -468,13 +520,18 @@ def list_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                name: Union[Unset, str]
+        hierarchy_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs()
+    kwargs = list_processing_group_dates._get_kwargs(
+        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -718,7 +775,13 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def advance_posting_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_posting_date_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    posting_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -739,12 +802,16 @@ def advance_posting_date_sync_detailed(*, client: StolonClient, billing_entity_u
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        posting_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_posting_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -782,7 +849,13 @@ def advance_posting_date_sync_detailed(*, client: StolonClient, billing_entity_u
     )
 
 
-def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_posting_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    posting_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -803,12 +876,16 @@ def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        posting_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_posting_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -832,7 +909,13 @@ def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     return None
 
 
-def advance_posting_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_posting_date_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    posting_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -853,12 +936,16 @@ def advance_posting_date_asyncio_detailed(*, client: StolonClient, billing_entit
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        posting_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_posting_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -896,7 +983,13 @@ def advance_posting_date_asyncio_detailed(*, client: StolonClient, billing_entit
     )
 
 
-def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_posting_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    posting_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -917,12 +1010,16 @@ def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        posting_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_posting_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -946,7 +1043,13 @@ def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     return None
 
 
-def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    include_name: Union[Unset, bool] = UNSET,
+) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -966,13 +1069,17 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(*, client: S
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: Union[Unset, str]
+        include_name: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1010,7 +1117,13 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(*, client: S
     )
 
 
-def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClient) -> ResponseError | None:
+def get_processing_group_dates_by_billing_entity_uuid_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    include_name: Union[Unset, bool] = UNSET,
+) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1030,13 +1143,17 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: Union[Unset, str]
+        include_name: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1061,7 +1178,11 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClie
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    include_name: Union[Unset, bool] = UNSET,
 ) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
@@ -1082,13 +1203,17 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: Union[Unset, str]
+        include_name: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1126,7 +1251,13 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     )
 
 
-def get_processing_group_dates_by_billing_entity_uuid_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_processing_group_dates_by_billing_entity_uuid_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: Union[Unset, str] = UNSET,
+    include_name: Union[Unset, bool] = UNSET,
+) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1146,13 +1277,17 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: Union[Unset, str]
+        include_name: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1176,7 +1311,9 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(*, client: StolonC
     return None
 
 
-def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_processing_group_dates_sync_detailed(
+    *, client: StolonClient, body: ApiProcessingGroupDates
+) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1194,13 +1331,13 @@ def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiProcessingGroupDates
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs()
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1238,7 +1375,7 @@ def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_processing_group_dates_sync(*, client: StolonClient) -> ResponseError | None:
+def create_processing_group_dates_sync(*, client: StolonClient, body: ApiProcessingGroupDates) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1256,13 +1393,13 @@ def create_processing_group_dates_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiProcessingGroupDates
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs()
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1286,7 +1423,9 @@ def create_processing_group_dates_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_processing_group_dates_asyncio_detailed(
+    *, client: StolonClient, body: ApiProcessingGroupDates
+) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1304,13 +1443,13 @@ def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiProcessingGroupDates
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs()
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1348,7 +1487,9 @@ def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_processing_group_dates_asyncio(
+    *, client: StolonClient, body: ApiProcessingGroupDates
+) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1366,13 +1507,13 @@ def create_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiProcessingGroupDates
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs()
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1396,7 +1537,13 @@ def create_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def advance_billing_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_billing_date_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    billing_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1417,12 +1564,16 @@ def advance_billing_date_sync_detailed(*, client: StolonClient, billing_entity_u
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        billing_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_billing_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1460,7 +1611,13 @@ def advance_billing_date_sync_detailed(*, client: StolonClient, billing_entity_u
     )
 
 
-def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_billing_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    billing_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1481,12 +1638,16 @@ def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        billing_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_billing_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1510,7 +1671,13 @@ def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     return None
 
 
-def advance_billing_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_billing_date_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    billing_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1531,12 +1698,16 @@ def advance_billing_date_asyncio_detailed(*, client: StolonClient, billing_entit
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        billing_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_billing_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1574,7 +1745,13 @@ def advance_billing_date_asyncio_detailed(*, client: StolonClient, billing_entit
     )
 
 
-def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_billing_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    billing_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1595,12 +1772,16 @@ def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        billing_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_billing_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1624,7 +1805,13 @@ def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     return None
 
 
-def advance_settlement_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_settlement_date_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    settlement_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
     Args:
@@ -1645,12 +1832,16 @@ def advance_settlement_date_sync_detailed(*, client: StolonClient, billing_entit
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        settlement_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_settlement_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1688,7 +1879,13 @@ def advance_settlement_date_sync_detailed(*, client: StolonClient, billing_entit
     )
 
 
-def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_settlement_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    settlement_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -1709,12 +1906,16 @@ def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        settlement_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_settlement_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1739,7 +1940,11 @@ def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: s
 
 
 def advance_settlement_date_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    settlement_date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
@@ -1761,12 +1966,16 @@ def advance_settlement_date_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        settlement_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_settlement_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1804,7 +2013,13 @@ def advance_settlement_date_asyncio_detailed(
     )
 
 
-def advance_settlement_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_settlement_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    settlement_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -1825,12 +2040,16 @@ def advance_settlement_date_asyncio(*, client: StolonClient, billing_entity_uuid
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        settlement_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_settlement_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1854,7 +2073,13 @@ def advance_settlement_date_asyncio(*, client: StolonClient, billing_entity_uuid
     return None
 
 
-def advance_cycle_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_cycle_date_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -1875,12 +2100,16 @@ def advance_cycle_date_sync_detailed(*, client: StolonClient, billing_entity_uui
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        cycle_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1918,7 +2147,13 @@ def advance_cycle_date_sync_detailed(*, client: StolonClient, billing_entity_uui
     )
 
 
-def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_cycle_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -1939,12 +2174,16 @@ def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        cycle_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1968,7 +2207,13 @@ def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -
     return None
 
 
-def advance_cycle_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
+def advance_cycle_date_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -1989,12 +2234,16 @@ def advance_cycle_date_asyncio_detailed(*, client: StolonClient, billing_entity_
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        cycle_date: Union[Unset, datetime.date]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2032,7 +2281,13 @@ def advance_cycle_date_asyncio_detailed(*, client: StolonClient, billing_entity_
     )
 
 
-def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def advance_cycle_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    cycle_date: Union[Unset, datetime.date] = UNSET,
+) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -2053,12 +2308,16 @@ def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        cycle_date: Union[Unset, datetime.date]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = advance_cycle_date._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

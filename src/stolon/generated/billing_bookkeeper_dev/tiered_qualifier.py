@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import (
@@ -25,10 +26,10 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_tiered_qualifier_sync_detailed(*, client: StolonClient, body: ApiTieredQualifier) -> Response[ResponseError]:
     """Create tiered qualifier
 
     Args:
@@ -46,13 +47,13 @@ def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredQualifier
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_qualifier._get_kwargs()
+    kwargs = create_tiered_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -90,7 +91,7 @@ def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def create_tiered_qualifier_sync(*, client: StolonClient) -> ResponseError | None:
+def create_tiered_qualifier_sync(*, client: StolonClient, body: ApiTieredQualifier) -> ResponseError | None:
     """Create tiered qualifier
 
     Args:
@@ -108,13 +109,13 @@ def create_tiered_qualifier_sync(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredQualifier
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_qualifier._get_kwargs()
+    kwargs = create_tiered_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -138,7 +139,9 @@ def create_tiered_qualifier_sync(*, client: StolonClient) -> ResponseError | Non
     return None
 
 
-def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_tiered_qualifier_asyncio_detailed(
+    *, client: StolonClient, body: ApiTieredQualifier
+) -> Response[ResponseError]:
     """Create tiered qualifier
 
     Args:
@@ -156,13 +159,13 @@ def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredQualifier
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_qualifier._get_kwargs()
+    kwargs = create_tiered_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -200,7 +203,7 @@ def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_tiered_qualifier_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_tiered_qualifier_asyncio(*, client: StolonClient, body: ApiTieredQualifier) -> ResponseError | None:
     """Create tiered qualifier
 
     Args:
@@ -218,13 +221,13 @@ def create_tiered_qualifier_asyncio(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredQualifier
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_qualifier._get_kwargs()
+    kwargs = create_tiered_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -456,7 +459,13 @@ def delete_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_tiered_rule_qualifiers_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -476,13 +485,15 @@ def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rule_qualifiers._get_kwargs()
+    kwargs = get_tiered_rule_qualifiers._get_kwargs(rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -520,7 +531,13 @@ def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ResponseError | None:
+def get_tiered_rule_qualifiers_sync(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -540,13 +557,15 @@ def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rule_qualifiers._get_kwargs()
+    kwargs = get_tiered_rule_qualifiers._get_kwargs(rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -570,7 +589,13 @@ def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_tiered_rule_qualifiers_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -590,13 +615,15 @@ def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rule_qualifiers._get_kwargs()
+    kwargs = get_tiered_rule_qualifiers._get_kwargs(rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -634,7 +661,13 @@ def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_tiered_rule_qualifiers_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_tiered_rule_qualifiers_asyncio(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -654,13 +687,15 @@ def get_tiered_rule_qualifiers_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rule_qualifiers._get_kwargs()
+    kwargs = get_tiered_rule_qualifiers._get_kwargs(rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

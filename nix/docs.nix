@@ -68,7 +68,7 @@ let
     # Ensure docs directory exists
     mkdir -p docs
 
-    echo '📚 Generating ${constants.name} documentation...'
+    echo '📚 Generating documentation for rhizome, stolon, and trifolium...'
 
     # Store current git status of docs files before generation
     if git ls-files --error-unmatch docs/ >/dev/null 2>&1; then
@@ -77,8 +77,8 @@ let
       git_status_before=""
     fi
 
-    # Generate docs
-    pdoc --output-directory docs ${constants.name}
+    # Generate docs for all three packages
+    pdoc --output-directory docs rhizome stolon trifolium
 
     # Post-process the generated docs to replace template placeholders
     echo '🔄 Post-processing documentation templates...'
@@ -102,13 +102,13 @@ let
       echo "✅ Documentation is up to date"
     fi
 
-    echo "💡 Open docs/${constants.name}.html in your browser to view the documentation"
+    echo "💡 Open docs/rhizome.html, docs/stolon.html, or docs/trifolium.html in your browser to view the documentation"
   '';
 
   # Create a single check that generates docs and detects changes
   pdocCheck = makeCheck {
     name = "pdoc";
-    description = "Generate API documentation for ${constants.name}";
+    description = "Generate API documentation for rhizome, stolon, and trifolium";
     dependencies = with pkgs; [ ];
     command = ''
       nix develop --command bash ${pdocScript}

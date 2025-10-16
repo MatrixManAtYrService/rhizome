@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_rate import (
@@ -19,11 +21,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_fee_descriptions_for_merchant_cellular_plan_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    effective_date: Union[Unset, datetime.date] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    accept_language: Union[Unset, str] = UNSET,
 ) -> Response[ResponseError]:
     """Get fee descriptions for the provided merchants cellular plan
 
@@ -48,12 +57,24 @@ def get_fee_descriptions_for_merchant_cellular_plan_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        effective_date: Union[Unset, datetime.date]
+        currency: Union[Unset, str]
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(uuid=uuid)
+    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(
+        uuid=uuid,
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        effective_date=effective_date,
+        currency=currency,
+        accept_language=accept_language,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +112,16 @@ def get_fee_descriptions_for_merchant_cellular_plan_sync_detailed(
     )
 
 
-def get_fee_descriptions_for_merchant_cellular_plan_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_fee_descriptions_for_merchant_cellular_plan_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    effective_date: Union[Unset, datetime.date] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    accept_language: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get fee descriptions for the provided merchants cellular plan
 
     Args:
@@ -115,12 +145,24 @@ def get_fee_descriptions_for_merchant_cellular_plan_sync(*, client: StolonClient
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        effective_date: Union[Unset, datetime.date]
+        currency: Union[Unset, str]
+        accept_language: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(uuid=uuid)
+    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(
+        uuid=uuid,
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        effective_date=effective_date,
+        currency=currency,
+        accept_language=accept_language,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -145,7 +187,14 @@ def get_fee_descriptions_for_merchant_cellular_plan_sync(*, client: StolonClient
 
 
 def get_fee_descriptions_for_merchant_cellular_plan_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    effective_date: Union[Unset, datetime.date] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    accept_language: Union[Unset, str] = UNSET,
 ) -> Response[ResponseError]:
     """Get fee descriptions for the provided merchants cellular plan
 
@@ -170,12 +219,24 @@ def get_fee_descriptions_for_merchant_cellular_plan_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        effective_date: Union[Unset, datetime.date]
+        currency: Union[Unset, str]
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(uuid=uuid)
+    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(
+        uuid=uuid,
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        effective_date=effective_date,
+        currency=currency,
+        accept_language=accept_language,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -213,7 +274,16 @@ def get_fee_descriptions_for_merchant_cellular_plan_asyncio_detailed(
     )
 
 
-def get_fee_descriptions_for_merchant_cellular_plan_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_fee_descriptions_for_merchant_cellular_plan_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    effective_date: Union[Unset, datetime.date] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    accept_language: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get fee descriptions for the provided merchants cellular plan
 
     Args:
@@ -237,12 +307,24 @@ def get_fee_descriptions_for_merchant_cellular_plan_asyncio(*, client: StolonCli
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        effective_date: Union[Unset, datetime.date]
+        currency: Union[Unset, str]
+        accept_language: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(uuid=uuid)
+    kwargs = get_fee_descriptions_for_merchant_cellular_plan._get_kwargs(
+        uuid=uuid,
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        effective_date=effective_date,
+        currency=currency,
+        accept_language=accept_language,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

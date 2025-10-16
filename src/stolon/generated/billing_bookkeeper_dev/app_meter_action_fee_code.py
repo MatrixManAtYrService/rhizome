@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_fee_code import (
@@ -20,13 +22,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_app_meter_action_fee_codes,
     update_app_meter_action_fee_code,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action_fee_code import (
+    ApiAppMeterActionFeeCode,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_app_meter_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_app_meter_action_fee_code_sync_detailed(
+    *, client: StolonClient, body: ApiAppMeterActionFeeCode
+) -> Response[ResponseError]:
     """Create app metered action fee code mapping
 
     Args:
@@ -44,13 +51,13 @@ def create_app_meter_action_fee_code_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_fee_code._get_kwargs()
+    kwargs = create_app_meter_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -88,7 +95,9 @@ def create_app_meter_action_fee_code_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_app_meter_action_fee_code_sync(*, client: StolonClient) -> ResponseError | None:
+def create_app_meter_action_fee_code_sync(
+    *, client: StolonClient, body: ApiAppMeterActionFeeCode
+) -> ResponseError | None:
     """Create app metered action fee code mapping
 
     Args:
@@ -106,13 +115,13 @@ def create_app_meter_action_fee_code_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_fee_code._get_kwargs()
+    kwargs = create_app_meter_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -136,7 +145,9 @@ def create_app_meter_action_fee_code_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def create_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_app_meter_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, body: ApiAppMeterActionFeeCode
+) -> Response[ResponseError]:
     """Create app metered action fee code mapping
 
     Args:
@@ -154,13 +165,13 @@ def create_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_fee_code._get_kwargs()
+    kwargs = create_app_meter_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -198,7 +209,9 @@ def create_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def create_app_meter_action_fee_code_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_app_meter_action_fee_code_asyncio(
+    *, client: StolonClient, body: ApiAppMeterActionFeeCode
+) -> ResponseError | None:
     """Create app metered action fee code mapping
 
     Args:
@@ -216,13 +229,13 @@ def create_app_meter_action_fee_code_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_fee_code._get_kwargs()
+    kwargs = create_app_meter_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -246,7 +259,9 @@ def create_app_meter_action_fee_code_asyncio(*, client: StolonClient) -> Respons
     return None
 
 
-def update_app_meter_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_app_meter_action_fee_code_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAppMeterActionFeeCode
+) -> Response[ResponseError]:
     """Update app metered action fee code mapping
 
     Args:
@@ -266,12 +281,13 @@ def update_app_meter_action_fee_code_sync_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAppMeterActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -309,7 +325,9 @@ def update_app_meter_action_fee_code_sync_detailed(*, client: StolonClient, uuid
     )
 
 
-def update_app_meter_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_app_meter_action_fee_code_sync(
+    *, client: StolonClient, uuid: str, body: ApiAppMeterActionFeeCode
+) -> ResponseError | None:
     """Update app metered action fee code mapping
 
     Args:
@@ -329,12 +347,13 @@ def update_app_meter_action_fee_code_sync(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAppMeterActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -358,7 +377,9 @@ def update_app_meter_action_fee_code_sync(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def update_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_app_meter_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAppMeterActionFeeCode
+) -> Response[ResponseError]:
     """Update app metered action fee code mapping
 
     Args:
@@ -378,12 +399,13 @@ def update_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient, u
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAppMeterActionFeeCode
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -421,7 +443,9 @@ def update_app_meter_action_fee_code_asyncio_detailed(*, client: StolonClient, u
     )
 
 
-def update_app_meter_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_app_meter_action_fee_code_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiAppMeterActionFeeCode
+) -> ResponseError | None:
     """Update app metered action fee code mapping
 
     Args:
@@ -441,12 +465,13 @@ def update_app_meter_action_fee_code_asyncio(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAppMeterActionFeeCode
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_app_meter_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -694,7 +719,19 @@ def delete_app_meter_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uu
     return None
 
 
-def get_app_meter_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_app_meter_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    app_meter_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get app metered action fee codes
 
     Args:
@@ -720,13 +757,31 @@ def get_app_meter_action_fee_codes_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        plan_uuids: Union[Unset, list[str]]
+        developer_app_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        app_meter_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_fee_codes._get_kwargs()
+    kwargs = get_app_meter_action_fee_codes._get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        developer_app_uuid=developer_app_uuid,
+        app_metered_uuid=app_metered_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        app_meter_action_type=app_meter_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -764,7 +819,19 @@ def get_app_meter_action_fee_codes_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def get_app_meter_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | None:
+def get_app_meter_action_fee_codes_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    app_meter_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get app metered action fee codes
 
     Args:
@@ -790,13 +857,31 @@ def get_app_meter_action_fee_codes_sync(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        plan_uuids: Union[Unset, list[str]]
+        developer_app_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        app_meter_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_fee_codes._get_kwargs()
+    kwargs = get_app_meter_action_fee_codes._get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        developer_app_uuid=developer_app_uuid,
+        app_metered_uuid=app_metered_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        app_meter_action_type=app_meter_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -820,7 +905,19 @@ def get_app_meter_action_fee_codes_sync(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def get_app_meter_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_app_meter_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    app_meter_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get app metered action fee codes
 
     Args:
@@ -846,13 +943,31 @@ def get_app_meter_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        plan_uuids: Union[Unset, list[str]]
+        developer_app_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        app_meter_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_fee_codes._get_kwargs()
+    kwargs = get_app_meter_action_fee_codes._get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        developer_app_uuid=developer_app_uuid,
+        app_metered_uuid=app_metered_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        app_meter_action_type=app_meter_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -890,7 +1005,19 @@ def get_app_meter_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def get_app_meter_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_app_meter_action_fee_codes_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    app_metered_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    app_meter_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get app metered action fee codes
 
     Args:
@@ -916,13 +1043,31 @@ def get_app_meter_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        plan_uuids: Union[Unset, list[str]]
+        developer_app_uuid: Union[Unset, str]
+        app_metered_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        app_meter_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_fee_codes._get_kwargs()
+    kwargs = get_app_meter_action_fee_codes._get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        developer_app_uuid=developer_app_uuid,
+        app_metered_uuid=app_metered_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        app_meter_action_type=app_meter_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

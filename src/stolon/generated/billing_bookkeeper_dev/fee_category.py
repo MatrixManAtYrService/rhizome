@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_category import (
@@ -26,10 +27,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_fee_categories_by_category_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_categories_by_category_sync_detailed(
+    *, client: StolonClient, fee_category: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get fee category(ies) by category value
 
     Args:
@@ -47,13 +50,13 @@ def get_fee_categories_by_category_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_categories_by_category._get_kwargs()
+    kwargs = get_fee_categories_by_category._get_kwargs(fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +94,9 @@ def get_fee_categories_by_category_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def get_fee_categories_by_category_sync(*, client: StolonClient) -> ResponseError | None:
+def get_fee_categories_by_category_sync(
+    *, client: StolonClient, fee_category: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get fee category(ies) by category value
 
     Args:
@@ -109,13 +114,13 @@ def get_fee_categories_by_category_sync(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_categories_by_category._get_kwargs()
+    kwargs = get_fee_categories_by_category._get_kwargs(fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +144,9 @@ def get_fee_categories_by_category_sync(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def get_fee_categories_by_category_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_categories_by_category_asyncio_detailed(
+    *, client: StolonClient, fee_category: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get fee category(ies) by category value
 
     Args:
@@ -157,13 +164,13 @@ def get_fee_categories_by_category_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_categories_by_category._get_kwargs()
+    kwargs = get_fee_categories_by_category._get_kwargs(fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +208,9 @@ def get_fee_categories_by_category_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def get_fee_categories_by_category_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_fee_categories_by_category_asyncio(
+    *, client: StolonClient, fee_category: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get fee category(ies) by category value
 
     Args:
@@ -219,13 +228,13 @@ def get_fee_categories_by_category_asyncio(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_categories_by_category._get_kwargs()
+    kwargs = get_fee_categories_by_category._get_kwargs(fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -459,113 +468,8 @@ def get_fee_category_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiF
     return None
 
 
-def update_fee_category_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCategory | ResponseError]:
-    """Update fee category
-
-    Args:
-        uuid (str):
-        body (ApiFeeCategory):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ApiFeeCategory, ResponseError]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiFeeCategory | ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = update_fee_category._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def update_fee_category_sync(*, client: StolonClient, uuid: str) -> ApiFeeCategory | ResponseError | None:
-    """Update fee category
-
-    Args:
-        uuid (str):
-        body (ApiFeeCategory):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ApiFeeCategory, ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiFeeCategory | ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = update_fee_category._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def update_fee_category_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+def update_fee_category_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiFeeCategory
 ) -> Response[ApiFeeCategory | ResponseError]:
     """Update fee category
 
@@ -586,12 +490,13 @@ def update_fee_category_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCategory
 
     Returns:
         Response[ApiFeeCategory | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_category._get_kwargs(uuid=uuid)
+    kwargs = update_fee_category._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -629,7 +534,9 @@ def update_fee_category_asyncio_detailed(
     )
 
 
-def update_fee_category_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCategory | ResponseError | None:
+def update_fee_category_sync(
+    *, client: StolonClient, uuid: str, body: ApiFeeCategory
+) -> ApiFeeCategory | ResponseError | None:
     """Update fee category
 
     Args:
@@ -649,12 +556,124 @@ def update_fee_category_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCat
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCategory
 
     Returns:
         ApiFeeCategory | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_category._get_kwargs(uuid=uuid)
+    kwargs = update_fee_category._get_kwargs(uuid=uuid, body=body)
+
+    # Proxy request through stolon server
+    client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+def update_fee_category_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiFeeCategory
+) -> Response[ApiFeeCategory | ResponseError]:
+    """Update fee category
+
+    Args:
+        uuid (str):
+        body (ApiFeeCategory):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ApiFeeCategory, ResponseError]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiFeeCategory
+
+    Returns:
+        Response[ApiFeeCategory | ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = update_fee_category._get_kwargs(uuid=uuid, body=body)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def update_fee_category_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiFeeCategory
+) -> ApiFeeCategory | ResponseError | None:
+    """Update fee category
+
+    Args:
+        uuid (str):
+        body (ApiFeeCategory):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiFeeCategory, ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiFeeCategory
+
+    Returns:
+        ApiFeeCategory | ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = update_fee_category._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -877,7 +896,7 @@ def delete_fee_category_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> R
     return None
 
 
-def create_fee_category_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_fee_category_sync_detailed(*, client: StolonClient, body: ApiFeeCategory) -> Response[ResponseError]:
     """Create fee category
 
     Args:
@@ -895,13 +914,13 @@ def create_fee_category_sync_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCategory
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_category._get_kwargs()
+    kwargs = create_fee_category._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -939,7 +958,7 @@ def create_fee_category_sync_detailed(*, client: StolonClient) -> Response[Respo
     )
 
 
-def create_fee_category_sync(*, client: StolonClient) -> ResponseError | None:
+def create_fee_category_sync(*, client: StolonClient, body: ApiFeeCategory) -> ResponseError | None:
     """Create fee category
 
     Args:
@@ -957,13 +976,13 @@ def create_fee_category_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCategory
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_category._get_kwargs()
+    kwargs = create_fee_category._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -987,7 +1006,7 @@ def create_fee_category_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_fee_category_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_fee_category_asyncio_detailed(*, client: StolonClient, body: ApiFeeCategory) -> Response[ResponseError]:
     """Create fee category
 
     Args:
@@ -1005,13 +1024,13 @@ def create_fee_category_asyncio_detailed(*, client: StolonClient) -> Response[Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCategory
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_category._get_kwargs()
+    kwargs = create_fee_category._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1049,7 +1068,7 @@ def create_fee_category_asyncio_detailed(*, client: StolonClient) -> Response[Re
     )
 
 
-def create_fee_category_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_fee_category_asyncio(*, client: StolonClient, body: ApiFeeCategory) -> ResponseError | None:
     """Create fee category
 
     Args:
@@ -1067,13 +1086,13 @@ def create_fee_category_asyncio(*, client: StolonClient) -> ResponseError | None
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCategory
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_category._get_kwargs()
+    kwargs = create_fee_category._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

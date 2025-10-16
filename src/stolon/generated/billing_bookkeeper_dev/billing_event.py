@@ -16,13 +16,16 @@ from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event import (
     post_billing_event,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import (
+    ApiBillingEvent,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_handled_event import (
     ApiHandledEvent,
 )
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def post_billing_event_sync_detailed(*, client: StolonClient) -> Response[ApiHandledEvent]:
+def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEvent) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -40,13 +43,13 @@ def post_billing_event_sync_detailed(*, client: StolonClient) -> Response[ApiHan
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         Response[ApiHandledEvent]
     """
     # Extract request parameters from generated function
-    kwargs = post_billing_event._get_kwargs()
+    kwargs = post_billing_event._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -84,7 +87,7 @@ def post_billing_event_sync_detailed(*, client: StolonClient) -> Response[ApiHan
     )
 
 
-def post_billing_event_sync(*, client: StolonClient) -> ApiHandledEvent | None:
+def post_billing_event_sync(*, client: StolonClient, body: ApiBillingEvent) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -102,13 +105,13 @@ def post_billing_event_sync(*, client: StolonClient) -> ApiHandledEvent | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         ApiHandledEvent | None
     """
     # Extract request parameters from generated function
-    kwargs = post_billing_event._get_kwargs()
+    kwargs = post_billing_event._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -132,7 +135,7 @@ def post_billing_event_sync(*, client: StolonClient) -> ApiHandledEvent | None:
     return None
 
 
-def post_billing_event_asyncio_detailed(*, client: StolonClient) -> Response[ApiHandledEvent]:
+def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillingEvent) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -150,13 +153,13 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         Response[ApiHandledEvent]
     """
     # Extract request parameters from generated function
-    kwargs = post_billing_event._get_kwargs()
+    kwargs = post_billing_event._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -194,7 +197,7 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def post_billing_event_asyncio(*, client: StolonClient) -> ApiHandledEvent | None:
+def post_billing_event_asyncio(*, client: StolonClient, body: ApiBillingEvent) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -212,13 +215,13 @@ def post_billing_event_asyncio(*, client: StolonClient) -> ApiHandledEvent | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEvent
 
     Returns:
         ApiHandledEvent | None
     """
     # Extract request parameters from generated function
-    kwargs = post_billing_event._get_kwargs()
+    kwargs = post_billing_event._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

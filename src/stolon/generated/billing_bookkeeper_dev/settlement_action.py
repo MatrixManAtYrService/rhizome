@@ -25,11 +25,14 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action import (
     ApiSettlementAction,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action_request import (
+    ApiSettlementActionRequest,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def get_reseller_settlement_actions_sync_detailed(
-    *, client: StolonClient, r_id: str
+    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -51,12 +54,16 @@ def get_reseller_settlement_actions_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_settlement_actions._get_kwargs(
+        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -95,7 +102,7 @@ def get_reseller_settlement_actions_sync_detailed(
 
 
 def get_reseller_settlement_actions_sync(
-    *, client: StolonClient, r_id: str
+    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -117,12 +124,16 @@ def get_reseller_settlement_actions_sync(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_settlement_actions._get_kwargs(
+        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -140,7 +151,7 @@ def get_reseller_settlement_actions_sync(
 
 
 def get_reseller_settlement_actions_asyncio_detailed(
-    *, client: StolonClient, r_id: str
+    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -162,12 +173,16 @@ def get_reseller_settlement_actions_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_settlement_actions._get_kwargs(
+        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -206,7 +221,7 @@ def get_reseller_settlement_actions_asyncio_detailed(
 
 
 def get_reseller_settlement_actions_asyncio(
-    *, client: StolonClient, r_id: str
+    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -228,12 +243,16 @@ def get_reseller_settlement_actions_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_settlement_actions._get_kwargs(
+        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -471,7 +490,7 @@ def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
 
 
 def get_settlement_actions_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuid: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -490,13 +509,13 @@ def get_settlement_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: str
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions._get_kwargs()
+    kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -534,7 +553,9 @@ def get_settlement_actions_sync_detailed(
     )
 
 
-def get_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
+def get_settlement_actions_sync(
+    *, client: StolonClient, settlement_uuid: str
+) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
     Args:
@@ -552,13 +573,13 @@ def get_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: str
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions._get_kwargs()
+    kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -576,7 +597,7 @@ def get_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction 
 
 
 def get_settlement_actions_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuid: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -595,13 +616,13 @@ def get_settlement_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: str
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions._get_kwargs()
+    kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -639,7 +660,9 @@ def get_settlement_actions_asyncio_detailed(
     )
 
 
-def get_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
+def get_settlement_actions_asyncio(
+    *, client: StolonClient, settlement_uuid: str
+) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
     Args:
@@ -657,13 +680,13 @@ def get_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementActi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: str
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions._get_kwargs()
+    kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -680,7 +703,9 @@ def get_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementActi
     return None
 
 
-def perform_settlement_actions_sync_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
+def perform_settlement_actions_sync_detailed(
+    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -699,13 +724,14 @@ def perform_settlement_actions_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiSettlementActionRequest"]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_actions._get_kwargs()
+    kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -743,7 +769,9 @@ def perform_settlement_actions_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def perform_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction | None:
+def perform_settlement_actions_sync(
+    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -762,13 +790,14 @@ def perform_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAct
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiSettlementActionRequest"]
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_actions._get_kwargs()
+    kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -792,7 +821,9 @@ def perform_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAct
     return None
 
 
-def perform_settlement_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
+def perform_settlement_actions_asyncio_detailed(
+    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -811,13 +842,14 @@ def perform_settlement_actions_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiSettlementActionRequest"]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_actions._get_kwargs()
+    kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -855,7 +887,9 @@ def perform_settlement_actions_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def perform_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementAction | None:
+def perform_settlement_actions_asyncio(
+    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -874,13 +908,14 @@ def perform_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlement
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiSettlementActionRequest"]
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_actions._get_kwargs()
+    kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -905,7 +940,7 @@ def perform_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlement
 
 
 def get_reseller_settlement_action_by_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -928,12 +963,13 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -972,7 +1008,7 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
 
 
 def get_reseller_settlement_action_by_uuid_sync(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -995,12 +1031,13 @@ def get_reseller_settlement_action_by_uuid_sync(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1025,7 +1062,7 @@ def get_reseller_settlement_action_by_uuid_sync(
 
 
 def get_reseller_settlement_action_by_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -1048,12 +1085,13 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1092,7 +1130,7 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
 
 
 def get_reseller_settlement_action_by_uuid_asyncio(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -1115,12 +1153,13 @@ def get_reseller_settlement_action_by_uuid_asyncio(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1145,7 +1184,7 @@ def get_reseller_settlement_action_by_uuid_asyncio(
 
 
 def get_settlement_actions_by_settlement_uuids_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1164,13 +1203,13 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1209,7 +1248,7 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
 
 
 def get_settlement_actions_by_settlement_uuids_sync(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1228,13 +1267,13 @@ def get_settlement_actions_by_settlement_uuids_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1252,7 +1291,7 @@ def get_settlement_actions_by_settlement_uuids_sync(
 
 
 def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1271,13 +1310,13 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1316,7 +1355,7 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
 
 
 def get_settlement_actions_by_settlement_uuids_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, settlement_uuids: list[str]
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1335,13 +1374,13 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuids: list[str]
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
+    kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1358,7 +1397,9 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
     return None
 
 
-def perform_settlement_action_sync_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
+def perform_settlement_action_sync_detailed(
+    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
     Args:
@@ -1377,13 +1418,14 @@ def perform_settlement_action_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementActionRequest
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_action._get_kwargs()
+    kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1421,7 +1463,9 @@ def perform_settlement_action_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def perform_settlement_action_sync(*, client: StolonClient) -> ApiSettlementAction | None:
+def perform_settlement_action_sync(
+    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+) -> ApiSettlementAction | None:
     """Perform a settlement action
 
     Args:
@@ -1440,13 +1484,14 @@ def perform_settlement_action_sync(*, client: StolonClient) -> ApiSettlementActi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementActionRequest
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_action._get_kwargs()
+    kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1470,7 +1515,9 @@ def perform_settlement_action_sync(*, client: StolonClient) -> ApiSettlementActi
     return None
 
 
-def perform_settlement_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
+def perform_settlement_action_asyncio_detailed(
+    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
     Args:
@@ -1489,13 +1536,14 @@ def perform_settlement_action_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementActionRequest
+        x_clover_appenv: str
 
     Returns:
         Response[ApiSettlementAction]
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_action._get_kwargs()
+    kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1533,7 +1581,9 @@ def perform_settlement_action_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def perform_settlement_action_asyncio(*, client: StolonClient) -> ApiSettlementAction | None:
+def perform_settlement_action_asyncio(
+    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+) -> ApiSettlementAction | None:
     """Perform a settlement action
 
     Args:
@@ -1552,13 +1602,14 @@ def perform_settlement_action_asyncio(*, client: StolonClient) -> ApiSettlementA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementActionRequest
+        x_clover_appenv: str
 
     Returns:
         ApiSettlementAction | None
     """
     # Extract request parameters from generated function
-    kwargs = perform_settlement_action._get_kwargs()
+    kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

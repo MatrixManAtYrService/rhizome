@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import (
@@ -25,10 +26,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_app_meter_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
+def create_app_meter_action_type_sync_detailed(
+    *, client: StolonClient, body: ApiAppMeterActionType
+) -> Response[ApiAppMeterActionType]:
     """Create app metered action type
 
     Args:
@@ -46,13 +49,13 @@ def create_app_meter_action_type_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionType
 
     Returns:
         Response[ApiAppMeterActionType]
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_type._get_kwargs()
+    kwargs = create_app_meter_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -90,7 +93,9 @@ def create_app_meter_action_type_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_app_meter_action_type_sync(*, client: StolonClient) -> ApiAppMeterActionType | None:
+def create_app_meter_action_type_sync(
+    *, client: StolonClient, body: ApiAppMeterActionType
+) -> ApiAppMeterActionType | None:
     """Create app metered action type
 
     Args:
@@ -108,13 +113,13 @@ def create_app_meter_action_type_sync(*, client: StolonClient) -> ApiAppMeterAct
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionType
 
     Returns:
         ApiAppMeterActionType | None
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_type._get_kwargs()
+    kwargs = create_app_meter_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -138,7 +143,9 @@ def create_app_meter_action_type_sync(*, client: StolonClient) -> ApiAppMeterAct
     return None
 
 
-def create_app_meter_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
+def create_app_meter_action_type_asyncio_detailed(
+    *, client: StolonClient, body: ApiAppMeterActionType
+) -> Response[ApiAppMeterActionType]:
     """Create app metered action type
 
     Args:
@@ -156,13 +163,13 @@ def create_app_meter_action_type_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionType
 
     Returns:
         Response[ApiAppMeterActionType]
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_type._get_kwargs()
+    kwargs = create_app_meter_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -200,7 +207,9 @@ def create_app_meter_action_type_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_app_meter_action_type_asyncio(*, client: StolonClient) -> ApiAppMeterActionType | None:
+def create_app_meter_action_type_asyncio(
+    *, client: StolonClient, body: ApiAppMeterActionType
+) -> ApiAppMeterActionType | None:
     """Create app metered action type
 
     Args:
@@ -218,13 +227,13 @@ def create_app_meter_action_type_asyncio(*, client: StolonClient) -> ApiAppMeter
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAppMeterActionType
 
     Returns:
         ApiAppMeterActionType | None
     """
     # Extract request parameters from generated function
-    kwargs = create_app_meter_action_type._get_kwargs()
+    kwargs = create_app_meter_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -472,7 +481,9 @@ def get_app_meter_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def get_app_meter_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
+def get_app_meter_action_types_by_action_type_sync_detailed(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by action type
 
     Args:
@@ -490,13 +501,13 @@ def get_app_meter_action_types_by_action_type_sync_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ApiAppMeterActionType]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_types_by_action_type._get_kwargs()
+    kwargs = get_app_meter_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -534,7 +545,9 @@ def get_app_meter_action_types_by_action_type_sync_detailed(*, client: StolonCli
     )
 
 
-def get_app_meter_action_types_by_action_type_sync(*, client: StolonClient) -> ApiAppMeterActionType | None:
+def get_app_meter_action_types_by_action_type_sync(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ApiAppMeterActionType | None:
     """Get app metered action type by action type
 
     Args:
@@ -552,13 +565,13 @@ def get_app_meter_action_types_by_action_type_sync(*, client: StolonClient) -> A
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ApiAppMeterActionType | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_types_by_action_type._get_kwargs()
+    kwargs = get_app_meter_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -583,7 +596,7 @@ def get_app_meter_action_types_by_action_type_sync(*, client: StolonClient) -> A
 
 
 def get_app_meter_action_types_by_action_type_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
 ) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by action type
 
@@ -602,13 +615,13 @@ def get_app_meter_action_types_by_action_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ApiAppMeterActionType]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_types_by_action_type._get_kwargs()
+    kwargs = get_app_meter_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -646,7 +659,9 @@ def get_app_meter_action_types_by_action_type_asyncio_detailed(
     )
 
 
-def get_app_meter_action_types_by_action_type_asyncio(*, client: StolonClient) -> ApiAppMeterActionType | None:
+def get_app_meter_action_types_by_action_type_asyncio(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ApiAppMeterActionType | None:
     """Get app metered action type by action type
 
     Args:
@@ -664,13 +679,13 @@ def get_app_meter_action_types_by_action_type_asyncio(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ApiAppMeterActionType | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_meter_action_types_by_action_type._get_kwargs()
+    kwargs = get_app_meter_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

@@ -22,7 +22,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def set_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]:
+def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Response[Any]:
     """Args:
         key (str):
         body (str):
@@ -40,12 +40,13 @@ def set_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
     Args:
         client: StolonClient instance for proxying requests
                 key: str
+        body: str
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = set_config._get_kwargs(key=key)
+    kwargs = set_config._get_kwargs(key=key, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -83,7 +84,7 @@ def set_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
     )
 
 
-def set_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[Any]:
+def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) -> Response[Any]:
     """Args:
         key (str):
         body (str):
@@ -101,12 +102,13 @@ def set_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[A
     Args:
         client: StolonClient instance for proxying requests
                 key: str
+        body: str
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = set_config._get_kwargs(key=key)
+    kwargs = set_config._get_kwargs(key=key, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

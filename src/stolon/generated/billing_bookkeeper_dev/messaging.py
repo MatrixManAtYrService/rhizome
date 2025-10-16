@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import (
@@ -34,11 +36,11 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -59,12 +61,13 @@ def acknowledge_consumer_failure_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        comment: Union[Unset, str]
 
     Returns:
         Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -103,7 +106,7 @@ def acknowledge_consumer_failure_sync_detailed(
 
 
 def acknowledge_consumer_failure_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -124,12 +127,13 @@ def acknowledge_consumer_failure_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        comment: Union[Unset, str]
 
     Returns:
         ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -147,7 +151,7 @@ def acknowledge_consumer_failure_sync(
 
 
 def acknowledge_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -168,12 +172,13 @@ def acknowledge_consumer_failure_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        comment: Union[Unset, str]
 
     Returns:
         Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -212,7 +217,7 @@ def acknowledge_consumer_failure_asyncio_detailed(
 
 
 def acknowledge_consumer_failure_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -233,12 +238,13 @@ def acknowledge_consumer_failure_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        comment: Union[Unset, str]
 
     Returns:
         ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -256,7 +262,7 @@ def acknowledge_consumer_failure_asyncio(
 
 
 def retry_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
@@ -277,12 +283,13 @@ def retry_consumer_failure_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiConsumerFailureHistory
 
     Returns:
         Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -321,7 +328,7 @@ def retry_consumer_failure_sync_detailed(
 
 
 def retry_consumer_failure_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
@@ -342,12 +349,13 @@ def retry_consumer_failure_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiConsumerFailureHistory
 
     Returns:
         ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -365,7 +373,7 @@ def retry_consumer_failure_sync(
 
 
 def retry_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
@@ -386,12 +394,13 @@ def retry_consumer_failure_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiConsumerFailureHistory
 
     Returns:
         Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -430,7 +439,7 @@ def retry_consumer_failure_asyncio_detailed(
 
 
 def retry_consumer_failure_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
@@ -451,12 +460,13 @@ def retry_consumer_failure_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiConsumerFailureHistory
 
     Returns:
         ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
+    kwargs = retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -474,7 +484,14 @@ def retry_consumer_failure_asyncio(
 
 
 def get_consumer_failures_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -498,13 +515,25 @@ def get_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailure"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs()
+    kwargs = get_consumer_failures._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -542,7 +571,16 @@ def get_consumer_failures_sync_detailed(
     )
 
 
-def get_consumer_failures_sync(*, client: StolonClient) -> ResponseError | list["ApiConsumerFailure"] | None:
+def get_consumer_failures_sync(
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -565,13 +603,25 @@ def get_consumer_failures_sync(*, client: StolonClient) -> ResponseError | list[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiConsumerFailure"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs()
+    kwargs = get_consumer_failures._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -589,7 +639,14 @@ def get_consumer_failures_sync(*, client: StolonClient) -> ResponseError | list[
 
 
 def get_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -613,13 +670,25 @@ def get_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailure"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs()
+    kwargs = get_consumer_failures._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -657,7 +726,16 @@ def get_consumer_failures_asyncio_detailed(
     )
 
 
-def get_consumer_failures_asyncio(*, client: StolonClient) -> ResponseError | list["ApiConsumerFailure"] | None:
+def get_consumer_failures_asyncio(
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -680,13 +758,25 @@ def get_consumer_failures_asyncio(*, client: StolonClient) -> ResponseError | li
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiConsumerFailure"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs()
+    kwargs = get_consumer_failures._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -916,7 +1006,7 @@ def get_consumer_failure_by_uuid_asyncio(
 
 
 def retry_consumer_failures_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -935,13 +1025,13 @@ def retry_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs()
+    kwargs = retry_consumer_failures._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -980,7 +1070,7 @@ def retry_consumer_failures_sync_detailed(
 
 
 def retry_consumer_failures_sync(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -999,13 +1089,13 @@ def retry_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs()
+    kwargs = retry_consumer_failures._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1023,7 +1113,7 @@ def retry_consumer_failures_sync(
 
 
 def retry_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -1042,13 +1132,13 @@ def retry_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs()
+    kwargs = retry_consumer_failures._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1087,7 +1177,7 @@ def retry_consumer_failures_asyncio_detailed(
 
 
 def retry_consumer_failures_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -1106,13 +1196,13 @@ def retry_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs()
+    kwargs = retry_consumer_failures._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1130,7 +1220,14 @@ def retry_consumer_failures_asyncio(
 
 
 def get_consumer_failure_histories_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1154,13 +1251,25 @@ def get_consumer_failure_histories_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs()
+    kwargs = get_consumer_failure_histories._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1199,7 +1308,14 @@ def get_consumer_failure_histories_sync_detailed(
 
 
 def get_consumer_failure_histories_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1223,13 +1339,25 @@ def get_consumer_failure_histories_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs()
+    kwargs = get_consumer_failure_histories._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1247,7 +1375,14 @@ def get_consumer_failure_histories_sync(
 
 
 def get_consumer_failure_histories_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1271,13 +1406,25 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs()
+    kwargs = get_consumer_failure_histories._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1316,7 +1463,14 @@ def get_consumer_failure_histories_asyncio_detailed(
 
 
 def get_consumer_failure_histories_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    topic: Union[Unset, str] = UNSET,
+    reference_id: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1340,13 +1494,25 @@ def get_consumer_failure_histories_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                topic: Union[Unset, str]
+        reference_id: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs()
+    kwargs = get_consumer_failure_histories._get_kwargs(
+        topic=topic,
+        reference_id=reference_id,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1364,7 +1530,7 @@ def get_consumer_failure_histories_asyncio(
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1384,13 +1550,14 @@ def acknowledge_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        comment: Union[Unset, str]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs()
+    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1429,7 +1596,7 @@ def acknowledge_consumer_failures_sync_detailed(
 
 
 def acknowledge_consumer_failures_sync(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1449,13 +1616,14 @@ def acknowledge_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        comment: Union[Unset, str]
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs()
+    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1473,7 +1641,7 @@ def acknowledge_consumer_failures_sync(
 
 
 def acknowledge_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1493,13 +1661,14 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        comment: Union[Unset, str]
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs()
+    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1538,7 +1707,7 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
 
 def acknowledge_consumer_failures_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1558,13 +1727,14 @@ def acknowledge_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        comment: Union[Unset, str]
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs()
+    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
     # Proxy request through stolon server
     client.proxy_request(

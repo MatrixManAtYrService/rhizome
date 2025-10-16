@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_note import (
@@ -20,7 +21,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_processing_note_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
@@ -243,7 +244,15 @@ def get_processing_note_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> R
     return None
 
 
-def get_processing_notes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_processing_notes_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    request_uuid: Union[Unset, str] = UNSET,
+    note_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -265,13 +274,23 @@ def get_processing_notes_sync_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        request_uuid: Union[Unset, str]
+        note_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_notes._get_kwargs()
+    kwargs = get_processing_notes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        request_uuid=request_uuid,
+        note_code=note_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -309,7 +328,15 @@ def get_processing_notes_sync_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def get_processing_notes_sync(*, client: StolonClient) -> ResponseError | None:
+def get_processing_notes_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    request_uuid: Union[Unset, str] = UNSET,
+    note_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get processing notes using filter parameters
 
     Args:
@@ -331,13 +358,23 @@ def get_processing_notes_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        request_uuid: Union[Unset, str]
+        note_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_notes._get_kwargs()
+    kwargs = get_processing_notes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        request_uuid=request_uuid,
+        note_code=note_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -361,7 +398,15 @@ def get_processing_notes_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_processing_notes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_processing_notes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    request_uuid: Union[Unset, str] = UNSET,
+    note_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -383,13 +428,23 @@ def get_processing_notes_asyncio_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        request_uuid: Union[Unset, str]
+        note_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_notes._get_kwargs()
+    kwargs = get_processing_notes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        request_uuid=request_uuid,
+        note_code=note_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -427,7 +482,15 @@ def get_processing_notes_asyncio_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def get_processing_notes_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_processing_notes_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    request_uuid: Union[Unset, str] = UNSET,
+    note_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get processing notes using filter parameters
 
     Args:
@@ -449,13 +512,23 @@ def get_processing_notes_asyncio(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        request_uuid: Union[Unset, str]
+        note_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_notes._get_kwargs()
+    kwargs = get_processing_notes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        request_uuid=request_uuid,
+        note_code=note_code,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

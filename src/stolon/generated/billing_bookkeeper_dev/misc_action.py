@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import (
@@ -19,13 +21,16 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_misc_actions,
     get_unposted_misc_actions_by_billing_entity,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_action import (
+    ApiMiscAction,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_misc_action_sync_detailed(*, client: StolonClient, body: ApiMiscAction) -> Response[ResponseError]:
     """Create miscellaneous action
 
     Args:
@@ -43,13 +48,13 @@ def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action._get_kwargs()
+    kwargs = create_misc_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +92,7 @@ def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[Respon
     )
 
 
-def create_misc_action_sync(*, client: StolonClient) -> ResponseError | None:
+def create_misc_action_sync(*, client: StolonClient, body: ApiMiscAction) -> ResponseError | None:
     """Create miscellaneous action
 
     Args:
@@ -105,13 +110,13 @@ def create_misc_action_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action._get_kwargs()
+    kwargs = create_misc_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +140,7 @@ def create_misc_action_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_misc_action_asyncio_detailed(*, client: StolonClient, body: ApiMiscAction) -> Response[ResponseError]:
     """Create miscellaneous action
 
     Args:
@@ -153,13 +158,13 @@ def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action._get_kwargs()
+    kwargs = create_misc_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -197,7 +202,7 @@ def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def create_misc_action_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_misc_action_asyncio(*, client: StolonClient, body: ApiMiscAction) -> ResponseError | None:
     """Create miscellaneous action
 
     Args:
@@ -215,13 +220,13 @@ def create_misc_action_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action._get_kwargs()
+    kwargs = create_misc_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -465,7 +470,19 @@ def get_misc_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Respo
     return None
 
 
-def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_actions_sync_detailed(
+    *,
+    client: StolonClient,
+    misc_action_type: Union[Unset, str] = UNSET,
+    misc_specifier: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get miscellaneous actions
 
     Args:
@@ -491,13 +508,31 @@ def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_action_type: Union[Unset, str]
+        misc_specifier: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_actions._get_kwargs()
+    kwargs = get_misc_actions._get_kwargs(
+        misc_action_type=misc_action_type,
+        misc_specifier=misc_specifier,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -535,7 +570,19 @@ def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
 
-def get_misc_actions_sync(*, client: StolonClient) -> ResponseError | None:
+def get_misc_actions_sync(
+    *,
+    client: StolonClient,
+    misc_action_type: Union[Unset, str] = UNSET,
+    misc_specifier: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get miscellaneous actions
 
     Args:
@@ -561,13 +608,31 @@ def get_misc_actions_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_action_type: Union[Unset, str]
+        misc_specifier: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_actions._get_kwargs()
+    kwargs = get_misc_actions._get_kwargs(
+        misc_action_type=misc_action_type,
+        misc_specifier=misc_specifier,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -591,7 +656,19 @@ def get_misc_actions_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_actions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    misc_action_type: Union[Unset, str] = UNSET,
+    misc_specifier: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get miscellaneous actions
 
     Args:
@@ -617,13 +694,31 @@ def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_action_type: Union[Unset, str]
+        misc_specifier: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_actions._get_kwargs()
+    kwargs = get_misc_actions._get_kwargs(
+        misc_action_type=misc_action_type,
+        misc_specifier=misc_specifier,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -661,7 +756,19 @@ def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
 
-def get_misc_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_misc_actions_asyncio(
+    *,
+    client: StolonClient,
+    misc_action_type: Union[Unset, str] = UNSET,
+    misc_specifier: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get miscellaneous actions
 
     Args:
@@ -687,13 +794,31 @@ def get_misc_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_action_type: Union[Unset, str]
+        misc_specifier: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_actions._get_kwargs()
+    kwargs = get_misc_actions._get_kwargs(
+        misc_action_type=misc_action_type,
+        misc_specifier=misc_specifier,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

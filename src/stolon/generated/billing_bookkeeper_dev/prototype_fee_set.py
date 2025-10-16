@@ -27,7 +27,9 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_prototype_fee_set_sync_detailed(*, client: StolonClient) -> Response[ApiPrototypeFeeSet]:
+def create_prototype_fee_set_sync_detailed(
+    *, client: StolonClient, body: ApiPrototypeFeeSet
+) -> Response[ApiPrototypeFeeSet]:
     """Create prototype fee set
 
     Args:
@@ -45,13 +47,13 @@ def create_prototype_fee_set_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPrototypeFeeSet
 
     Returns:
         Response[ApiPrototypeFeeSet]
     """
     # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
+    kwargs = create_prototype_fee_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -89,7 +91,7 @@ def create_prototype_fee_set_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_prototype_fee_set_sync(*, client: StolonClient) -> ApiPrototypeFeeSet | None:
+def create_prototype_fee_set_sync(*, client: StolonClient, body: ApiPrototypeFeeSet) -> ApiPrototypeFeeSet | None:
     """Create prototype fee set
 
     Args:
@@ -107,13 +109,13 @@ def create_prototype_fee_set_sync(*, client: StolonClient) -> ApiPrototypeFeeSet
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPrototypeFeeSet
 
     Returns:
         ApiPrototypeFeeSet | None
     """
     # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
+    kwargs = create_prototype_fee_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -137,7 +139,9 @@ def create_prototype_fee_set_sync(*, client: StolonClient) -> ApiPrototypeFeeSet
     return None
 
 
-def create_prototype_fee_set_asyncio_detailed(*, client: StolonClient) -> Response[ApiPrototypeFeeSet]:
+def create_prototype_fee_set_asyncio_detailed(
+    *, client: StolonClient, body: ApiPrototypeFeeSet
+) -> Response[ApiPrototypeFeeSet]:
     """Create prototype fee set
 
     Args:
@@ -155,13 +159,13 @@ def create_prototype_fee_set_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPrototypeFeeSet
 
     Returns:
         Response[ApiPrototypeFeeSet]
     """
     # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
+    kwargs = create_prototype_fee_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -199,7 +203,7 @@ def create_prototype_fee_set_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_prototype_fee_set_asyncio(*, client: StolonClient) -> ApiPrototypeFeeSet | None:
+def create_prototype_fee_set_asyncio(*, client: StolonClient, body: ApiPrototypeFeeSet) -> ApiPrototypeFeeSet | None:
     """Create prototype fee set
 
     Args:
@@ -217,13 +221,13 @@ def create_prototype_fee_set_asyncio(*, client: StolonClient) -> ApiPrototypeFee
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPrototypeFeeSet
 
     Returns:
         ApiPrototypeFeeSet | None
     """
     # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
+    kwargs = create_prototype_fee_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -247,7 +251,9 @@ def create_prototype_fee_set_asyncio(*, client: StolonClient) -> ApiPrototypeFee
     return None
 
 
-def update_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
+def update_prototype_fee_set_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiPrototypeFeeSet
+) -> Response[ApiPrototypeFeeSet]:
     """Update prototype fee set
 
     Args:
@@ -267,12 +273,13 @@ def update_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPrototypeFeeSet
 
     Returns:
         Response[ApiPrototypeFeeSet]
     """
     # Extract request parameters from generated function
-    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid)
+    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -310,7 +317,9 @@ def update_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
 
-def update_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
+def update_prototype_fee_set_sync(
+    *, client: StolonClient, uuid: str, body: ApiPrototypeFeeSet
+) -> ApiPrototypeFeeSet | None:
     """Update prototype fee set
 
     Args:
@@ -330,12 +339,13 @@ def update_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiProt
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPrototypeFeeSet
 
     Returns:
         ApiPrototypeFeeSet | None
     """
     # Extract request parameters from generated function
-    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid)
+    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -359,7 +369,9 @@ def update_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiProt
     return None
 
 
-def update_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
+def update_prototype_fee_set_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiPrototypeFeeSet
+) -> Response[ApiPrototypeFeeSet]:
     """Update prototype fee set
 
     Args:
@@ -379,12 +391,13 @@ def update_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPrototypeFeeSet
 
     Returns:
         Response[ApiPrototypeFeeSet]
     """
     # Extract request parameters from generated function
-    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid)
+    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -422,7 +435,9 @@ def update_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
 
-def update_prototype_fee_set_asyncio(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
+def update_prototype_fee_set_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiPrototypeFeeSet
+) -> ApiPrototypeFeeSet | None:
     """Update prototype fee set
 
     Args:
@@ -442,12 +457,13 @@ def update_prototype_fee_set_asyncio(*, client: StolonClient, uuid: str) -> ApiP
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPrototypeFeeSet
 
     Returns:
         ApiPrototypeFeeSet | None
     """
     # Extract request parameters from generated function
-    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid)
+    kwargs = update_prototype_fee_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

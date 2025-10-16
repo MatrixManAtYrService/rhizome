@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key_app import (
@@ -27,7 +28,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_ledger_account_key_app_by_uuid_sync_detailed(
@@ -455,7 +456,7 @@ def delete_ledger_account_key_app_by_uuid_asyncio(*, client: StolonClient, uuid:
 
 
 def get_ledger_account_key_app_by_key_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ledger_account_key: str
 ) -> Response[ApiLedgerAccountKeyApp | ResponseError]:
     """Get ledger-account-key-to-app mapping using the ledger account key value
 
@@ -474,13 +475,13 @@ def get_ledger_account_key_app_by_key_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
 
     Returns:
         Response[ApiLedgerAccountKeyApp | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_app_by_key._get_kwargs()
+    kwargs = get_ledger_account_key_app_by_key._get_kwargs(ledger_account_key=ledger_account_key)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -518,7 +519,9 @@ def get_ledger_account_key_app_by_key_sync_detailed(
     )
 
 
-def get_ledger_account_key_app_by_key_sync(*, client: StolonClient) -> ApiLedgerAccountKeyApp | ResponseError | None:
+def get_ledger_account_key_app_by_key_sync(
+    *, client: StolonClient, ledger_account_key: str
+) -> ApiLedgerAccountKeyApp | ResponseError | None:
     """Get ledger-account-key-to-app mapping using the ledger account key value
 
     Args:
@@ -536,13 +539,13 @@ def get_ledger_account_key_app_by_key_sync(*, client: StolonClient) -> ApiLedger
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
 
     Returns:
         ApiLedgerAccountKeyApp | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_app_by_key._get_kwargs()
+    kwargs = get_ledger_account_key_app_by_key._get_kwargs(ledger_account_key=ledger_account_key)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -560,7 +563,7 @@ def get_ledger_account_key_app_by_key_sync(*, client: StolonClient) -> ApiLedger
 
 
 def get_ledger_account_key_app_by_key_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ledger_account_key: str
 ) -> Response[ApiLedgerAccountKeyApp | ResponseError]:
     """Get ledger-account-key-to-app mapping using the ledger account key value
 
@@ -579,13 +582,13 @@ def get_ledger_account_key_app_by_key_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
 
     Returns:
         Response[ApiLedgerAccountKeyApp | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_app_by_key._get_kwargs()
+    kwargs = get_ledger_account_key_app_by_key._get_kwargs(ledger_account_key=ledger_account_key)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -623,7 +626,9 @@ def get_ledger_account_key_app_by_key_asyncio_detailed(
     )
 
 
-def get_ledger_account_key_app_by_key_asyncio(*, client: StolonClient) -> ApiLedgerAccountKeyApp | ResponseError | None:
+def get_ledger_account_key_app_by_key_asyncio(
+    *, client: StolonClient, ledger_account_key: str
+) -> ApiLedgerAccountKeyApp | ResponseError | None:
     """Get ledger-account-key-to-app mapping using the ledger account key value
 
     Args:
@@ -641,13 +646,13 @@ def get_ledger_account_key_app_by_key_asyncio(*, client: StolonClient) -> ApiLed
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
 
     Returns:
         ApiLedgerAccountKeyApp | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_app_by_key._get_kwargs()
+    kwargs = get_ledger_account_key_app_by_key._get_kwargs(ledger_account_key=ledger_account_key)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -665,7 +670,7 @@ def get_ledger_account_key_app_by_key_asyncio(*, client: StolonClient) -> ApiLed
 
 
 def update_ledger_account_key_app_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountKeyApp
 ) -> Response[ApiLedgerAccountKeyApp | ResponseError]:
     """Update ledger-account-key-to-app mapping
 
@@ -686,12 +691,13 @@ def update_ledger_account_key_app_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountKeyApp
 
     Returns:
         Response[ApiLedgerAccountKeyApp | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -730,7 +736,7 @@ def update_ledger_account_key_app_sync_detailed(
 
 
 def update_ledger_account_key_app_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountKeyApp
 ) -> ApiLedgerAccountKeyApp | ResponseError | None:
     """Update ledger-account-key-to-app mapping
 
@@ -751,12 +757,13 @@ def update_ledger_account_key_app_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountKeyApp
 
     Returns:
         ApiLedgerAccountKeyApp | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -774,7 +781,7 @@ def update_ledger_account_key_app_sync(
 
 
 def update_ledger_account_key_app_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountKeyApp
 ) -> Response[ApiLedgerAccountKeyApp | ResponseError]:
     """Update ledger-account-key-to-app mapping
 
@@ -795,12 +802,13 @@ def update_ledger_account_key_app_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountKeyApp
 
     Returns:
         Response[ApiLedgerAccountKeyApp | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -839,7 +847,7 @@ def update_ledger_account_key_app_asyncio_detailed(
 
 
 def update_ledger_account_key_app_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountKeyApp
 ) -> ApiLedgerAccountKeyApp | ResponseError | None:
     """Update ledger-account-key-to-app mapping
 
@@ -860,12 +868,13 @@ def update_ledger_account_key_app_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountKeyApp
 
     Returns:
         ApiLedgerAccountKeyApp | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_key_app._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -882,7 +891,9 @@ def update_ledger_account_key_app_asyncio(
     return None
 
 
-def create_ledger_account_key_app_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_ledger_account_key_app_sync_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountKeyApp
+) -> Response[ResponseError]:
     """Create ledger-account-key-to-app mapping
 
     Args:
@@ -900,13 +911,13 @@ def create_ledger_account_key_app_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyApp
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_app._get_kwargs()
+    kwargs = create_ledger_account_key_app._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -944,7 +955,7 @@ def create_ledger_account_key_app_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_ledger_account_key_app_sync(*, client: StolonClient) -> ResponseError | None:
+def create_ledger_account_key_app_sync(*, client: StolonClient, body: ApiLedgerAccountKeyApp) -> ResponseError | None:
     """Create ledger-account-key-to-app mapping
 
     Args:
@@ -962,13 +973,13 @@ def create_ledger_account_key_app_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyApp
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_app._get_kwargs()
+    kwargs = create_ledger_account_key_app._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -992,7 +1003,9 @@ def create_ledger_account_key_app_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def create_ledger_account_key_app_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_ledger_account_key_app_asyncio_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountKeyApp
+) -> Response[ResponseError]:
     """Create ledger-account-key-to-app mapping
 
     Args:
@@ -1010,13 +1023,13 @@ def create_ledger_account_key_app_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyApp
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_app._get_kwargs()
+    kwargs = create_ledger_account_key_app._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1054,7 +1067,9 @@ def create_ledger_account_key_app_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_ledger_account_key_app_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_ledger_account_key_app_asyncio(
+    *, client: StolonClient, body: ApiLedgerAccountKeyApp
+) -> ResponseError | None:
     """Create ledger-account-key-to-app mapping
 
     Args:
@@ -1072,13 +1087,13 @@ def create_ledger_account_key_app_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyApp
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_app._get_kwargs()
+    kwargs = create_ledger_account_key_app._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1102,7 +1117,15 @@ def create_ledger_account_key_app_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def list_ledger_account_key_apps_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def list_ledger_account_key_apps_sync_detailed(
+    *,
+    client: StolonClient,
+    partial_key: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Lists ledger-account-key-to-app mappings
 
     Args:
@@ -1124,13 +1147,23 @@ def list_ledger_account_key_apps_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_key: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = list_ledger_account_key_apps._get_kwargs()
+    kwargs = list_ledger_account_key_apps._get_kwargs(
+        partial_key=partial_key,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1168,7 +1201,15 @@ def list_ledger_account_key_apps_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def list_ledger_account_key_apps_sync(*, client: StolonClient) -> ResponseError | None:
+def list_ledger_account_key_apps_sync(
+    *,
+    client: StolonClient,
+    partial_key: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Lists ledger-account-key-to-app mappings
 
     Args:
@@ -1190,13 +1231,23 @@ def list_ledger_account_key_apps_sync(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_key: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = list_ledger_account_key_apps._get_kwargs()
+    kwargs = list_ledger_account_key_apps._get_kwargs(
+        partial_key=partial_key,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1220,7 +1271,15 @@ def list_ledger_account_key_apps_sync(*, client: StolonClient) -> ResponseError 
     return None
 
 
-def list_ledger_account_key_apps_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def list_ledger_account_key_apps_asyncio_detailed(
+    *,
+    client: StolonClient,
+    partial_key: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Lists ledger-account-key-to-app mappings
 
     Args:
@@ -1242,13 +1301,23 @@ def list_ledger_account_key_apps_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_key: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = list_ledger_account_key_apps._get_kwargs()
+    kwargs = list_ledger_account_key_apps._get_kwargs(
+        partial_key=partial_key,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1286,7 +1355,15 @@ def list_ledger_account_key_apps_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def list_ledger_account_key_apps_asyncio(*, client: StolonClient) -> ResponseError | None:
+def list_ledger_account_key_apps_asyncio(
+    *,
+    client: StolonClient,
+    partial_key: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Lists ledger-account-key-to-app mappings
 
     Args:
@@ -1308,13 +1385,23 @@ def list_ledger_account_key_apps_asyncio(*, client: StolonClient) -> ResponseErr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_key: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = list_ledger_account_key_apps._get_kwargs()
+    kwargs = list_ledger_account_key_apps._get_kwargs(
+        partial_key=partial_key,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import (
@@ -26,10 +27,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
+def create_auto_adjust_advice_sync_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustAdvice
+) -> Response[ApiAutoAdjustAdvice]:
     """Create auto-adjust advice
 
     Args:
@@ -47,13 +50,13 @@ def create_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustAdvice
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_advice._get_kwargs()
+    kwargs = create_auto_adjust_advice._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +94,7 @@ def create_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def create_auto_adjust_advice_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
+def create_auto_adjust_advice_sync(*, client: StolonClient, body: ApiAutoAdjustAdvice) -> ApiAutoAdjustAdvice | None:
     """Create auto-adjust advice
 
     Args:
@@ -109,13 +112,13 @@ def create_auto_adjust_advice_sync(*, client: StolonClient) -> ApiAutoAdjustAdvi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustAdvice
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_advice._get_kwargs()
+    kwargs = create_auto_adjust_advice._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +142,9 @@ def create_auto_adjust_advice_sync(*, client: StolonClient) -> ApiAutoAdjustAdvi
     return None
 
 
-def create_auto_adjust_advice_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
+def create_auto_adjust_advice_asyncio_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustAdvice
+) -> Response[ApiAutoAdjustAdvice]:
     """Create auto-adjust advice
 
     Args:
@@ -157,13 +162,13 @@ def create_auto_adjust_advice_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustAdvice
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_advice._get_kwargs()
+    kwargs = create_auto_adjust_advice._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +206,7 @@ def create_auto_adjust_advice_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
+def create_auto_adjust_advice_asyncio(*, client: StolonClient, body: ApiAutoAdjustAdvice) -> ApiAutoAdjustAdvice | None:
     """Create auto-adjust advice
 
     Args:
@@ -219,13 +224,13 @@ def create_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiAutoAdjustA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustAdvice
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_advice._get_kwargs()
+    kwargs = create_auto_adjust_advice._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -249,7 +254,15 @@ def create_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiAutoAdjustA
     return None
 
 
-def get_auto_adjust_advices_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
+def get_auto_adjust_advices_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    is_active: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advices
 
     Args:
@@ -271,13 +284,23 @@ def get_auto_adjust_advices_sync_detailed(*, client: StolonClient) -> Response[A
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        is_active: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_advices._get_kwargs()
+    kwargs = get_auto_adjust_advices._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        is_active=is_active,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -315,7 +338,15 @@ def get_auto_adjust_advices_sync_detailed(*, client: StolonClient) -> Response[A
     )
 
 
-def get_auto_adjust_advices_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advices_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    is_active: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advices
 
     Args:
@@ -337,13 +368,23 @@ def get_auto_adjust_advices_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        is_active: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_advices._get_kwargs()
+    kwargs = get_auto_adjust_advices._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        is_active=is_active,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -367,7 +408,15 @@ def get_auto_adjust_advices_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice
     return None
 
 
-def get_auto_adjust_advices_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
+def get_auto_adjust_advices_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    is_active: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advices
 
     Args:
@@ -389,13 +438,23 @@ def get_auto_adjust_advices_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        is_active: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_advices._get_kwargs()
+    kwargs = get_auto_adjust_advices._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        is_active=is_active,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -433,7 +492,15 @@ def get_auto_adjust_advices_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_auto_adjust_advices_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advices_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    is_active: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advices
 
     Args:
@@ -455,13 +522,23 @@ def get_auto_adjust_advices_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdv
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        is_active: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_advices._get_kwargs()
+    kwargs = get_auto_adjust_advices._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        rule_uuid=rule_uuid,
+        is_active=is_active,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -485,7 +562,9 @@ def get_auto_adjust_advices_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdv
     return None
 
 
-def update_auto_adjust_advice_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAutoAdjustAdvice]:
+def update_auto_adjust_advice_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustAdvice
+) -> Response[ApiAutoAdjustAdvice]:
     """Update auto-adjust advice
 
     Args:
@@ -505,12 +584,13 @@ def update_auto_adjust_advice_sync_detailed(*, client: StolonClient, uuid: str) 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustAdvice
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -548,7 +628,9 @@ def update_auto_adjust_advice_sync_detailed(*, client: StolonClient, uuid: str) 
     )
 
 
-def update_auto_adjust_advice_sync(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
+def update_auto_adjust_advice_sync(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustAdvice
+) -> ApiAutoAdjustAdvice | None:
     """Update auto-adjust advice
 
     Args:
@@ -568,12 +650,13 @@ def update_auto_adjust_advice_sync(*, client: StolonClient, uuid: str) -> ApiAut
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustAdvice
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -597,7 +680,9 @@ def update_auto_adjust_advice_sync(*, client: StolonClient, uuid: str) -> ApiAut
     return None
 
 
-def update_auto_adjust_advice_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAutoAdjustAdvice]:
+def update_auto_adjust_advice_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustAdvice
+) -> Response[ApiAutoAdjustAdvice]:
     """Update auto-adjust advice
 
     Args:
@@ -617,12 +702,13 @@ def update_auto_adjust_advice_asyncio_detailed(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustAdvice
 
     Returns:
         Response[ApiAutoAdjustAdvice]
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -660,7 +746,9 @@ def update_auto_adjust_advice_asyncio_detailed(*, client: StolonClient, uuid: st
     )
 
 
-def update_auto_adjust_advice_asyncio(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
+def update_auto_adjust_advice_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiAutoAdjustAdvice
+) -> ApiAutoAdjustAdvice | None:
     """Update auto-adjust advice
 
     Args:
@@ -680,12 +768,13 @@ def update_auto_adjust_advice_asyncio(*, client: StolonClient, uuid: str) -> Api
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiAutoAdjustAdvice
 
     Returns:
         ApiAutoAdjustAdvice | None
     """
     # Extract request parameters from generated function
-    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid)
+    kwargs = update_auto_adjust_advice._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

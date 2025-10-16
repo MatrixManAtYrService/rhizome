@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key_purpose import (
@@ -25,7 +26,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def delete_ledger_account_key_purpose_by_uuid_sync_detailed(
@@ -467,7 +468,12 @@ def get_ledger_account_key_purpose_by_uuid_asyncio(
 
 
 def get_ledger_account_key_purposes_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    purpose: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"]]:
     """Get ledger account key purposes using the purpose value
 
@@ -489,13 +495,18 @@ def get_ledger_account_key_purposes_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                purpose: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_purposes._get_kwargs()
+    kwargs = get_ledger_account_key_purposes._get_kwargs(
+        purpose=purpose, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -534,7 +545,12 @@ def get_ledger_account_key_purposes_sync_detailed(
 
 
 def get_ledger_account_key_purposes_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    purpose: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"] | None:
     """Get ledger account key purposes using the purpose value
 
@@ -556,13 +572,18 @@ def get_ledger_account_key_purposes_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                purpose: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_purposes._get_kwargs()
+    kwargs = get_ledger_account_key_purposes._get_kwargs(
+        purpose=purpose, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -580,7 +601,12 @@ def get_ledger_account_key_purposes_sync(
 
 
 def get_ledger_account_key_purposes_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    purpose: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"]]:
     """Get ledger account key purposes using the purpose value
 
@@ -602,13 +628,18 @@ def get_ledger_account_key_purposes_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                purpose: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_purposes._get_kwargs()
+    kwargs = get_ledger_account_key_purposes._get_kwargs(
+        purpose=purpose, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -647,7 +678,12 @@ def get_ledger_account_key_purposes_asyncio_detailed(
 
 
 def get_ledger_account_key_purposes_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    purpose: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"] | None:
     """Get ledger account key purposes using the purpose value
 
@@ -669,13 +705,18 @@ def get_ledger_account_key_purposes_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                purpose: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountKeyPurpose | list["ApiLedgerAccountKeyPurpose"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_purposes._get_kwargs()
+    kwargs = get_ledger_account_key_purposes._get_kwargs(
+        purpose=purpose, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -692,7 +733,9 @@ def get_ledger_account_key_purposes_asyncio(
     return None
 
 
-def create_ledger_account_key_purpose_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKeyPurpose]:
+def create_ledger_account_key_purpose_sync_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountKeyPurpose
+) -> Response[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -710,13 +753,13 @@ def create_ledger_account_key_purpose_sync_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyPurpose
 
     Returns:
         Response[ApiLedgerAccountKeyPurpose]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_purpose._get_kwargs()
+    kwargs = create_ledger_account_key_purpose._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -754,7 +797,9 @@ def create_ledger_account_key_purpose_sync_detailed(*, client: StolonClient) -> 
     )
 
 
-def create_ledger_account_key_purpose_sync(*, client: StolonClient) -> ApiLedgerAccountKeyPurpose | None:
+def create_ledger_account_key_purpose_sync(
+    *, client: StolonClient, body: ApiLedgerAccountKeyPurpose
+) -> ApiLedgerAccountKeyPurpose | None:
     """Create ledger account key purpose
 
     Args:
@@ -772,13 +817,13 @@ def create_ledger_account_key_purpose_sync(*, client: StolonClient) -> ApiLedger
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyPurpose
 
     Returns:
         ApiLedgerAccountKeyPurpose | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_purpose._get_kwargs()
+    kwargs = create_ledger_account_key_purpose._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -802,7 +847,9 @@ def create_ledger_account_key_purpose_sync(*, client: StolonClient) -> ApiLedger
     return None
 
 
-def create_ledger_account_key_purpose_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKeyPurpose]:
+def create_ledger_account_key_purpose_asyncio_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountKeyPurpose
+) -> Response[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -820,13 +867,13 @@ def create_ledger_account_key_purpose_asyncio_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyPurpose
 
     Returns:
         Response[ApiLedgerAccountKeyPurpose]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_purpose._get_kwargs()
+    kwargs = create_ledger_account_key_purpose._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -864,7 +911,9 @@ def create_ledger_account_key_purpose_asyncio_detailed(*, client: StolonClient) 
     )
 
 
-def create_ledger_account_key_purpose_asyncio(*, client: StolonClient) -> ApiLedgerAccountKeyPurpose | None:
+def create_ledger_account_key_purpose_asyncio(
+    *, client: StolonClient, body: ApiLedgerAccountKeyPurpose
+) -> ApiLedgerAccountKeyPurpose | None:
     """Create ledger account key purpose
 
     Args:
@@ -882,13 +931,13 @@ def create_ledger_account_key_purpose_asyncio(*, client: StolonClient) -> ApiLed
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountKeyPurpose
 
     Returns:
         ApiLedgerAccountKeyPurpose | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_key_purpose._get_kwargs()
+    kwargs = create_ledger_account_key_purpose._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

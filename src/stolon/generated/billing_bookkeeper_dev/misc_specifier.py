@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import (
@@ -19,13 +20,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_misc_specifier_by_uuid,
     get_misc_specifiers_by_specifier,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_specifier import (
+    ApiMiscSpecifier,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_misc_specifiers_by_specifier_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_specifiers_by_specifier_sync_detailed(
+    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
     Args:
@@ -43,13 +49,13 @@ def get_misc_specifiers_by_specifier_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_specifier: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_specifiers_by_specifier._get_kwargs()
+    kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +93,9 @@ def get_misc_specifiers_by_specifier_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def get_misc_specifiers_by_specifier_sync(*, client: StolonClient) -> ResponseError | None:
+def get_misc_specifiers_by_specifier_sync(
+    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
     Args:
@@ -105,13 +113,13 @@ def get_misc_specifiers_by_specifier_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_specifier: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_specifiers_by_specifier._get_kwargs()
+    kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +143,9 @@ def get_misc_specifiers_by_specifier_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def get_misc_specifiers_by_specifier_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_specifiers_by_specifier_asyncio_detailed(
+    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
     Args:
@@ -153,13 +163,13 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_specifier: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_specifiers_by_specifier._get_kwargs()
+    kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -197,7 +207,9 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def get_misc_specifiers_by_specifier_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_misc_specifiers_by_specifier_asyncio(
+    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
     Args:
@@ -215,13 +227,13 @@ def get_misc_specifiers_by_specifier_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                misc_specifier: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_specifiers_by_specifier._get_kwargs()
+    kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -465,7 +477,7 @@ def get_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def create_misc_specifier_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSpecifier) -> Response[ResponseError]:
     """Create miscellaneous specifier
 
     Args:
@@ -483,13 +495,13 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscSpecifier
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_specifier._get_kwargs()
+    kwargs = create_misc_specifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -527,7 +539,7 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def create_misc_specifier_sync(*, client: StolonClient) -> ResponseError | None:
+def create_misc_specifier_sync(*, client: StolonClient, body: ApiMiscSpecifier) -> ResponseError | None:
     """Create miscellaneous specifier
 
     Args:
@@ -545,13 +557,13 @@ def create_misc_specifier_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscSpecifier
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_specifier._get_kwargs()
+    kwargs = create_misc_specifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -575,7 +587,7 @@ def create_misc_specifier_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_misc_specifier_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMiscSpecifier) -> Response[ResponseError]:
     """Create miscellaneous specifier
 
     Args:
@@ -593,13 +605,13 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscSpecifier
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_specifier._get_kwargs()
+    kwargs = create_misc_specifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -637,7 +649,7 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_misc_specifier_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_misc_specifier_asyncio(*, client: StolonClient, body: ApiMiscSpecifier) -> ResponseError | None:
     """Create miscellaneous specifier
 
     Args:
@@ -655,13 +667,13 @@ def create_misc_specifier_asyncio(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscSpecifier
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_specifier._get_kwargs()
+    kwargs = create_misc_specifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

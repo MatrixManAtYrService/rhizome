@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import (
@@ -22,13 +24,31 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_resellers_adjust_action_by_uuid,
     get_unposted_adjust_actions_by_billing_entity,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_action import (
+    ApiAdjustAction,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_adjust_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_actions_sync_detailed(
+    *,
+    client: StolonClient,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get adjustment actions
 
     Args:
@@ -57,13 +77,37 @@ def get_adjust_actions_sync_detailed(*, client: StolonClient) -> Response[Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs()
+    kwargs = get_adjust_actions._get_kwargs(
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -101,7 +145,22 @@ def get_adjust_actions_sync_detailed(*, client: StolonClient) -> Response[Respon
     )
 
 
-def get_adjust_actions_sync(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_actions_sync(
+    *,
+    client: StolonClient,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get adjustment actions
 
     Args:
@@ -130,13 +189,37 @@ def get_adjust_actions_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs()
+    kwargs = get_adjust_actions._get_kwargs(
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -160,7 +243,22 @@ def get_adjust_actions_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_adjust_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_adjust_actions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get adjustment actions
 
     Args:
@@ -189,13 +287,37 @@ def get_adjust_actions_asyncio_detailed(*, client: StolonClient) -> Response[Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs()
+    kwargs = get_adjust_actions._get_kwargs(
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -233,7 +355,22 @@ def get_adjust_actions_asyncio_detailed(*, client: StolonClient) -> Response[Res
     )
 
 
-def get_adjust_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_adjust_actions_asyncio(
+    *,
+    client: StolonClient,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get adjustment actions
 
     Args:
@@ -262,13 +399,37 @@ def get_adjust_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs()
+    kwargs = get_adjust_actions._get_kwargs(
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -293,7 +454,7 @@ def get_adjust_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -316,13 +477,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         billing_entity_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -362,7 +524,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -385,13 +547,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
         client: StolonClient instance for proxying requests
                 r_id: str
         billing_entity_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -417,7 +580,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -440,13 +603,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         billing_entity_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -486,7 +650,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -509,13 +673,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
         client: StolonClient instance for proxying requests
                 r_id: str
         billing_entity_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -540,7 +705,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     return None
 
 
-def create_adjust_action_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustAction) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -558,13 +723,13 @@ def create_adjust_action_sync_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action._get_kwargs()
+    kwargs = create_adjust_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -602,7 +767,7 @@ def create_adjust_action_sync_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def create_adjust_action_sync(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_action_sync(*, client: StolonClient, body: ApiAdjustAction) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -620,13 +785,13 @@ def create_adjust_action_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action._get_kwargs()
+    kwargs = create_adjust_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -650,7 +815,7 @@ def create_adjust_action_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_adjust_action_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdjustAction) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -668,13 +833,13 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action._get_kwargs()
+    kwargs = create_adjust_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -712,7 +877,7 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def create_adjust_action_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_adjust_action_asyncio(*, client: StolonClient, body: ApiAdjustAction) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -730,13 +895,13 @@ def create_adjust_action_asyncio(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAdjustAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_adjust_action._get_kwargs()
+    kwargs = create_adjust_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1208,7 +1373,24 @@ def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Res
     return None
 
 
-def get_reseller_adjust_actions_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_reseller_adjust_actions_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
     Args:
@@ -1240,12 +1422,40 @@ def get_reseller_adjust_actions_sync_detailed(*, client: StolonClient, r_id: str
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_adjust_actions._get_kwargs(
+        r_id=r_id,
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1283,7 +1493,24 @@ def get_reseller_adjust_actions_sync_detailed(*, client: StolonClient, r_id: str
     )
 
 
-def get_reseller_adjust_actions_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_reseller_adjust_actions_sync(
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get adjustment actions for resellers
 
     Args:
@@ -1315,12 +1542,40 @@ def get_reseller_adjust_actions_sync(*, client: StolonClient, r_id: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_adjust_actions._get_kwargs(
+        r_id=r_id,
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1344,7 +1599,24 @@ def get_reseller_adjust_actions_sync(*, client: StolonClient, r_id: str) -> Resp
     return None
 
 
-def get_reseller_adjust_actions_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_reseller_adjust_actions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
     Args:
@@ -1376,12 +1648,40 @@ def get_reseller_adjust_actions_asyncio_detailed(*, client: StolonClient, r_id: 
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_adjust_actions._get_kwargs(
+        r_id=r_id,
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1419,7 +1719,24 @@ def get_reseller_adjust_actions_asyncio_detailed(*, client: StolonClient, r_id: 
     )
 
 
-def get_reseller_adjust_actions_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_reseller_adjust_actions_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_reason: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    adjust_action_type: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get adjustment actions for resellers
 
     Args:
@@ -1451,12 +1768,40 @@ def get_reseller_adjust_actions_asyncio(*, client: StolonClient, r_id: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        settlement_uuid: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        adjust_reason: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        adjust_action_type: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_adjust_actions._get_kwargs(
+        r_id=r_id,
+        settlement_uuid=settlement_uuid,
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_reason=adjust_reason,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+        adjust_action_type=adjust_action_type,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1481,7 +1826,7 @@ def get_reseller_adjust_actions_asyncio(*, client: StolonClient, r_id: str) -> R
 
 
 def get_resellers_adjust_action_by_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1504,12 +1849,13 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1547,7 +1893,9 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
     )
 
 
-def get_resellers_adjust_action_by_uuid_sync(*, client: StolonClient, r_id: str, uuid: str) -> ResponseError | None:
+def get_resellers_adjust_action_by_uuid_sync(
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
     Args:
@@ -1569,12 +1917,13 @@ def get_resellers_adjust_action_by_uuid_sync(*, client: StolonClient, r_id: str,
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1599,7 +1948,7 @@ def get_resellers_adjust_action_by_uuid_sync(*, client: StolonClient, r_id: str,
 
 
 def get_resellers_adjust_action_by_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1622,12 +1971,13 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1665,7 +2015,9 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
     )
 
 
-def get_resellers_adjust_action_by_uuid_asyncio(*, client: StolonClient, r_id: str, uuid: str) -> ResponseError | None:
+def get_resellers_adjust_action_by_uuid_asyncio(
+    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
     Args:
@@ -1687,12 +2039,13 @@ def get_resellers_adjust_action_by_uuid_asyncio(*, client: StolonClient, r_id: s
         client: StolonClient instance for proxying requests
                 r_id: str
         uuid: str
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid)
+    kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

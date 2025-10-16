@@ -78,6 +78,7 @@ let
       echo "Trimming trailing whitespace..."
       find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.nix" -o -name "*.md" \) \
         -not -path "./.*" -not -path "./result*" -not -path "./build*" -not -path "./dist*" \
+        -not -path "./src/stolon/openapi_generated/*" -not -path "./src/stolon/generated/*" \
         -exec sed -i 's/[[:space:]]*$//' {} \;
       echo "Whitespace trimming complete."
     '';
@@ -85,6 +86,7 @@ let
       echo "Trimming trailing whitespace with verbose output..."
       find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.nix" -o -name "*.md" \) \
         -not -path "./.*" -not -path "./result*" -not -path "./build*" -not -path "./dist*" \
+        -not -path "./src/stolon/openapi_generated/*" -not -path "./src/stolon/generated/*" \
         -print -exec sed -i 's/[[:space:]]*$//' {} \;
       echo "Whitespace trimming complete."
     '';

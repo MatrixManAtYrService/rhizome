@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_adjustment import (
@@ -23,7 +24,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_monetary_adjustment_by_uuid_sync_detailed(
@@ -240,7 +241,16 @@ def get_monetary_adjustment_by_uuid_asyncio(
     return None
 
 
-def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_adjustments_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_fee_summary_uuid: Union[Unset, str] = UNSET,
+    qualified_fee_summary_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary adjustments
 
     Args:
@@ -263,13 +273,25 @@ def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        adjust_fee_summary_uuid: Union[Unset, str]
+        qualified_fee_summary_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_adjustments._get_kwargs()
+    kwargs = get_monetary_adjustments._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_fee_summary_uuid=adjust_fee_summary_uuid,
+        qualified_fee_summary_uuid=qualified_fee_summary_uuid,
+        rule_uuid=rule_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -307,7 +329,16 @@ def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def get_monetary_adjustments_sync(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_adjustments_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_fee_summary_uuid: Union[Unset, str] = UNSET,
+    qualified_fee_summary_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary adjustments
 
     Args:
@@ -330,13 +361,25 @@ def get_monetary_adjustments_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        adjust_fee_summary_uuid: Union[Unset, str]
+        qualified_fee_summary_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_adjustments._get_kwargs()
+    kwargs = get_monetary_adjustments._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_fee_summary_uuid=adjust_fee_summary_uuid,
+        qualified_fee_summary_uuid=qualified_fee_summary_uuid,
+        rule_uuid=rule_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -360,7 +403,16 @@ def get_monetary_adjustments_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_adjustments_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_fee_summary_uuid: Union[Unset, str] = UNSET,
+    qualified_fee_summary_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary adjustments
 
     Args:
@@ -383,13 +435,25 @@ def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        adjust_fee_summary_uuid: Union[Unset, str]
+        qualified_fee_summary_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_adjustments._get_kwargs()
+    kwargs = get_monetary_adjustments._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_fee_summary_uuid=adjust_fee_summary_uuid,
+        qualified_fee_summary_uuid=qualified_fee_summary_uuid,
+        rule_uuid=rule_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -427,7 +491,16 @@ def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def get_monetary_adjustments_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_adjustments_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    adjust_fee_summary_uuid: Union[Unset, str] = UNSET,
+    qualified_fee_summary_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary adjustments
 
     Args:
@@ -450,13 +523,25 @@ def get_monetary_adjustments_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        adjust_fee_summary_uuid: Union[Unset, str]
+        qualified_fee_summary_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_adjustments._get_kwargs()
+    kwargs = get_monetary_adjustments._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        adjust_fee_summary_uuid=adjust_fee_summary_uuid,
+        qualified_fee_summary_uuid=qualified_fee_summary_uuid,
+        rule_uuid=rule_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

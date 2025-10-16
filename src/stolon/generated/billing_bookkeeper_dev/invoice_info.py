@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import (
@@ -27,11 +29,20 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_info_extended import (
     ApiInvoiceInfoExtended,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_reseller_invoice_infos_sync_detailed(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for reseller
 
@@ -58,12 +69,28 @@ def get_reseller_invoice_infos_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_invoice_infos._get_kwargs(
+        r_id=r_id,
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -102,7 +129,16 @@ def get_reseller_invoice_infos_sync_detailed(
 
 
 def get_reseller_invoice_infos_sync(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for reseller
 
@@ -129,12 +165,28 @@ def get_reseller_invoice_infos_sync(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_invoice_infos._get_kwargs(
+        r_id=r_id,
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -152,7 +204,16 @@ def get_reseller_invoice_infos_sync(
 
 
 def get_reseller_invoice_infos_asyncio_detailed(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for reseller
 
@@ -179,12 +240,28 @@ def get_reseller_invoice_infos_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_invoice_infos._get_kwargs(
+        r_id=r_id,
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -223,7 +300,16 @@ def get_reseller_invoice_infos_asyncio_detailed(
 
 
 def get_reseller_invoice_infos_asyncio(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for reseller
 
@@ -250,12 +336,28 @@ def get_reseller_invoice_infos_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
+    kwargs = get_reseller_invoice_infos._get_kwargs(
+        r_id=r_id,
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -493,7 +595,14 @@ def get_invoice_info_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiI
 
 
 def get_developer_invoice_infos_sync_detailed(
-    *, client: StolonClient, developer_uuid: str
+    *,
+    client: StolonClient,
+    developer_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for developer
 
@@ -518,12 +627,24 @@ def get_developer_invoice_infos_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 developer_uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
+    kwargs = get_developer_invoice_infos._get_kwargs(
+        developer_uuid=developer_uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -562,7 +683,14 @@ def get_developer_invoice_infos_sync_detailed(
 
 
 def get_developer_invoice_infos_sync(
-    *, client: StolonClient, developer_uuid: str
+    *,
+    client: StolonClient,
+    developer_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for developer
 
@@ -587,12 +715,24 @@ def get_developer_invoice_infos_sync(
     Args:
         client: StolonClient instance for proxying requests
                 developer_uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
+    kwargs = get_developer_invoice_infos._get_kwargs(
+        developer_uuid=developer_uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -610,7 +750,14 @@ def get_developer_invoice_infos_sync(
 
 
 def get_developer_invoice_infos_asyncio_detailed(
-    *, client: StolonClient, developer_uuid: str
+    *,
+    client: StolonClient,
+    developer_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for developer
 
@@ -635,12 +782,24 @@ def get_developer_invoice_infos_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 developer_uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
+    kwargs = get_developer_invoice_infos._get_kwargs(
+        developer_uuid=developer_uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -679,7 +838,14 @@ def get_developer_invoice_infos_asyncio_detailed(
 
 
 def get_developer_invoice_infos_asyncio(
-    *, client: StolonClient, developer_uuid: str
+    *,
+    client: StolonClient,
+    developer_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for developer
 
@@ -704,12 +870,24 @@ def get_developer_invoice_infos_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 developer_uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
+    kwargs = get_developer_invoice_infos._get_kwargs(
+        developer_uuid=developer_uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -727,7 +905,7 @@ def get_developer_invoice_infos_asyncio(
 
 
 def get_invoice_info_extended_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, merchant_uuids: list[str], date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]:
     """Return Extended Invoice Information per Location
 
@@ -750,13 +928,14 @@ def get_invoice_info_extended_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: list[str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_info_extended._get_kwargs()
+    kwargs = get_invoice_info_extended._get_kwargs(merchant_uuids=merchant_uuids, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -795,7 +974,7 @@ def get_invoice_info_extended_sync_detailed(
 
 
 def get_invoice_info_extended_sync(
-    *, client: StolonClient
+    *, client: StolonClient, merchant_uuids: list[str], date: Union[Unset, datetime.date] = UNSET
 ) -> ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None:
     """Return Extended Invoice Information per Location
 
@@ -818,13 +997,14 @@ def get_invoice_info_extended_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: list[str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_info_extended._get_kwargs()
+    kwargs = get_invoice_info_extended._get_kwargs(merchant_uuids=merchant_uuids, date=date)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -842,7 +1022,7 @@ def get_invoice_info_extended_sync(
 
 
 def get_invoice_info_extended_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, merchant_uuids: list[str], date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]:
     """Return Extended Invoice Information per Location
 
@@ -865,13 +1045,14 @@ def get_invoice_info_extended_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: list[str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_info_extended._get_kwargs()
+    kwargs = get_invoice_info_extended._get_kwargs(merchant_uuids=merchant_uuids, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -910,7 +1091,7 @@ def get_invoice_info_extended_asyncio_detailed(
 
 
 def get_invoice_info_extended_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, merchant_uuids: list[str], date: Union[Unset, datetime.date] = UNSET
 ) -> ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None:
     """Return Extended Invoice Information per Location
 
@@ -933,13 +1114,14 @@ def get_invoice_info_extended_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: list[str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_info_extended._get_kwargs()
+    kwargs = get_invoice_info_extended._get_kwargs(merchant_uuids=merchant_uuids, date=date)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -957,7 +1139,14 @@ def get_invoice_info_extended_asyncio(
 
 
 def get_merchant_invoice_infos_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for merchant
 
@@ -982,12 +1171,24 @@ def get_merchant_invoice_infos_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_invoice_infos._get_kwargs(
+        uuid=uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1026,7 +1227,14 @@ def get_merchant_invoice_infos_sync_detailed(
 
 
 def get_merchant_invoice_infos_sync(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for merchant
 
@@ -1051,12 +1259,24 @@ def get_merchant_invoice_infos_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_invoice_infos._get_kwargs(
+        uuid=uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1074,7 +1294,14 @@ def get_merchant_invoice_infos_sync(
 
 
 def get_merchant_invoice_infos_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for merchant
 
@@ -1099,12 +1326,24 @@ def get_merchant_invoice_infos_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_invoice_infos._get_kwargs(
+        uuid=uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1143,7 +1382,14 @@ def get_merchant_invoice_infos_asyncio_detailed(
 
 
 def get_merchant_invoice_infos_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for merchant
 
@@ -1168,12 +1414,24 @@ def get_merchant_invoice_infos_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: Union[Unset, datetime.date]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_invoice_infos._get_kwargs(
+        uuid=uuid,
+        date=date,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1190,7 +1448,16 @@ def get_merchant_invoice_infos_asyncio(
     return None
 
 
-def get_invoice_infos_sync_detailed(*, client: StolonClient) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
+def get_invoice_infos_sync_detailed(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information
 
     Args:
@@ -1213,13 +1480,25 @@ def get_invoice_infos_sync_detailed(*, client: StolonClient) -> Response[ApiInvo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_infos._get_kwargs()
+    kwargs = get_invoice_infos._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1257,7 +1536,16 @@ def get_invoice_infos_sync_detailed(*, client: StolonClient) -> Response[ApiInvo
     )
 
 
-def get_invoice_infos_sync(*, client: StolonClient) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
+def get_invoice_infos_sync(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information
 
     Args:
@@ -1280,13 +1568,25 @@ def get_invoice_infos_sync(*, client: StolonClient) -> ApiInvoiceInfo | list["Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_infos._get_kwargs()
+    kwargs = get_invoice_infos._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1303,7 +1603,16 @@ def get_invoice_infos_sync(*, client: StolonClient) -> ApiInvoiceInfo | list["Ap
     return None
 
 
-def get_invoice_infos_asyncio_detailed(*, client: StolonClient) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
+def get_invoice_infos_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information
 
     Args:
@@ -1326,13 +1635,25 @@ def get_invoice_infos_asyncio_detailed(*, client: StolonClient) -> Response[ApiI
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_infos._get_kwargs()
+    kwargs = get_invoice_infos._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1370,7 +1691,16 @@ def get_invoice_infos_asyncio_detailed(*, client: StolonClient) -> Response[ApiI
     )
 
 
-def get_invoice_infos_asyncio(*, client: StolonClient) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
+def get_invoice_infos_asyncio(
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    invoice_num: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information
 
     Args:
@@ -1393,13 +1723,25 @@ def get_invoice_infos_asyncio(*, client: StolonClient) -> ApiInvoiceInfo | list[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        invoice_num: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_infos._get_kwargs()
+    kwargs = get_invoice_infos._get_kwargs(
+        date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        invoice_num=invoice_num,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

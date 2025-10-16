@@ -28,7 +28,9 @@ class GeneratedMethodCall(BaseModel):
     service: str = Field(description="Service identifier (e.g., 'billing_bookkeeper_dev')")
     api_module: str = Field(description="API module name (e.g., 'billing_entity')")
     api_function: str = Field(description="API function name (e.g., 'create_billing_entity')")
-    call_sites: list[CallSite] = Field(default_factory=list, description="Locations where this method is called")
+    call_sites: list[CallSite] = Field(
+        default_factory=lambda: list[CallSite](), description="Locations where this method is called"
+    )
 
 
 class DiscoveryResult(BaseModel):
@@ -96,22 +98,26 @@ class GeneratedClientUsageVisitor(cst.CSTVisitor):
                 logger.warning(f"Star import from generated client: {module_path}")
             else:
                 for name_item in node.names:
-                    if isinstance(name_item, cst.ImportAlias):
-                        imported_name = (
-                            name_item.name.value if isinstance(name_item.name, cst.Name) else str(name_item.name)
-                        )
-                        local_name = name_item.asname.name.value if name_item.asname else imported_name
+                    # name_item is always ImportAlias at this point (not ImportStar)
+                    imported_name = (
+                        name_item.name.value if isinstance(name_item.name, cst.Name) else str(name_item.name)
+                    )
+                    local_name: str = (
+                        name_item.asname.name.value
+                        if name_item.asname and isinstance(name_item.asname.name, cst.Name)
+                        else imported_name
+                    )
 
-                        # Store mapping: local_name -> (module_path, service, api_module, api_function)
-                        self.imports[local_name] = (module_path, service, api_module, imported_name)
+                    # Store mapping: local_name -> (module_path, service, api_module, api_function)
+                    self.imports[local_name] = (module_path, service, api_module, imported_name)
 
-                        logger.debug(
-                            "Tracked generated import",
-                            local_name=local_name,
-                            service=service,
-                            api_module=api_module,
-                            api_function=imported_name,
-                        )
+                    logger.debug(
+                        "Tracked generated import",
+                        local_name=local_name,
+                        service=service,
+                        api_module=api_module,
+                        api_function=imported_name,
+                    )
 
     def visit_Call(self, node: cst.Call) -> None:
         """Visit function calls to detect: imported_module.method(...)."""
@@ -154,7 +160,7 @@ class GeneratedClientUsageVisitor(cst.CSTVisitor):
 
     def _get_dotted_name(self, node: cst.BaseExpression) -> list[str]:
         """Extract dotted name parts from module path."""
-        parts = []
+        parts: list[str] = []
         current = node
         while isinstance(current, cst.Attribute):
             parts.insert(0, current.attr.value)
@@ -165,8 +171,8 @@ class GeneratedClientUsageVisitor(cst.CSTVisitor):
 
     def _get_line_number(self, node: cst.CSTNode) -> int:
         """Extract line number from node metadata."""
-        pos = self.get_metadata(cst.metadata.PositionProvider, node)
-        return pos.start.line if pos else -1
+        pos = self.get_metadata(cst.metadata.PositionProvider, node)  # type: ignore[attr-defined]
+        return pos.start.line if pos else -1  # type: ignore[union-attr]
 
 
 def discover_generated_client_usage(src_dir: Path = Path("src")) -> DiscoveryResult:
@@ -198,12 +204,12 @@ def discover_generated_client_usage(src_dir: Path = Path("src")) -> DiscoveryRes
             module = cst.parse_module(source_code)
 
             # Wrap module with metadata (needed for line numbers)
-            wrapper = cst.metadata.MetadataWrapper(module)
+            wrapper = cst.metadata.MetadataWrapper(module)  # type: ignore[attr-defined]
 
             visitor = GeneratedClientUsageVisitor(str(py_file.relative_to(Path.cwd())))
 
             # Visit with metadata
-            wrapper.visit(visitor)
+            wrapper.visit(visitor)  # type: ignore[attr-defined]
 
             # Merge results
             for key, call in visitor.calls.items():

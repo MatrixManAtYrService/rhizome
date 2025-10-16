@@ -11,7 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import (
@@ -22,7 +22,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_scheduled_jobs,
     get_succeeded_jobs,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
@@ -145,7 +145,13 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
     )
 
 
-def get_failed_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_failed_jobs_sync_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -163,13 +169,15 @@ def get_failed_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_failed_jobs._get_kwargs()
+    kwargs = get_failed_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -207,7 +215,13 @@ def get_failed_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_failed_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_failed_jobs_asyncio_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -225,13 +239,15 @@ def get_failed_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_failed_jobs._get_kwargs()
+    kwargs = get_failed_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -269,7 +285,13 @@ def get_failed_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_succeeded_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_succeeded_jobs_sync_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -287,13 +309,15 @@ def get_succeeded_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_succeeded_jobs._get_kwargs()
+    kwargs = get_succeeded_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -331,7 +355,13 @@ def get_succeeded_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_succeeded_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_succeeded_jobs_asyncio_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -349,13 +379,15 @@ def get_succeeded_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_succeeded_jobs._get_kwargs()
+    kwargs = get_succeeded_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -393,7 +425,13 @@ def get_succeeded_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any
     )
 
 
-def get_processing_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_processing_jobs_sync_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -411,13 +449,15 @@ def get_processing_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_jobs._get_kwargs()
+    kwargs = get_processing_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -455,7 +495,13 @@ def get_processing_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_processing_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_processing_jobs_asyncio_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -473,13 +519,15 @@ def get_processing_jobs_asyncio_detailed(*, client: StolonClient) -> Response[An
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_processing_jobs._get_kwargs()
+    kwargs = get_processing_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -517,7 +565,13 @@ def get_processing_jobs_asyncio_detailed(*, client: StolonClient) -> Response[An
     )
 
 
-def get_enqueued_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_enqueued_jobs_sync_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -535,13 +589,15 @@ def get_enqueued_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_enqueued_jobs._get_kwargs()
+    kwargs = get_enqueued_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -579,7 +635,13 @@ def get_enqueued_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_enqueued_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_enqueued_jobs_asyncio_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -597,13 +659,15 @@ def get_enqueued_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_enqueued_jobs._get_kwargs()
+    kwargs = get_enqueued_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -641,7 +705,13 @@ def get_enqueued_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]
     )
 
 
-def get_scheduled_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_scheduled_jobs_sync_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -659,13 +729,15 @@ def get_scheduled_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_scheduled_jobs._get_kwargs()
+    kwargs = get_scheduled_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -703,7 +775,13 @@ def get_scheduled_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_scheduled_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_scheduled_jobs_asyncio_detailed(
+    *,
+    client: StolonClient,
+    is_ascending: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -721,13 +799,15 @@ def get_scheduled_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any
 
     Args:
         client: StolonClient instance for proxying requests
-
+                is_ascending: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_scheduled_jobs._get_kwargs()
+    kwargs = get_scheduled_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

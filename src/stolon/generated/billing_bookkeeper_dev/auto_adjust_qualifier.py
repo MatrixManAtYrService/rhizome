@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import (
@@ -25,10 +26,16 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_auto_adjust_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
+def get_auto_adjust_rule_qualifiers_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> Response[ApiAutoAdjustQualifier]:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -48,13 +55,17 @@ def get_auto_adjust_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         Response[ApiAutoAdjustQualifier]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs(
+        rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -92,7 +103,13 @@ def get_auto_adjust_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Re
     )
 
 
-def get_auto_adjust_rule_qualifiers_sync(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
+def get_auto_adjust_rule_qualifiers_sync(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> ApiAutoAdjustQualifier | None:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -112,13 +129,17 @@ def get_auto_adjust_rule_qualifiers_sync(*, client: StolonClient) -> ApiAutoAdju
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         ApiAutoAdjustQualifier | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs(
+        rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -142,7 +163,13 @@ def get_auto_adjust_rule_qualifiers_sync(*, client: StolonClient) -> ApiAutoAdju
     return None
 
 
-def get_auto_adjust_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
+def get_auto_adjust_rule_qualifiers_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> Response[ApiAutoAdjustQualifier]:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -162,13 +189,17 @@ def get_auto_adjust_rule_qualifiers_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         Response[ApiAutoAdjustQualifier]
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs(
+        rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -206,7 +237,13 @@ def get_auto_adjust_rule_qualifiers_asyncio_detailed(*, client: StolonClient) ->
     )
 
 
-def get_auto_adjust_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
+def get_auto_adjust_rule_qualifiers_asyncio(
+    *,
+    client: StolonClient,
+    rule_uuid: str,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+) -> ApiAutoAdjustQualifier | None:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -226,13 +263,17 @@ def get_auto_adjust_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiAutoA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
 
     Returns:
         ApiAutoAdjustQualifier | None
     """
     # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs(
+        rule_uuid=rule_uuid, fee_category=fee_category, fee_code=fee_code
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -466,7 +507,9 @@ def delete_auto_adjust_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: 
     return None
 
 
-def create_auto_adjust_qualifier_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
+def create_auto_adjust_qualifier_sync_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustQualifier
+) -> Response[ApiAutoAdjustQualifier]:
     """Create auto-adjust qualifier
 
     Args:
@@ -484,13 +527,13 @@ def create_auto_adjust_qualifier_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustQualifier
 
     Returns:
         Response[ApiAutoAdjustQualifier]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_qualifier._get_kwargs()
+    kwargs = create_auto_adjust_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -528,7 +571,9 @@ def create_auto_adjust_qualifier_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_auto_adjust_qualifier_sync(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
+def create_auto_adjust_qualifier_sync(
+    *, client: StolonClient, body: ApiAutoAdjustQualifier
+) -> ApiAutoAdjustQualifier | None:
     """Create auto-adjust qualifier
 
     Args:
@@ -546,13 +591,13 @@ def create_auto_adjust_qualifier_sync(*, client: StolonClient) -> ApiAutoAdjustQ
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustQualifier
 
     Returns:
         ApiAutoAdjustQualifier | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_qualifier._get_kwargs()
+    kwargs = create_auto_adjust_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -576,7 +621,9 @@ def create_auto_adjust_qualifier_sync(*, client: StolonClient) -> ApiAutoAdjustQ
     return None
 
 
-def create_auto_adjust_qualifier_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
+def create_auto_adjust_qualifier_asyncio_detailed(
+    *, client: StolonClient, body: ApiAutoAdjustQualifier
+) -> Response[ApiAutoAdjustQualifier]:
     """Create auto-adjust qualifier
 
     Args:
@@ -594,13 +641,13 @@ def create_auto_adjust_qualifier_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustQualifier
 
     Returns:
         Response[ApiAutoAdjustQualifier]
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_qualifier._get_kwargs()
+    kwargs = create_auto_adjust_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -638,7 +685,9 @@ def create_auto_adjust_qualifier_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_auto_adjust_qualifier_asyncio(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
+def create_auto_adjust_qualifier_asyncio(
+    *, client: StolonClient, body: ApiAutoAdjustQualifier
+) -> ApiAutoAdjustQualifier | None:
     """Create auto-adjust qualifier
 
     Args:
@@ -656,13 +705,13 @@ def create_auto_adjust_qualifier_asyncio(*, client: StolonClient) -> ApiAutoAdju
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAutoAdjustQualifier
 
     Returns:
         ApiAutoAdjustQualifier | None
     """
     # Extract request parameters from generated function
-    kwargs = create_auto_adjust_qualifier._get_kwargs()
+    kwargs = create_auto_adjust_qualifier._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

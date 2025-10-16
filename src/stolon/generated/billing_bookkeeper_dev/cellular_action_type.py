@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_type import (
@@ -19,13 +20,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_cellular_action_type_by_uuid,
     get_cellular_action_types_by_action_type,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_type import (
+    ApiCellularActionType,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_cellular_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_cellular_action_types_by_action_type_sync_detailed(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get cellular action type by action type
 
     Args:
@@ -43,13 +49,13 @@ def get_cellular_action_types_by_action_type_sync_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_types_by_action_type._get_kwargs()
+    kwargs = get_cellular_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +93,9 @@ def get_cellular_action_types_by_action_type_sync_detailed(*, client: StolonClie
     )
 
 
-def get_cellular_action_types_by_action_type_sync(*, client: StolonClient) -> ResponseError | None:
+def get_cellular_action_types_by_action_type_sync(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get cellular action type by action type
 
     Args:
@@ -105,13 +113,13 @@ def get_cellular_action_types_by_action_type_sync(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_types_by_action_type._get_kwargs()
+    kwargs = get_cellular_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +143,9 @@ def get_cellular_action_types_by_action_type_sync(*, client: StolonClient) -> Re
     return None
 
 
-def get_cellular_action_types_by_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_cellular_action_types_by_action_type_asyncio_detailed(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get cellular action type by action type
 
     Args:
@@ -153,13 +163,13 @@ def get_cellular_action_types_by_action_type_asyncio_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_types_by_action_type._get_kwargs()
+    kwargs = get_cellular_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -197,7 +207,9 @@ def get_cellular_action_types_by_action_type_asyncio_detailed(*, client: StolonC
     )
 
 
-def get_cellular_action_types_by_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_cellular_action_types_by_action_type_asyncio(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get cellular action type by action type
 
     Args:
@@ -215,13 +227,13 @@ def get_cellular_action_types_by_action_type_asyncio(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_types_by_action_type._get_kwargs()
+    kwargs = get_cellular_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -245,7 +257,9 @@ def get_cellular_action_types_by_action_type_asyncio(*, client: StolonClient) ->
     return None
 
 
-def create_cellular_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_cellular_action_type_sync_detailed(
+    *, client: StolonClient, body: ApiCellularActionType
+) -> Response[ResponseError]:
     """Create cellular action type
 
     Args:
@@ -263,13 +277,13 @@ def create_cellular_action_type_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularActionType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action_type._get_kwargs()
+    kwargs = create_cellular_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -307,7 +321,7 @@ def create_cellular_action_type_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_cellular_action_type_sync(*, client: StolonClient) -> ResponseError | None:
+def create_cellular_action_type_sync(*, client: StolonClient, body: ApiCellularActionType) -> ResponseError | None:
     """Create cellular action type
 
     Args:
@@ -325,13 +339,13 @@ def create_cellular_action_type_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularActionType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action_type._get_kwargs()
+    kwargs = create_cellular_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -355,7 +369,9 @@ def create_cellular_action_type_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def create_cellular_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_cellular_action_type_asyncio_detailed(
+    *, client: StolonClient, body: ApiCellularActionType
+) -> Response[ResponseError]:
     """Create cellular action type
 
     Args:
@@ -373,13 +389,13 @@ def create_cellular_action_type_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularActionType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action_type._get_kwargs()
+    kwargs = create_cellular_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -417,7 +433,7 @@ def create_cellular_action_type_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def create_cellular_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_cellular_action_type_asyncio(*, client: StolonClient, body: ApiCellularActionType) -> ResponseError | None:
     """Create cellular action type
 
     Args:
@@ -435,13 +451,13 @@ def create_cellular_action_type_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularActionType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action_type._get_kwargs()
+    kwargs = create_cellular_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

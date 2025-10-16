@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import (
@@ -54,7 +56,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_invoice_number_formats_sync_detailed(
@@ -260,7 +262,7 @@ def get_invoice_number_formats_asyncio(
 
 
 def get_resolved_partner_config_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiResolvedPartnerConfig | ResponseError]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -282,13 +284,17 @@ def get_resolved_partner_config_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiResolvedPartnerConfig | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs()
+    kwargs = get_resolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -326,7 +332,9 @@ def get_resolved_partner_config_sync_detailed(
     )
 
 
-def get_resolved_partner_config_sync(*, client: StolonClient) -> ApiResolvedPartnerConfig | ResponseError | None:
+def get_resolved_partner_config_sync(
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+) -> ApiResolvedPartnerConfig | ResponseError | None:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -347,13 +355,17 @@ def get_resolved_partner_config_sync(*, client: StolonClient) -> ApiResolvedPart
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiResolvedPartnerConfig | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs()
+    kwargs = get_resolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -371,7 +383,7 @@ def get_resolved_partner_config_sync(*, client: StolonClient) -> ApiResolvedPart
 
 
 def get_resolved_partner_config_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiResolvedPartnerConfig | ResponseError]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -393,13 +405,17 @@ def get_resolved_partner_config_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiResolvedPartnerConfig | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs()
+    kwargs = get_resolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -437,7 +453,9 @@ def get_resolved_partner_config_asyncio_detailed(
     )
 
 
-def get_resolved_partner_config_asyncio(*, client: StolonClient) -> ApiResolvedPartnerConfig | ResponseError | None:
+def get_resolved_partner_config_asyncio(
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+) -> ApiResolvedPartnerConfig | ResponseError | None:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -458,13 +476,17 @@ def get_resolved_partner_config_asyncio(*, client: StolonClient) -> ApiResolvedP
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiResolvedPartnerConfig | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs()
+    kwargs = get_resolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -873,7 +895,9 @@ def get_settlement_methods_asyncio(*, client: StolonClient) -> ApiSettlementMeth
     return None
 
 
-def update_partner_config_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPartnerConfig]:
+def update_partner_config_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
+) -> Response[ApiPartnerConfig]:
     """Update a partner configuration
 
     Args:
@@ -893,12 +917,13 @@ def update_partner_config_sync_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPartnerConfig
 
     Returns:
         Response[ApiPartnerConfig]
     """
     # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid)
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -936,7 +961,7 @@ def update_partner_config_sync_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def update_partner_config_sync(*, client: StolonClient, uuid: str) -> ApiPartnerConfig | None:
+def update_partner_config_sync(*, client: StolonClient, uuid: str, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
     """Update a partner configuration
 
     Args:
@@ -956,12 +981,13 @@ def update_partner_config_sync(*, client: StolonClient, uuid: str) -> ApiPartner
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPartnerConfig
 
     Returns:
         ApiPartnerConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid)
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -985,7 +1011,9 @@ def update_partner_config_sync(*, client: StolonClient, uuid: str) -> ApiPartner
     return None
 
 
-def update_partner_config_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPartnerConfig]:
+def update_partner_config_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
+) -> Response[ApiPartnerConfig]:
     """Update a partner configuration
 
     Args:
@@ -1005,12 +1033,13 @@ def update_partner_config_asyncio_detailed(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPartnerConfig
 
     Returns:
         Response[ApiPartnerConfig]
     """
     # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid)
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1048,7 +1077,9 @@ def update_partner_config_asyncio_detailed(*, client: StolonClient, uuid: str) -
     )
 
 
-def update_partner_config_asyncio(*, client: StolonClient, uuid: str) -> ApiPartnerConfig | None:
+def update_partner_config_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
+) -> ApiPartnerConfig | None:
     """Update a partner configuration
 
     Args:
@@ -1068,12 +1099,13 @@ def update_partner_config_asyncio(*, client: StolonClient, uuid: str) -> ApiPart
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPartnerConfig
 
     Returns:
         ApiPartnerConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid)
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1318,7 +1350,13 @@ def get_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
 
 
 def get_unresolved_partner_config_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiPartnerConfig | list["ApiPartnerConfig"]]:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1341,13 +1379,23 @@ def get_unresolved_partner_config_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiPartnerConfig | list["ApiPartnerConfig"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs()
+    kwargs = get_unresolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1385,7 +1433,15 @@ def get_unresolved_partner_config_sync_detailed(
     )
 
 
-def get_unresolved_partner_config_sync(*, client: StolonClient) -> ApiPartnerConfig | list["ApiPartnerConfig"] | None:
+def get_unresolved_partner_config_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiPartnerConfig | list["ApiPartnerConfig"] | None:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
     Args:
@@ -1407,13 +1463,23 @@ def get_unresolved_partner_config_sync(*, client: StolonClient) -> ApiPartnerCon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiPartnerConfig | list["ApiPartnerConfig"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs()
+    kwargs = get_unresolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1431,7 +1497,13 @@ def get_unresolved_partner_config_sync(*, client: StolonClient) -> ApiPartnerCon
 
 
 def get_unresolved_partner_config_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiPartnerConfig | list["ApiPartnerConfig"]]:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1454,13 +1526,23 @@ def get_unresolved_partner_config_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiPartnerConfig | list["ApiPartnerConfig"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs()
+    kwargs = get_unresolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1499,7 +1581,13 @@ def get_unresolved_partner_config_asyncio_detailed(
 
 
 def get_unresolved_partner_config_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiPartnerConfig | list["ApiPartnerConfig"] | None:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1522,13 +1610,23 @@ def get_unresolved_partner_config_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiPartnerConfig | list["ApiPartnerConfig"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs()
+    kwargs = get_unresolved_partner_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1545,7 +1643,7 @@ def get_unresolved_partner_config_asyncio(
     return None
 
 
-def create_partner_config_sync_detailed(*, client: StolonClient) -> Response[ApiPartnerConfig]:
+def create_partner_config_sync_detailed(*, client: StolonClient, body: ApiPartnerConfig) -> Response[ApiPartnerConfig]:
     """Create a partner configuration
 
     Args:
@@ -1563,13 +1661,13 @@ def create_partner_config_sync_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPartnerConfig
 
     Returns:
         Response[ApiPartnerConfig]
     """
     # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs()
+    kwargs = create_partner_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1607,7 +1705,7 @@ def create_partner_config_sync_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def create_partner_config_sync(*, client: StolonClient) -> ApiPartnerConfig | None:
+def create_partner_config_sync(*, client: StolonClient, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
     """Create a partner configuration
 
     Args:
@@ -1625,13 +1723,13 @@ def create_partner_config_sync(*, client: StolonClient) -> ApiPartnerConfig | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPartnerConfig
 
     Returns:
         ApiPartnerConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs()
+    kwargs = create_partner_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1655,7 +1753,9 @@ def create_partner_config_sync(*, client: StolonClient) -> ApiPartnerConfig | No
     return None
 
 
-def create_partner_config_asyncio_detailed(*, client: StolonClient) -> Response[ApiPartnerConfig]:
+def create_partner_config_asyncio_detailed(
+    *, client: StolonClient, body: ApiPartnerConfig
+) -> Response[ApiPartnerConfig]:
     """Create a partner configuration
 
     Args:
@@ -1673,13 +1773,13 @@ def create_partner_config_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPartnerConfig
 
     Returns:
         Response[ApiPartnerConfig]
     """
     # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs()
+    kwargs = create_partner_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1717,7 +1817,7 @@ def create_partner_config_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_partner_config_asyncio(*, client: StolonClient) -> ApiPartnerConfig | None:
+def create_partner_config_asyncio(*, client: StolonClient, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
     """Create a partner configuration
 
     Args:
@@ -1735,13 +1835,13 @@ def create_partner_config_asyncio(*, client: StolonClient) -> ApiPartnerConfig |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPartnerConfig
 
     Returns:
         ApiPartnerConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs()
+    kwargs = create_partner_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

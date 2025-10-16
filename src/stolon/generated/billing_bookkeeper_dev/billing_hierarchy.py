@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import (
@@ -39,13 +41,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level_node import (
     ApiBillingHierarchyLevelNode,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_billing_hierarchy_child_nodes_entity_types_item import (
+    GetBillingHierarchyChildNodesEntityTypesItem,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_billing_hierarchy_children_sync_detailed(
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
+) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -66,12 +73,14 @@ def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        exclude_merchants: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -109,7 +118,9 @@ def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: 
     )
 
 
-def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_hierarchy_children_sync(
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
+) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -130,12 +141,14 @@ def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        exclude_merchants: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -159,7 +172,9 @@ def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> R
     return None
 
 
-def get_billing_hierarchy_children_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_billing_hierarchy_children_asyncio_detailed(
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
+) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -180,12 +195,14 @@ def get_billing_hierarchy_children_asyncio_detailed(*, client: StolonClient, uui
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        exclude_merchants: Union[Unset, bool]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -223,7 +240,9 @@ def get_billing_hierarchy_children_asyncio_detailed(*, client: StolonClient, uui
     )
 
 
-def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_hierarchy_children_asyncio(
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
+) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -244,12 +263,14 @@ def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        exclude_merchants: Union[Unset, bool]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -273,7 +294,9 @@ def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -
     return None
 
 
-def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def move_merchant_billing_hierarchies_sync_detailed(
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
+) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
     Args:
@@ -293,13 +316,17 @@ def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        new_parent_billing_entity_uuid: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs()
+    kwargs = move_merchant_billing_hierarchies._get_kwargs(
+        body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -337,7 +364,9 @@ def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> 
     )
 
 
-def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ResponseError | None:
+def move_merchant_billing_hierarchies_sync(
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
+) -> ResponseError | None:
     """Move billing hierarchy merchants
 
     Args:
@@ -357,13 +386,17 @@ def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        new_parent_billing_entity_uuid: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs()
+    kwargs = move_merchant_billing_hierarchies._get_kwargs(
+        body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -387,7 +420,9 @@ def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ResponseE
     return None
 
 
-def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def move_merchant_billing_hierarchies_asyncio_detailed(
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
+) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
     Args:
@@ -407,13 +442,17 @@ def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        new_parent_billing_entity_uuid: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs()
+    kwargs = move_merchant_billing_hierarchies._get_kwargs(
+        body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -451,7 +490,9 @@ def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) 
     )
 
 
-def move_merchant_billing_hierarchies_asyncio(*, client: StolonClient) -> ResponseError | None:
+def move_merchant_billing_hierarchies_asyncio(
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
+) -> ResponseError | None:
     """Move billing hierarchy merchants
 
     Args:
@@ -471,13 +512,17 @@ def move_merchant_billing_hierarchies_asyncio(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
+        new_parent_billing_entity_uuid: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs()
+    kwargs = move_merchant_billing_hierarchies._get_kwargs(
+        body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -715,7 +760,9 @@ def get_billing_hierarchy_by_uuid_asyncio(
     return None
 
 
-def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(
+    *, client: StolonClient, entityuuid: str, type_: str
+) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -734,13 +781,14 @@ def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -778,7 +826,9 @@ def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonC
     )
 
 
-def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_date_nodes_for_entity_sync(
+    *, client: StolonClient, entityuuid: str, type_: str
+) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -797,13 +847,14 @@ def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -827,7 +878,9 @@ def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) ->
     return None
 
 
-def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
+    *, client: StolonClient, entityuuid: str, type_: str
+) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -846,13 +899,14 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -890,7 +944,9 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(*, client: Stol
     )
 
 
-def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_date_nodes_for_entity_asyncio(
+    *, client: StolonClient, entityuuid: str, type_: str
+) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -909,13 +965,14 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -940,7 +997,7 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient)
 
 
 def get_billing_hierarchy_parent_nodes_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -962,12 +1019,16 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1006,7 +1067,7 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
 
 
 def get_billing_hierarchy_parent_nodes_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1028,12 +1089,16 @@ def get_billing_hierarchy_parent_nodes_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1058,7 +1123,7 @@ def get_billing_hierarchy_parent_nodes_sync(
 
 
 def get_billing_hierarchy_parent_nodes_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1080,12 +1145,16 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1124,7 +1193,7 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
 
 
 def get_billing_hierarchy_parent_nodes_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1146,12 +1215,16 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1175,7 +1248,9 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     return None
 
 
-def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchyLevel]:
+def get_archetypes_sync_detailed(
+    *, client: StolonClient, uuid: str, date: datetime.date
+) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
     Args:
@@ -1194,13 +1269,14 @@ def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBilling
 
     Args:
         client: StolonClient instance for proxying requests
-
+                uuid: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
     # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs()
+    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1238,7 +1314,7 @@ def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBilling
     )
 
 
-def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+def get_archetypes_sync(*, client: StolonClient, uuid: str, date: datetime.date) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1257,13 +1333,14 @@ def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                uuid: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
     # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs()
+    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1287,7 +1364,9 @@ def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | N
     return None
 
 
-def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchyLevel]:
+def get_archetypes_asyncio_detailed(
+    *, client: StolonClient, uuid: str, date: datetime.date
+) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
     Args:
@@ -1306,13 +1385,14 @@ def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBill
 
     Args:
         client: StolonClient instance for proxying requests
-
+                uuid: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
     # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs()
+    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1350,7 +1430,7 @@ def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBill
     )
 
 
-def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+def get_archetypes_asyncio(*, client: StolonClient, uuid: str, date: datetime.date) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1369,13 +1449,14 @@ def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                uuid: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
     # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs()
+    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1400,7 +1481,7 @@ def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel 
 
 
 def delete_billing_hierarchy_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
@@ -1421,12 +1502,13 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1465,7 +1547,7 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(
 
 
 def delete_billing_hierarchy_by_uuid_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
@@ -1486,12 +1568,13 @@ def delete_billing_hierarchy_by_uuid_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1509,7 +1592,7 @@ def delete_billing_hierarchy_by_uuid_sync(
 
 
 def delete_billing_hierarchy_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
@@ -1530,12 +1613,13 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1574,7 +1658,7 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
 
 
 def delete_billing_hierarchy_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
@@ -1595,12 +1679,13 @@ def delete_billing_hierarchy_by_uuid_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
+    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1617,7 +1702,9 @@ def delete_billing_hierarchy_by_uuid_asyncio(
     return None
 
 
-def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_children_of_entity_sync_detailed(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1637,13 +1724,15 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1681,7 +1770,9 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClie
     )
 
 
-def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_children_of_entity_sync(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1701,13 +1792,15 @@ def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1731,7 +1824,9 @@ def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> Re
     return None
 
 
-def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_children_of_entity_asyncio_detailed(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1751,13 +1846,15 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1795,7 +1892,9 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonC
     )
 
 
-def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_children_of_entity_asyncio(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1815,13 +1914,15 @@ def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1846,7 +1947,7 @@ def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) ->
 
 
 def get_effective_billing_hierarchy_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -1868,12 +1969,16 @@ def get_effective_billing_hierarchy_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_effective_billing_hierarchy._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, type_=type_, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1911,7 +2016,9 @@ def get_effective_billing_hierarchy_sync_detailed(
     )
 
 
-def get_effective_billing_hierarchy_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def get_effective_billing_hierarchy_sync(
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
+) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -1932,12 +2039,16 @@ def get_effective_billing_hierarchy_sync(*, client: StolonClient, billing_entity
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_effective_billing_hierarchy._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, type_=type_, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1962,7 +2073,7 @@ def get_effective_billing_hierarchy_sync(*, client: StolonClient, billing_entity
 
 
 def get_effective_billing_hierarchy_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -1984,12 +2095,16 @@ def get_effective_billing_hierarchy_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_effective_billing_hierarchy._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, type_=type_, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2027,7 +2142,9 @@ def get_effective_billing_hierarchy_asyncio_detailed(
     )
 
 
-def get_effective_billing_hierarchy_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
+def get_effective_billing_hierarchy_asyncio(
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
+) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -2048,12 +2165,16 @@ def get_effective_billing_hierarchy_asyncio(*, client: StolonClient, billing_ent
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_effective_billing_hierarchy._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, type_=type_, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2077,7 +2198,9 @@ def get_effective_billing_hierarchy_asyncio(*, client: StolonClient, billing_ent
     return None
 
 
-def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchies_sync_detailed(
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
+) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2097,13 +2220,15 @@ def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
+        date: datetime.date
+        name: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs()
+    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2141,7 +2266,9 @@ def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def get_billing_hierarchies_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchies_sync(
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
+) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2161,13 +2288,15 @@ def get_billing_hierarchies_sync(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
+        date: datetime.date
+        name: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs()
+    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2191,7 +2320,9 @@ def get_billing_hierarchies_sync(*, client: StolonClient) -> ResponseError | Non
     return None
 
 
-def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchies_asyncio_detailed(
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
+) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2211,13 +2342,15 @@ def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
+        date: datetime.date
+        name: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs()
+    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2255,7 +2388,9 @@ def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_billing_hierarchies_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchies_asyncio(
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
+) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2275,13 +2410,15 @@ def get_billing_hierarchies_asyncio(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
+        date: datetime.date
+        name: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs()
+    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2530,7 +2667,12 @@ def get_billing_hierarchy_parents_asyncio(*, client: StolonClient, uuid: str) ->
 
 
 def get_billing_hierarchy_child_nodes_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2553,12 +2695,17 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]]
 
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2597,7 +2744,12 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
 
 
 def get_billing_hierarchy_child_nodes_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2620,12 +2772,17 @@ def get_billing_hierarchy_child_nodes_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]]
 
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2650,7 +2807,12 @@ def get_billing_hierarchy_child_nodes_sync(
 
 
 def get_billing_hierarchy_child_nodes_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2673,12 +2835,17 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]]
 
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2717,7 +2884,12 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
 
 
 def get_billing_hierarchy_child_nodes_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date,
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2740,12 +2912,17 @@ def get_billing_hierarchy_child_nodes_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
+        entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]]
 
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2769,7 +2946,9 @@ def get_billing_hierarchy_child_nodes_asyncio(
     return None
 
 
-def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_sync_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchy
+) -> Response[ResponseError]:
     """Create billing hierarchy
 
     Args:
@@ -2787,13 +2966,13 @@ def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchy
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs()
+    kwargs = create_billing_hierarchy._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2831,7 +3010,7 @@ def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_billing_hierarchy_sync(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_sync(*, client: StolonClient, body: ApiBillingHierarchy) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -2849,13 +3028,13 @@ def create_billing_hierarchy_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchy
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs()
+    kwargs = create_billing_hierarchy._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2879,7 +3058,9 @@ def create_billing_hierarchy_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchy
+) -> Response[ResponseError]:
     """Create billing hierarchy
 
     Args:
@@ -2897,13 +3078,13 @@ def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchy
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs()
+    kwargs = create_billing_hierarchy._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2941,7 +3122,7 @@ def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_asyncio(*, client: StolonClient, body: ApiBillingHierarchy) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -2959,13 +3140,13 @@ def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchy
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs()
+    kwargs = create_billing_hierarchy._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2990,7 +3171,7 @@ def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ResponseError |
 
 
 def get_billing_hierarchy_parents_of_entity_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -3011,13 +3192,15 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3055,7 +3238,9 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
     )
 
 
-def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+def get_billing_hierarchy_parents_of_entity_sync(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
     Args:
@@ -3075,13 +3260,15 @@ def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3106,7 +3293,7 @@ def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> Api
 
 
 def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -3127,13 +3314,15 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3171,7 +3360,9 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
     )
 
 
-def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+def get_billing_hierarchy_parents_of_entity_asyncio(
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
+) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
     Args:
@@ -3191,13 +3382,15 @@ def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entityuuid: str
+        type_: str
+        date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs()
+    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3222,7 +3415,13 @@ def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> 
 
 
 def get_billing_hierarchy_merchant_children_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: datetime.date,
+    name: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
@@ -3246,12 +3445,18 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        name: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(
+        uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3289,7 +3494,15 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     )
 
 
-def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_hierarchy_merchant_children_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: datetime.date,
+    name: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3312,12 +3525,18 @@ def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        name: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(
+        uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3342,7 +3561,13 @@ def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: 
 
 
 def get_billing_hierarchy_merchant_children_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: datetime.date,
+    name: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
@@ -3366,12 +3591,18 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        name: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(
+        uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3409,7 +3640,15 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     )
 
 
-def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_hierarchy_merchant_children_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    date: datetime.date,
+    name: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3432,12 +3671,18 @@ def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uui
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        date: datetime.date
+        name: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
+    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(
+        uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

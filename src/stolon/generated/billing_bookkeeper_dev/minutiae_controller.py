@@ -11,16 +11,31 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.minutiae_controller import (
     get_billing_entity_minutiae,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_billing_entity_minutiae_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    as_of_date: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, str] = UNSET,
+    end_date: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    only_effective: Union[Unset, bool] = UNSET,
+    fees: Union[Unset, bool] = UNSET,
+    actions: Union[Unset, bool] = UNSET,
+    action_errors: Union[Unset, bool] = UNSET,
+    ledgers: Union[Unset, bool] = UNSET,
+    monetary: Union[Unset, bool] = UNSET,
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (Union[Unset, str]):
         entity_uuid (Union[Unset, str]):
@@ -47,13 +62,37 @@ def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        as_of_date: Union[Unset, str]
+        start_date: Union[Unset, str]
+        end_date: Union[Unset, str]
+        limit: Union[Unset, int]
+        only_effective: Union[Unset, bool]
+        fees: Union[Unset, bool]
+        actions: Union[Unset, bool]
+        action_errors: Union[Unset, bool]
+        ledgers: Union[Unset, bool]
+        monetary: Union[Unset, bool]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_entity_minutiae._get_kwargs()
+    kwargs = get_billing_entity_minutiae._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        as_of_date=as_of_date,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
+        only_effective=only_effective,
+        fees=fees,
+        actions=actions,
+        action_errors=action_errors,
+        ledgers=ledgers,
+        monetary=monetary,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +130,22 @@ def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def get_billing_entity_minutiae_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_billing_entity_minutiae_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
+    as_of_date: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, str] = UNSET,
+    end_date: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    only_effective: Union[Unset, bool] = UNSET,
+    fees: Union[Unset, bool] = UNSET,
+    actions: Union[Unset, bool] = UNSET,
+    action_errors: Union[Unset, bool] = UNSET,
+    ledgers: Union[Unset, bool] = UNSET,
+    monetary: Union[Unset, bool] = UNSET,
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (Union[Unset, str]):
         entity_uuid (Union[Unset, str]):
@@ -118,13 +172,37 @@ def get_billing_entity_minutiae_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
+        as_of_date: Union[Unset, str]
+        start_date: Union[Unset, str]
+        end_date: Union[Unset, str]
+        limit: Union[Unset, int]
+        only_effective: Union[Unset, bool]
+        fees: Union[Unset, bool]
+        actions: Union[Unset, bool]
+        action_errors: Union[Unset, bool]
+        ledgers: Union[Unset, bool]
+        monetary: Union[Unset, bool]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_entity_minutiae._get_kwargs()
+    kwargs = get_billing_entity_minutiae._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
+        as_of_date=as_of_date,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit,
+        only_effective=only_effective,
+        fees=fees,
+        actions=actions,
+        action_errors=action_errors,
+        ledgers=ledgers,
+        monetary=monetary,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

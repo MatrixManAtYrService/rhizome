@@ -12,7 +12,7 @@ from stolon.get_internal_token import get_internal_token
 logger = structlog.get_logger()
 
 
-def _fetch_openapi_spec(env: str, service: str, domain: str, spec_url: str) -> dict:
+def _fetch_openapi_spec(env: str, service: str, domain: str, spec_url: str) -> dict[str, object]:
     """Fetch OpenAPI spec from the service, with or without authentication.
 
     Args:
@@ -61,7 +61,9 @@ def _fetch_openapi_spec(env: str, service: str, domain: str, spec_url: str) -> d
             raise typer.Exit(1) from e2
 
 
-def _generate_client_from_spec(spec_data: dict, service: str, env: str, output_path: Path, overwrite: bool) -> None:
+def _generate_client_from_spec(
+    spec_data: dict[str, object], service: str, env: str, output_path: Path, overwrite: bool
+) -> None:
     """Generate Python client from OpenAPI spec using openapi-python-client.
 
     Args:
@@ -212,7 +214,7 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
     # OpenAPI-generated client goes to openapi_generated (raw output, don't edit)
     # Our proxied wrappers go to generated (higher-level, editable if needed)
     openapi_output_path = Path("src/stolon/openapi_generated") / f"{actual_service.replace('-', '_')}_{env}"
-    Path("src/stolon/generated") / f"{actual_service.replace('-', '_')}_{env}"
+    # Note: wrappers path is determined inside generate_wrappers_for_service()
 
     if openapi_output_path.exists() and not overwrite:
         typer.echo(f"⚠️  OpenAPI client already exists at {openapi_output_path}")

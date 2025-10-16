@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_balance import (
@@ -24,11 +25,15 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_ledger_account_balances_by_ledger_account_uuid_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerAccountBalance"]]:
     """Get the ledger account balances for a ledger account identified by UUID
 
@@ -49,13 +54,17 @@ def get_ledger_account_balances_by_ledger_account_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerAccountBalance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -94,7 +103,11 @@ def get_ledger_account_balances_by_ledger_account_uuid_sync_detailed(
 
 
 def get_ledger_account_balances_by_ledger_account_uuid_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerAccountBalance"] | None:
     """Get the ledger account balances for a ledger account identified by UUID
 
@@ -115,13 +128,17 @@ def get_ledger_account_balances_by_ledger_account_uuid_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerAccountBalance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -139,7 +156,11 @@ def get_ledger_account_balances_by_ledger_account_uuid_sync(
 
 
 def get_ledger_account_balances_by_ledger_account_uuid_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerAccountBalance"]]:
     """Get the ledger account balances for a ledger account identified by UUID
 
@@ -160,13 +181,17 @@ def get_ledger_account_balances_by_ledger_account_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerAccountBalance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -205,7 +230,11 @@ def get_ledger_account_balances_by_ledger_account_uuid_asyncio_detailed(
 
 
 def get_ledger_account_balances_by_ledger_account_uuid_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerAccountBalance"] | None:
     """Get the ledger account balances for a ledger account identified by UUID
 
@@ -226,13 +255,17 @@ def get_ledger_account_balances_by_ledger_account_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerAccountBalance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_account_balances_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -250,7 +283,7 @@ def get_ledger_account_balances_by_ledger_account_uuid_asyncio(
 
 
 def get_ledger_account_balance_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ledger_acct_uuid: str, currency: str
 ) -> Response[ApiLedgerAccountBalance | ResponseError]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
@@ -271,13 +304,14 @@ def get_ledger_account_balance_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        currency: str
 
     Returns:
         Response[ApiLedgerAccountBalance | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balance._get_kwargs()
+    kwargs = get_ledger_account_balance._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, currency=currency)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -315,7 +349,9 @@ def get_ledger_account_balance_sync_detailed(
     )
 
 
-def get_ledger_account_balance_sync(*, client: StolonClient) -> ApiLedgerAccountBalance | ResponseError | None:
+def get_ledger_account_balance_sync(
+    *, client: StolonClient, ledger_acct_uuid: str, currency: str
+) -> ApiLedgerAccountBalance | ResponseError | None:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -335,13 +371,14 @@ def get_ledger_account_balance_sync(*, client: StolonClient) -> ApiLedgerAccount
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        currency: str
 
     Returns:
         ApiLedgerAccountBalance | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balance._get_kwargs()
+    kwargs = get_ledger_account_balance._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, currency=currency)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -359,7 +396,7 @@ def get_ledger_account_balance_sync(*, client: StolonClient) -> ApiLedgerAccount
 
 
 def get_ledger_account_balance_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ledger_acct_uuid: str, currency: str
 ) -> Response[ApiLedgerAccountBalance | ResponseError]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
@@ -380,13 +417,14 @@ def get_ledger_account_balance_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        currency: str
 
     Returns:
         Response[ApiLedgerAccountBalance | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balance._get_kwargs()
+    kwargs = get_ledger_account_balance._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, currency=currency)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -424,7 +462,9 @@ def get_ledger_account_balance_asyncio_detailed(
     )
 
 
-def get_ledger_account_balance_asyncio(*, client: StolonClient) -> ApiLedgerAccountBalance | ResponseError | None:
+def get_ledger_account_balance_asyncio(
+    *, client: StolonClient, ledger_acct_uuid: str, currency: str
+) -> ApiLedgerAccountBalance | ResponseError | None:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -444,13 +484,14 @@ def get_ledger_account_balance_asyncio(*, client: StolonClient) -> ApiLedgerAcco
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        currency: str
 
     Returns:
         ApiLedgerAccountBalance | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_balance._get_kwargs()
+    kwargs = get_ledger_account_balance._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, currency=currency)
 
     # Proxy request through stolon server
     client.proxy_request(

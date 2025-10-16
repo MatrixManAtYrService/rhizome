@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import (
@@ -25,10 +26,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_billing_archetype_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_archetype_sync_detailed(
+    *, client: StolonClient, body: ApiBillingArchetype
+) -> Response[ResponseError]:
     """Create billing archetype
 
     Args:
@@ -46,13 +49,13 @@ def create_billing_archetype_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingArchetype
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
+    kwargs = create_billing_archetype._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -90,7 +93,7 @@ def create_billing_archetype_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_billing_archetype_sync(*, client: StolonClient) -> ResponseError | None:
+def create_billing_archetype_sync(*, client: StolonClient, body: ApiBillingArchetype) -> ResponseError | None:
     """Create billing archetype
 
     Args:
@@ -108,13 +111,13 @@ def create_billing_archetype_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingArchetype
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
+    kwargs = create_billing_archetype._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -138,7 +141,9 @@ def create_billing_archetype_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def create_billing_archetype_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_archetype_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingArchetype
+) -> Response[ResponseError]:
     """Create billing archetype
 
     Args:
@@ -156,13 +161,13 @@ def create_billing_archetype_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingArchetype
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
+    kwargs = create_billing_archetype._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -200,7 +205,7 @@ def create_billing_archetype_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_billing_archetype_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_billing_archetype_asyncio(*, client: StolonClient, body: ApiBillingArchetype) -> ResponseError | None:
     """Create billing archetype
 
     Args:
@@ -218,13 +223,13 @@ def create_billing_archetype_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingArchetype
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
+    kwargs = create_billing_archetype._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -672,7 +677,9 @@ def get_billing_archetype_by_uuid_asyncio(
     return None
 
 
-def get_billing_archetypes_by_archetype_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_archetypes_by_archetype_type_sync_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing archetype by archetype type
 
     Args:
@@ -691,13 +698,14 @@ def get_billing_archetypes_by_archetype_type_sync_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs()
+    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -735,7 +743,9 @@ def get_billing_archetypes_by_archetype_type_sync_detailed(*, client: StolonClie
     )
 
 
-def get_billing_archetypes_by_archetype_type_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_archetypes_by_archetype_type_sync(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing archetype by archetype type
 
     Args:
@@ -754,13 +764,14 @@ def get_billing_archetypes_by_archetype_type_sync(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs()
+    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -784,7 +795,9 @@ def get_billing_archetypes_by_archetype_type_sync(*, client: StolonClient) -> Re
     return None
 
 
-def get_billing_archetypes_by_archetype_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_archetypes_by_archetype_type_asyncio_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing archetype by archetype type
 
     Args:
@@ -803,13 +816,14 @@ def get_billing_archetypes_by_archetype_type_asyncio_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs()
+    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -847,7 +861,9 @@ def get_billing_archetypes_by_archetype_type_asyncio_detailed(*, client: StolonC
     )
 
 
-def get_billing_archetypes_by_archetype_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_archetypes_by_archetype_type_asyncio(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing archetype by archetype type
 
     Args:
@@ -866,13 +882,14 @@ def get_billing_archetypes_by_archetype_type_asyncio(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs()
+    kwargs = get_billing_archetypes_by_archetype_type._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

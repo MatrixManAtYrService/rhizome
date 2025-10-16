@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import (
@@ -27,10 +28,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_fee_ytd_by_billing_entity_and_year_sync_detailed(*, client: StolonClient) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_billing_entity_and_year_sync_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    year: int,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -52,13 +61,23 @@ def get_fee_ytd_by_billing_entity_and_year_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        year: int
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        currency: Union[Unset, str]
 
     Returns:
         Response[ApiFeeYtdExtended]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs()
+    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        year=year,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        currency=currency,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -96,7 +115,15 @@ def get_fee_ytd_by_billing_entity_and_year_sync_detailed(*, client: StolonClient
     )
 
 
-def get_fee_ytd_by_billing_entity_and_year_sync(*, client: StolonClient) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_billing_entity_and_year_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    year: int,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+) -> ApiFeeYtdExtended | None:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -118,13 +145,23 @@ def get_fee_ytd_by_billing_entity_and_year_sync(*, client: StolonClient) -> ApiF
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        year: int
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        currency: Union[Unset, str]
 
     Returns:
         ApiFeeYtdExtended | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs()
+    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        year=year,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        currency=currency,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -148,7 +185,15 @@ def get_fee_ytd_by_billing_entity_and_year_sync(*, client: StolonClient) -> ApiF
     return None
 
 
-def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    year: int,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -170,13 +215,23 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        year: int
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        currency: Union[Unset, str]
 
     Returns:
         Response[ApiFeeYtdExtended]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs()
+    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        year=year,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        currency=currency,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -214,7 +269,15 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(*, client: StolonCli
     )
 
 
-def get_fee_ytd_by_billing_entity_and_year_asyncio(*, client: StolonClient) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_billing_entity_and_year_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    year: int,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+) -> ApiFeeYtdExtended | None:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -236,13 +299,23 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio(*, client: StolonClient) -> A
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        year: int
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        currency: Union[Unset, str]
 
     Returns:
         ApiFeeYtdExtended | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs()
+    kwargs = get_fee_ytd_by_billing_entity_and_year._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        year=year,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        currency=currency,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -266,7 +339,7 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio(*, client: StolonClient) -> A
     return None
 
 
-def create_fee_ytd_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_fee_ytd_sync_detailed(*, client: StolonClient, body: ApiFeeYtd) -> Response[ResponseError]:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -284,13 +357,13 @@ def create_fee_ytd_sync_detailed(*, client: StolonClient) -> Response[ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeYtd
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_ytd._get_kwargs()
+    kwargs = create_fee_ytd._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -328,7 +401,7 @@ def create_fee_ytd_sync_detailed(*, client: StolonClient) -> Response[ResponseEr
     )
 
 
-def create_fee_ytd_sync(*, client: StolonClient) -> ResponseError | None:
+def create_fee_ytd_sync(*, client: StolonClient, body: ApiFeeYtd) -> ResponseError | None:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -346,13 +419,13 @@ def create_fee_ytd_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeYtd
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_ytd._get_kwargs()
+    kwargs = create_fee_ytd._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -376,7 +449,7 @@ def create_fee_ytd_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def create_fee_ytd_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_fee_ytd_asyncio_detailed(*, client: StolonClient, body: ApiFeeYtd) -> Response[ResponseError]:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -394,13 +467,13 @@ def create_fee_ytd_asyncio_detailed(*, client: StolonClient) -> Response[Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeYtd
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_ytd._get_kwargs()
+    kwargs = create_fee_ytd._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -438,7 +511,7 @@ def create_fee_ytd_asyncio_detailed(*, client: StolonClient) -> Response[Respons
     )
 
 
-def create_fee_ytd_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_fee_ytd_asyncio(*, client: StolonClient, body: ApiFeeYtd) -> ResponseError | None:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -456,13 +529,13 @@ def create_fee_ytd_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeYtd
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_ytd._get_kwargs()
+    kwargs = create_fee_ytd._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -486,7 +559,9 @@ def create_fee_ytd_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def update_fee_ytd_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtd | ResponseError]:
+def update_fee_ytd_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiFeeYtd
+) -> Response[ApiFeeYtd | ResponseError]:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -506,12 +581,13 @@ def update_fee_ytd_sync_detailed(*, client: StolonClient, uuid: str) -> Response
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeYtd
 
     Returns:
         Response[ApiFeeYtd | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
+    kwargs = update_fee_ytd._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -549,7 +625,7 @@ def update_fee_ytd_sync_detailed(*, client: StolonClient, uuid: str) -> Response
     )
 
 
-def update_fee_ytd_sync(*, client: StolonClient, uuid: str) -> ApiFeeYtd | ResponseError | None:
+def update_fee_ytd_sync(*, client: StolonClient, uuid: str, body: ApiFeeYtd) -> ApiFeeYtd | ResponseError | None:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -569,12 +645,13 @@ def update_fee_ytd_sync(*, client: StolonClient, uuid: str) -> ApiFeeYtd | Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeYtd
 
     Returns:
         ApiFeeYtd | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
+    kwargs = update_fee_ytd._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -591,7 +668,9 @@ def update_fee_ytd_sync(*, client: StolonClient, uuid: str) -> ApiFeeYtd | Respo
     return None
 
 
-def update_fee_ytd_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtd | ResponseError]:
+def update_fee_ytd_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiFeeYtd
+) -> Response[ApiFeeYtd | ResponseError]:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -611,12 +690,13 @@ def update_fee_ytd_asyncio_detailed(*, client: StolonClient, uuid: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeYtd
 
     Returns:
         Response[ApiFeeYtd | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
+    kwargs = update_fee_ytd._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -654,7 +734,7 @@ def update_fee_ytd_asyncio_detailed(*, client: StolonClient, uuid: str) -> Respo
     )
 
 
-def update_fee_ytd_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeYtd | ResponseError | None:
+def update_fee_ytd_asyncio(*, client: StolonClient, uuid: str, body: ApiFeeYtd) -> ApiFeeYtd | ResponseError | None:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -674,12 +754,13 @@ def update_fee_ytd_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeYtd | Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeYtd
 
     Returns:
         ApiFeeYtd | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
+    kwargs = update_fee_ytd._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(

@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import (
@@ -33,10 +35,21 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_sync_detailed(
+    *,
+    client: StolonClient,
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -61,13 +74,29 @@ def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs()
+    kwargs = get_cellular_pricing._get_kwargs(
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -105,7 +134,18 @@ def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiC
     )
 
 
-def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | None:
+def get_cellular_pricing_sync(
+    *,
+    client: StolonClient,
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -130,13 +170,29 @@ def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs()
+    kwargs = get_cellular_pricing._get_kwargs(
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -160,7 +216,18 @@ def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | N
     return None
 
 
-def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_asyncio_detailed(
+    *,
+    client: StolonClient,
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -185,13 +252,29 @@ def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[A
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs()
+    kwargs = get_cellular_pricing._get_kwargs(
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -229,7 +312,18 @@ def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[A
     )
 
 
-def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing | None:
+def get_cellular_pricing_asyncio(
+    *,
+    client: StolonClient,
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -254,13 +348,29 @@ def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs()
+    kwargs = get_cellular_pricing._get_kwargs(
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -284,7 +394,17 @@ def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing 
     return None
 
 
-def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_pricing_sync_detailed(
+    *,
+    client: StolonClient,
+    currency: str,
+    misc_specifiers: list[str],
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -308,13 +428,27 @@ def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        misc_specifiers: list[str]
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs()
+    kwargs = get_misc_pricing._get_kwargs(
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -352,7 +486,17 @@ def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
 
-def get_misc_pricing_sync(*, client: StolonClient) -> ResponseError | None:
+def get_misc_pricing_sync(
+    *,
+    client: StolonClient,
+    currency: str,
+    misc_specifiers: list[str],
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -376,13 +520,27 @@ def get_misc_pricing_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        misc_specifiers: list[str]
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs()
+    kwargs = get_misc_pricing._get_kwargs(
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -406,7 +564,17 @@ def get_misc_pricing_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_misc_pricing_asyncio_detailed(
+    *,
+    client: StolonClient,
+    currency: str,
+    misc_specifiers: list[str],
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -430,13 +598,27 @@ def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        misc_specifiers: list[str]
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs()
+    kwargs = get_misc_pricing._get_kwargs(
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -474,7 +656,17 @@ def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
 
-def get_misc_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_misc_pricing_asyncio(
+    *,
+    client: StolonClient,
+    currency: str,
+    misc_specifiers: list[str],
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -498,13 +690,27 @@ def get_misc_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                currency: str
+        misc_specifiers: list[str]
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs()
+    kwargs = get_misc_pricing._get_kwargs(
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -528,7 +734,17 @@ def get_misc_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -554,12 +770,26 @@ def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -597,7 +827,17 @@ def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiPlanPricing | None:
+def get_plan_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -623,12 +863,26 @@ def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Ap
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -652,7 +906,17 @@ def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -678,12 +942,26 @@ def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -721,7 +999,17 @@ def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
     )
 
 
-def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiPlanPricing | None:
+def get_plan_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -747,12 +1035,26 @@ def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -776,7 +1078,16 @@ def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def get_misc_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_misc_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -800,12 +1111,24 @@ def get_misc_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -843,7 +1166,16 @@ def get_misc_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def get_misc_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_misc_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -867,12 +1199,24 @@ def get_misc_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -896,7 +1240,16 @@ def get_misc_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def get_misc_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_misc_pricing_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -920,12 +1273,24 @@ def get_misc_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -963,7 +1328,16 @@ def get_misc_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
     )
 
 
-def get_misc_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_misc_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -987,12 +1361,24 @@ def get_misc_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1016,7 +1402,16 @@ def get_misc_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def get_misc_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_misc_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1040,12 +1435,24 @@ def get_misc_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1083,7 +1490,16 @@ def get_misc_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
     )
 
 
-def get_misc_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_misc_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1107,12 +1523,24 @@ def get_misc_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1136,7 +1564,16 @@ def get_misc_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Re
     return None
 
 
-def get_misc_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_misc_pricing_for_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1160,12 +1597,24 @@ def get_misc_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1203,7 +1652,16 @@ def get_misc_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
     )
 
 
-def get_misc_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_misc_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    misc_specifiers: list[str],
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1227,12 +1685,24 @@ def get_misc_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        misc_specifiers: list[str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        misc_specifiers=misc_specifiers,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1256,7 +1726,17 @@ def get_misc_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
     return None
 
 
-def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1282,12 +1762,26 @@ def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1325,7 +1819,17 @@ def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
     )
 
 
-def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiPlanPricing | None:
+def get_plan_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1351,12 +1855,26 @@ def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Ap
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1380,7 +1898,17 @@ def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Ap
     return None
 
 
-def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1406,12 +1934,26 @@ def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1449,7 +1991,17 @@ def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
     )
 
 
-def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiPlanPricing | None:
+def get_plan_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str,
+    plan_uuids: list[str],
+    currency: str,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1475,12 +2027,26 @@ def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        plan_uuids: list[str]
+        currency: str
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        plan_uuids=plan_uuids,
+        currency=currency,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1504,7 +2070,18 @@ def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
     return None
 
 
-def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiPlanPricing]:
+def get_plan_pricing_sync_detailed(
+    *,
+    client: StolonClient,
+    plan_uuids: list[str],
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1529,13 +2106,29 @@ def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiPlanP
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuids: list[str]
+        currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs()
+    kwargs = get_plan_pricing._get_kwargs(
+        plan_uuids=plan_uuids,
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1573,7 +2166,18 @@ def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiPlanP
     )
 
 
-def get_plan_pricing_sync(*, client: StolonClient) -> ApiPlanPricing | None:
+def get_plan_pricing_sync(
+    *,
+    client: StolonClient,
+    plan_uuids: list[str],
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1598,13 +2202,29 @@ def get_plan_pricing_sync(*, client: StolonClient) -> ApiPlanPricing | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuids: list[str]
+        currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs()
+    kwargs = get_plan_pricing._get_kwargs(
+        plan_uuids=plan_uuids,
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1628,7 +2248,18 @@ def get_plan_pricing_sync(*, client: StolonClient) -> ApiPlanPricing | None:
     return None
 
 
-def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanPricing]:
+def get_plan_pricing_asyncio_detailed(
+    *,
+    client: StolonClient,
+    plan_uuids: list[str],
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1653,13 +2284,29 @@ def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiPl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuids: list[str]
+        currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs()
+    kwargs = get_plan_pricing._get_kwargs(
+        plan_uuids=plan_uuids,
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1697,7 +2344,18 @@ def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiPl
     )
 
 
-def get_plan_pricing_asyncio(*, client: StolonClient) -> ApiPlanPricing | None:
+def get_plan_pricing_asyncio(
+    *,
+    client: StolonClient,
+    plan_uuids: list[str],
+    currency: str,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1722,13 +2380,29 @@ def get_plan_pricing_asyncio(*, client: StolonClient) -> ApiPlanPricing | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuids: list[str]
+        currency: str
+        merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiPlanPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs()
+    kwargs = get_plan_pricing._get_kwargs(
+        plan_uuids=plan_uuids,
+        currency=currency,
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1752,7 +2426,17 @@ def get_plan_pricing_asyncio(*, client: StolonClient) -> ApiPlanPricing | None:
     return None
 
 
-def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1778,12 +2462,26 @@ def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uui
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1821,7 +2519,17 @@ def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uui
     )
 
 
-def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1847,12 +2555,26 @@ def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1877,7 +2599,15 @@ def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -
 
 
 def get_cellular_pricing_for_merchant_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -1904,12 +2634,26 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1947,7 +2691,17 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     )
 
 
-def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1973,12 +2727,26 @@ def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid)
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
+        uuid=uuid,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2002,7 +2770,17 @@ def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2028,12 +2806,26 @@ def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_i
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2071,7 +2863,17 @@ def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_i
     )
 
 
-def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2097,12 +2899,26 @@ def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2127,7 +2943,15 @@ def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -
 
 
 def get_cellular_pricing_for_reseller_asyncio_detailed(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2154,12 +2978,26 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         Response[ApiCellularPricing]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2197,7 +3035,17 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     )
 
 
-def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str,
+    currency: str,
+    carriers: Union[Unset, list[str]] = UNSET,
+    billing_method: Union[Unset, str] = UNSET,
+    rule_aliases: Union[Unset, list[str]] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    x_clover_appenv: str,
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2223,12 +3071,26 @@ def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        currency: str
+        carriers: Union[Unset, list[str]]
+        billing_method: Union[Unset, str]
+        rule_aliases: Union[Unset, list[str]]
+        date: Union[Unset, datetime.date]
+        x_clover_appenv: str
 
     Returns:
         ApiCellularPricing | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
+        r_id=r_id,
+        currency=currency,
+        carriers=carriers,
+        billing_method=billing_method,
+        rule_aliases=rule_aliases,
+        date=date,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

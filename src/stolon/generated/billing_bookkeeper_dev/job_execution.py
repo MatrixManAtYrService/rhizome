@@ -63,13 +63,48 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     kill_job,
     query_job,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_backout_job_params import (
+    ApiBackoutJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_base_job_params import (
+    ApiBaseJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_date_job_params import (
+    ApiDateJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_generate_error_reports_job_params import (
+    ApiGenerateErrorReportsJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_generate_invoices_job_params import (
+    ApiGenerateInvoicesJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_limit_job_params import (
+    ApiLimitJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_no_op_job_params import (
+    ApiNoOpJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_populate_cycle_job_params import (
+    ApiPopulateCycleJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_post_actions_job_params import (
+    ApiPostActionsJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_export_job_params import (
+    ApiSettlementExportJobParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_summarize_fees_job_params import (
+    ApiSummarizeFeesJobParams,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_posting_date_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-posting-date job
 
     Args:
@@ -87,13 +122,13 @@ def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_posting_date_job._get_kwargs()
+    kwargs = exec_advance_posting_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -131,7 +166,7 @@ def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_posting_date_job_sync(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-posting-date job
 
     Args:
@@ -149,13 +184,13 @@ def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_posting_date_job._get_kwargs()
+    kwargs = exec_advance_posting_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -179,7 +214,9 @@ def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_posting_date_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-posting-date job
 
     Args:
@@ -197,13 +234,13 @@ def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_posting_date_job._get_kwargs()
+    kwargs = exec_advance_posting_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -241,7 +278,7 @@ def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_posting_date_job_asyncio(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-posting-date job
 
     Args:
@@ -259,13 +296,13 @@ def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_posting_date_job._get_kwargs()
+    kwargs = exec_advance_posting_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -289,7 +326,9 @@ def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_validate_cycle_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -307,13 +346,13 @@ def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
+    kwargs = enqueue_backout_validate_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -351,7 +390,7 @@ def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient, body: ApiBackoutJobParams) -> ResponseError | None:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -369,13 +408,13 @@ def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
+    kwargs = enqueue_backout_validate_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -399,7 +438,9 @@ def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> Response
     return None
 
 
-def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_validate_cycle_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -417,13 +458,13 @@ def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
+    kwargs = enqueue_backout_validate_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -461,7 +502,9 @@ def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_validate_cycle_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -479,13 +522,13 @@ def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
+    kwargs = enqueue_backout_validate_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -509,7 +552,9 @@ def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> Respo
     return None
 
 
-def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_billing_date_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-billing-date job
 
     Args:
@@ -527,13 +572,13 @@ def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_billing_date_job._get_kwargs()
+    kwargs = exec_advance_billing_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -571,7 +616,7 @@ def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_billing_date_job_sync(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-billing-date job
 
     Args:
@@ -589,13 +634,13 @@ def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_billing_date_job._get_kwargs()
+    kwargs = exec_advance_billing_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -619,7 +664,9 @@ def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_billing_date_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-billing-date job
 
     Args:
@@ -637,13 +684,13 @@ def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_billing_date_job._get_kwargs()
+    kwargs = exec_advance_billing_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -681,7 +728,7 @@ def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_billing_date_job_asyncio(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-billing-date job
 
     Args:
@@ -699,13 +746,13 @@ def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_billing_date_job._get_kwargs()
+    kwargs = exec_advance_billing_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -729,7 +776,9 @@ def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_cellular_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -747,13 +796,13 @@ def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -791,7 +840,9 @@ def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonCli
     )
 
 
-def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_cellular_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -809,13 +860,13 @@ def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -839,7 +890,9 @@ def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> R
     return None
 
 
-def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_cellular_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -857,13 +910,13 @@ def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -901,7 +954,9 @@ def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: Stolon
     )
 
 
-def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_cellular_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -919,13 +974,13 @@ def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -949,7 +1004,9 @@ def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -
     return None
 
 
-def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_summarize_fees_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -967,13 +1024,13 @@ def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
+    kwargs = enqueue_backout_summarize_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1011,7 +1068,7 @@ def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient, body: ApiBackoutJobParams) -> ResponseError | None:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1029,13 +1086,13 @@ def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
+    kwargs = enqueue_backout_summarize_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1059,7 +1116,9 @@ def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> Response
     return None
 
 
-def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_summarize_fees_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1077,13 +1136,13 @@ def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
+    kwargs = enqueue_backout_summarize_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1121,7 +1180,9 @@ def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_summarize_fees_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1139,13 +1200,13 @@ def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
+    kwargs = enqueue_backout_summarize_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1169,7 +1230,9 @@ def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> Respo
     return None
 
 
-def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_app_meter_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1187,13 +1250,13 @@ def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1231,7 +1294,9 @@ def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonCl
     )
 
 
-def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_app_meter_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1249,13 +1314,13 @@ def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1279,7 +1344,9 @@ def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> 
     return None
 
 
-def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1297,13 +1364,13 @@ def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1341,7 +1408,9 @@ def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: Stolo
     )
 
 
-def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_app_meter_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1359,13 +1428,13 @@ def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1389,7 +1458,9 @@ def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) 
     return None
 
 
-def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_developer_fees_job_sync_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1407,13 +1478,13 @@ def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_developer_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1451,7 +1522,9 @@ def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) 
     )
 
 
-def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_developer_fees_job_sync(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1469,13 +1542,13 @@ def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_developer_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1499,7 +1572,9 @@ def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> Respon
     return None
 
 
-def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_developer_fees_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1517,13 +1592,13 @@ def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_developer_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1561,7 +1636,9 @@ def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClien
     )
 
 
-def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_developer_fees_job_asyncio(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1579,13 +1656,13 @@ def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_developer_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1609,7 +1686,9 @@ def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> Res
     return None
 
 
-def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_cellular_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1627,13 +1706,13 @@ def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1671,7 +1750,9 @@ def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> 
     )
 
 
-def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_cellular_actions_job_sync(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1689,13 +1770,13 @@ def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1719,7 +1800,9 @@ def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ResponseE
     return None
 
 
-def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_cellular_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1737,13 +1820,13 @@ def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1781,7 +1864,9 @@ def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) 
     )
 
 
-def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_cellular_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1799,13 +1884,13 @@ def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_cellular_actions_job._get_kwargs()
+    kwargs = enqueue_post_cellular_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1830,7 +1915,7 @@ def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> Respon
 
 
 def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
@@ -1849,13 +1934,13 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1893,7 +1978,9 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_developer_job_sync(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -1911,13 +1998,13 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1942,7 +2029,7 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonC
 
 
 def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
@@ -1961,13 +2048,13 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2005,7 +2092,9 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_developer_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -2023,13 +2112,13 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2054,7 +2143,7 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: Stol
 
 
 def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
@@ -2073,13 +2162,13 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2117,7 +2206,9 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_reseller_job_sync(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2135,13 +2226,13 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2166,7 +2257,7 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonCl
 
 
 def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
@@ -2185,13 +2276,13 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2229,7 +2320,9 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2247,13 +2340,13 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2277,7 +2370,9 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: Stolo
     return None
 
 
-def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_developer_invoices_job_sync_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2295,13 +2390,13 @@ def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_developer_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2339,7 +2434,9 @@ def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClien
     )
 
 
-def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_developer_invoices_job_sync(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2357,13 +2454,13 @@ def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_developer_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2387,7 +2484,9 @@ def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> Res
     return None
 
 
-def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_developer_invoices_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2405,13 +2504,13 @@ def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_developer_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2449,7 +2548,9 @@ def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonCl
     )
 
 
-def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_developer_invoices_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2467,13 +2568,13 @@ def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_developer_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2497,7 +2598,9 @@ def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> 
     return None
 
 
-def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_reseller_revenue_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2515,13 +2618,13 @@ def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2559,7 +2662,9 @@ def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonCli
     )
 
 
-def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_reseller_revenue_actions_job_sync(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2577,13 +2682,13 @@ def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2607,7 +2712,9 @@ def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> R
     return None
 
 
-def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2625,13 +2732,13 @@ def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2669,7 +2776,9 @@ def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: Stolon
     )
 
 
-def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_reseller_revenue_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2687,13 +2796,13 @@ def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2717,7 +2826,9 @@ def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -
     return None
 
 
-def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_posted_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2735,13 +2846,13 @@ def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_posted_actions_job._get_kwargs()
+    kwargs = exec_validate_posted_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2779,7 +2890,7 @@ def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_posted_actions_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2797,13 +2908,13 @@ def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_posted_actions_job._get_kwargs()
+    kwargs = exec_validate_posted_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2827,7 +2938,9 @@ def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_posted_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2845,13 +2958,13 @@ def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_posted_actions_job._get_kwargs()
+    kwargs = exec_validate_posted_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2889,7 +3002,7 @@ def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_posted_actions_job_asyncio(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2907,13 +3020,13 @@ def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_posted_actions_job._get_kwargs()
+    kwargs = exec_validate_posted_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2937,7 +3050,9 @@ def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_misc_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -2955,13 +3070,13 @@ def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2999,7 +3114,7 @@ def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_misc_actions_job_sync(*, client: StolonClient, body: ApiPostActionsJobParams) -> ResponseError | None:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -3017,13 +3132,13 @@ def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3047,7 +3162,9 @@ def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_misc_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -3065,13 +3182,13 @@ def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3109,7 +3226,9 @@ def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_misc_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -3127,13 +3246,13 @@ def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3157,7 +3276,9 @@ def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_plan_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3175,13 +3296,13 @@ def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3219,7 +3340,9 @@ def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_plan_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3237,13 +3360,13 @@ def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3267,7 +3390,9 @@ def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_plan_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3285,13 +3410,13 @@ def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3329,7 +3454,9 @@ def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_plan_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3347,13 +3474,13 @@ def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3377,7 +3504,9 @@ def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> Re
     return None
 
 
-def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_merchant_job_sync_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3395,13 +3524,13 @@ def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
+    kwargs = enqueue_settlement_export_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3439,7 +3568,9 @@ def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient
     )
 
 
-def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_merchant_job_sync(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3457,13 +3588,13 @@ def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
+    kwargs = enqueue_settlement_export_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3487,7 +3618,9 @@ def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_merchant_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3505,13 +3638,13 @@ def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
+    kwargs = enqueue_settlement_export_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3549,7 +3682,9 @@ def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonCli
     )
 
 
-def enqueue_settlement_export_merchant_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_merchant_job_asyncio(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3567,13 +3702,13 @@ def enqueue_settlement_export_merchant_job_asyncio(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
+    kwargs = enqueue_settlement_export_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3817,7 +3952,9 @@ def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ResponseErro
     return None
 
 
-def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_reseller_cycle_job_sync_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3835,13 +3972,13 @@ def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3879,7 +4016,9 @@ def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_reseller_cycle_job_sync(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3897,13 +4036,13 @@ def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3927,7 +4066,9 @@ def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_reseller_cycle_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3945,13 +4086,13 @@ def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3989,7 +4130,9 @@ def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_reseller_cycle_job_asyncio(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -4007,13 +4150,13 @@ def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_reseller_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4037,7 +4180,9 @@ def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_app_sub_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4055,13 +4200,13 @@ def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4099,7 +4244,9 @@ def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_app_sub_actions_job_sync(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4117,13 +4264,13 @@ def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4147,7 +4294,9 @@ def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_app_sub_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4165,13 +4314,13 @@ def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4209,7 +4358,9 @@ def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_app_sub_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4227,13 +4378,13 @@ def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4257,7 +4408,9 @@ def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> Respons
     return None
 
 
-def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_cycle_date_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4275,13 +4428,13 @@ def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_cycle_date_job._get_kwargs()
+    kwargs = exec_advance_cycle_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4319,7 +4472,7 @@ def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_cycle_date_job_sync(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4337,13 +4490,13 @@ def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_cycle_date_job._get_kwargs()
+    kwargs = exec_advance_cycle_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4367,7 +4520,9 @@ def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_cycle_date_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4385,13 +4540,13 @@ def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_cycle_date_job._get_kwargs()
+    kwargs = exec_advance_cycle_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4429,7 +4584,7 @@ def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_cycle_date_job_asyncio(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4447,13 +4602,13 @@ def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_cycle_date_job._get_kwargs()
+    kwargs = exec_advance_cycle_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4477,7 +4632,9 @@ def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_settlement_export_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4495,13 +4652,13 @@ def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_settlement_export_job._get_kwargs()
+    kwargs = enqueue_backout_settlement_export_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4539,7 +4696,9 @@ def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_settlement_export_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4557,13 +4716,13 @@ def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_settlement_export_job._get_kwargs()
+    kwargs = enqueue_backout_settlement_export_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4587,7 +4746,9 @@ def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_settlement_export_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4605,13 +4766,13 @@ def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_settlement_export_job._get_kwargs()
+    kwargs = enqueue_backout_settlement_export_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4649,7 +4810,9 @@ def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_settlement_export_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4667,13 +4830,13 @@ def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_settlement_export_job._get_kwargs()
+    kwargs = enqueue_backout_settlement_export_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4697,7 +4860,9 @@ def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> Re
     return None
 
 
-def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_developer_revenue_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4715,13 +4880,13 @@ def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4759,7 +4924,9 @@ def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonCl
     )
 
 
-def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_developer_revenue_actions_job_sync(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4777,13 +4944,13 @@ def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4807,7 +4974,9 @@ def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> 
     return None
 
 
-def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_developer_revenue_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4825,13 +4994,13 @@ def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4869,7 +5038,9 @@ def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: Stolo
     )
 
 
-def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_developer_revenue_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4887,13 +5058,13 @@ def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4917,7 +5088,9 @@ def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) 
     return None
 
 
-def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_developer_cycle_job_sync_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -4935,13 +5108,13 @@ def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_developer_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -4979,7 +5152,9 @@ def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) 
     )
 
 
-def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_developer_cycle_job_sync(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -4997,13 +5172,13 @@ def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_developer_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5027,7 +5202,9 @@ def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> Respon
     return None
 
 
-def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_developer_cycle_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -5045,13 +5222,13 @@ def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_developer_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5089,7 +5266,9 @@ def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClien
     )
 
 
-def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_developer_cycle_job_asyncio(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -5107,13 +5286,13 @@ def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_developer_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5137,7 +5316,7 @@ def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> Res
     return None
 
 
-def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_events_job_sync_detailed(*, client: StolonClient, body: ApiBaseJobParams) -> Response[ResponseError]:
     """Executes the validate-events job
 
     Args:
@@ -5155,13 +5334,13 @@ def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_events_job._get_kwargs()
+    kwargs = exec_validate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5199,7 +5378,7 @@ def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def exec_validate_events_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_events_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-events job
 
     Args:
@@ -5217,13 +5396,13 @@ def exec_validate_events_job_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_events_job._get_kwargs()
+    kwargs = exec_validate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5247,7 +5426,9 @@ def exec_validate_events_job_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_events_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-events job
 
     Args:
@@ -5265,13 +5446,13 @@ def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_events_job._get_kwargs()
+    kwargs = exec_validate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5309,7 +5490,7 @@ def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def exec_validate_events_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_events_job_asyncio(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-events job
 
     Args:
@@ -5327,13 +5508,13 @@ def exec_validate_events_job_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_events_job._get_kwargs()
+    kwargs = exec_validate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5357,7 +5538,9 @@ def exec_validate_events_job_asyncio(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_merchant_invoices_job_sync_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5375,13 +5558,13 @@ def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5419,7 +5602,9 @@ def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient
     )
 
 
-def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_merchant_invoices_job_sync(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5437,13 +5622,13 @@ def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5467,7 +5652,9 @@ def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_merchant_invoices_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5485,13 +5672,13 @@ def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5529,7 +5716,9 @@ def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonCli
     )
 
 
-def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_merchant_invoices_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5547,13 +5736,13 @@ def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_merchant_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5577,7 +5766,9 @@ def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> R
     return None
 
 
-def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_sync_developers_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5595,13 +5786,13 @@ def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_sync_developers_job._get_kwargs()
+    kwargs = enqueue_sync_developers_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5639,7 +5830,7 @@ def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_sync_developers_job_sync(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5657,13 +5848,13 @@ def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_sync_developers_job._get_kwargs()
+    kwargs = enqueue_sync_developers_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5687,7 +5878,9 @@ def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_sync_developers_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5705,13 +5898,13 @@ def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_sync_developers_job._get_kwargs()
+    kwargs = enqueue_sync_developers_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5749,7 +5942,7 @@ def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_sync_developers_job_asyncio(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5767,13 +5960,13 @@ def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_sync_developers_job._get_kwargs()
+    kwargs = enqueue_sync_developers_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5797,7 +5990,9 @@ def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ResponseErro
     return None
 
 
-def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5815,13 +6010,13 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(*, client: S
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5859,7 +6054,9 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(*, client: S
     )
 
 
-def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_reseller_revenue_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5877,13 +6074,13 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5908,7 +6105,7 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClie
 
 
 def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiBackoutJobParams
 ) -> Response[ResponseError]:
     """Enqueues the backout-post-reseller-revenue-actions job
 
@@ -5927,13 +6124,13 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -5971,7 +6168,9 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
     )
 
 
-def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_reseller_revenue_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5989,13 +6188,13 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6019,7 +6218,9 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonC
     return None
 
 
-def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_app_meter_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6037,13 +6238,13 @@ def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6081,7 +6282,9 @@ def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_app_meter_actions_job_sync(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6099,13 +6302,13 @@ def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6129,7 +6332,9 @@ def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> Response
     return None
 
 
-def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_app_meter_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6147,13 +6352,13 @@ def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6191,7 +6396,9 @@ def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_app_meter_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6209,13 +6416,13 @@ def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
+    kwargs = enqueue_post_app_meter_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6239,7 +6446,9 @@ def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> Respo
     return None
 
 
-def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_summarized_balances_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6257,13 +6466,13 @@ def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_summarized_balances_job._get_kwargs()
+    kwargs = exec_validate_summarized_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6301,7 +6510,7 @@ def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_summarized_balances_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6319,13 +6528,13 @@ def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_summarized_balances_job._get_kwargs()
+    kwargs = exec_validate_summarized_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6349,7 +6558,9 @@ def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_summarized_balances_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6367,13 +6578,13 @@ def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_summarized_balances_job._get_kwargs()
+    kwargs = exec_validate_summarized_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6411,7 +6622,9 @@ def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def exec_validate_summarized_balances_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_summarized_balances_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ResponseError | None:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6429,13 +6642,13 @@ def exec_validate_summarized_balances_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_summarized_balances_job._get_kwargs()
+    kwargs = exec_validate_summarized_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6679,7 +6892,9 @@ def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ResponseErr
     return None
 
 
-def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_manage_documents_job_sync_detailed(
+    *, client: StolonClient, body: ApiLimitJobParams
+) -> Response[ResponseError]:
     """Enqueues the manage-documents job
 
     Args:
@@ -6697,13 +6912,13 @@ def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLimitJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_manage_documents_job._get_kwargs()
+    kwargs = enqueue_manage_documents_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6741,7 +6956,7 @@ def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_manage_documents_job_sync(*, client: StolonClient, body: ApiLimitJobParams) -> ResponseError | None:
     """Enqueues the manage-documents job
 
     Args:
@@ -6759,13 +6974,13 @@ def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLimitJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_manage_documents_job._get_kwargs()
+    kwargs = enqueue_manage_documents_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6789,7 +7004,9 @@ def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ResponseError 
     return None
 
 
-def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_manage_documents_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiLimitJobParams
+) -> Response[ResponseError]:
     """Enqueues the manage-documents job
 
     Args:
@@ -6807,13 +7024,13 @@ def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLimitJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_manage_documents_job._get_kwargs()
+    kwargs = enqueue_manage_documents_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6851,7 +7068,7 @@ def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_manage_documents_job_asyncio(*, client: StolonClient, body: ApiLimitJobParams) -> ResponseError | None:
     """Enqueues the manage-documents job
 
     Args:
@@ -6869,13 +7086,13 @@ def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ResponseErr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLimitJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_manage_documents_job._get_kwargs()
+    kwargs = enqueue_manage_documents_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6899,7 +7116,9 @@ def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ResponseErr
     return None
 
 
-def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_misc_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6917,13 +7136,13 @@ def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -6961,7 +7180,9 @@ def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_misc_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6979,13 +7200,13 @@ def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7009,7 +7230,9 @@ def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_misc_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -7027,13 +7250,13 @@ def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7071,7 +7294,9 @@ def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_misc_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -7089,13 +7314,13 @@ def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_misc_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7119,7 +7344,9 @@ def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> Re
     return None
 
 
-def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_app_sub_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7137,13 +7364,13 @@ def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7181,7 +7408,9 @@ def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClie
     )
 
 
-def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_app_sub_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7199,13 +7428,13 @@ def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7229,7 +7458,9 @@ def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> Re
     return None
 
 
-def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7247,13 +7478,13 @@ def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7291,7 +7522,9 @@ def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonC
     )
 
 
-def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_app_sub_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7309,13 +7542,13 @@ def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7339,7 +7572,9 @@ def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) ->
     return None
 
 
-def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_plan_actions_job_sync_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7357,13 +7592,13 @@ def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7401,7 +7636,7 @@ def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_plan_actions_job_sync(*, client: StolonClient, body: ApiPostActionsJobParams) -> ResponseError | None:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7419,13 +7654,13 @@ def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7449,7 +7684,9 @@ def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_post_plan_actions_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> Response[ResponseError]:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7467,13 +7704,13 @@ def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7511,7 +7748,9 @@ def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_post_plan_actions_job_asyncio(
+    *, client: StolonClient, body: ApiPostActionsJobParams
+) -> ResponseError | None:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7529,13 +7768,13 @@ def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPostActionsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_post_plan_actions_job._get_kwargs()
+    kwargs = enqueue_post_plan_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7559,7 +7798,9 @@ def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_developer_job_sync_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7577,13 +7818,13 @@ def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_developer_job._get_kwargs()
+    kwargs = enqueue_settlement_export_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7621,7 +7862,9 @@ def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClien
     )
 
 
-def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_developer_job_sync(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7639,13 +7882,13 @@ def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_developer_job._get_kwargs()
+    kwargs = enqueue_settlement_export_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7669,7 +7912,9 @@ def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> Res
     return None
 
 
-def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_developer_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7687,13 +7932,13 @@ def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_developer_job._get_kwargs()
+    kwargs = enqueue_settlement_export_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7731,7 +7976,9 @@ def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonCl
     )
 
 
-def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_developer_job_asyncio(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7749,13 +7996,13 @@ def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_developer_job._get_kwargs()
+    kwargs = enqueue_settlement_export_developer_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7779,7 +8026,9 @@ def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> 
     return None
 
 
-def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_settlement_balances_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7797,13 +8046,13 @@ def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_settlement_balances_job._get_kwargs()
+    kwargs = exec_validate_settlement_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7841,7 +8090,7 @@ def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_settlement_balances_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7859,13 +8108,13 @@ def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_settlement_balances_job._get_kwargs()
+    kwargs = exec_validate_settlement_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7889,7 +8138,9 @@ def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_settlement_balances_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7907,13 +8158,13 @@ def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_settlement_balances_job._get_kwargs()
+    kwargs = exec_validate_settlement_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7951,7 +8202,9 @@ def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_settlement_balances_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ResponseError | None:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7969,13 +8222,13 @@ def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_settlement_balances_job._get_kwargs()
+    kwargs = exec_validate_settlement_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -7999,7 +8252,9 @@ def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> Re
     return None
 
 
-def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_merchant_fees_job_sync_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -8017,13 +8272,13 @@ def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8061,7 +8316,9 @@ def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_merchant_fees_job_sync(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -8079,13 +8336,13 @@ def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8109,7 +8366,9 @@ def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_merchant_fees_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -8127,13 +8386,13 @@ def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8171,7 +8430,9 @@ def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_merchant_fees_job_asyncio(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -8189,13 +8450,13 @@ def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_merchant_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8219,7 +8480,9 @@ def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> Resp
     return None
 
 
-def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_settlement_date_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8237,13 +8500,13 @@ def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_settlement_date_job._get_kwargs()
+    kwargs = exec_advance_settlement_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8281,7 +8544,7 @@ def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_settlement_date_job_sync(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8299,13 +8562,13 @@ def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_settlement_date_job._get_kwargs()
+    kwargs = exec_advance_settlement_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8329,7 +8592,9 @@ def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_advance_settlement_date_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8347,13 +8612,13 @@ def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_settlement_date_job._get_kwargs()
+    kwargs = exec_advance_settlement_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8391,7 +8656,7 @@ def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_advance_settlement_date_job_asyncio(*, client: StolonClient, body: ApiDateJobParams) -> ResponseError | None:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8409,13 +8674,13 @@ def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_advance_settlement_date_job._get_kwargs()
+    kwargs = exec_advance_settlement_date_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8439,7 +8704,7 @@ def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_no_op_job_sync_detailed(*, client: StolonClient, body: ApiNoOpJobParams) -> Response[ResponseError]:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8457,13 +8722,13 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8501,7 +8766,7 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[Respons
     )
 
 
-def enqueue_no_op_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_no_op_job_sync(*, client: StolonClient, body: ApiNoOpJobParams) -> ResponseError | None:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8519,13 +8784,13 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8549,7 +8814,7 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient, body: ApiNoOpJobParams) -> Response[ResponseError]:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8567,13 +8832,13 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8611,7 +8876,7 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_no_op_job_asyncio(*, client: StolonClient, body: ApiNoOpJobParams) -> ResponseError | None:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8629,13 +8894,13 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8659,7 +8924,9 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_reseller_job_sync_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8677,13 +8944,13 @@ def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
+    kwargs = enqueue_settlement_export_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8721,7 +8988,9 @@ def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient
     )
 
 
-def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_reseller_job_sync(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8739,13 +9008,13 @@ def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
+    kwargs = enqueue_settlement_export_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8769,7 +9038,9 @@ def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_settlement_export_reseller_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8787,13 +9058,13 @@ def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
+    kwargs = enqueue_settlement_export_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8831,7 +9102,9 @@ def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonCli
     )
 
 
-def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_settlement_export_reseller_job_asyncio(
+    *, client: StolonClient, body: ApiSettlementExportJobParams
+) -> ResponseError | None:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8849,13 +9122,13 @@ def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSettlementExportJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
+    kwargs = enqueue_settlement_export_reseller_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8879,7 +9152,9 @@ def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> R
     return None
 
 
-def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_reseller_fees_job_sync_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8897,13 +9172,13 @@ def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8941,7 +9216,9 @@ def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_reseller_fees_job_sync(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8959,13 +9236,13 @@ def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -8989,7 +9266,9 @@ def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_summarize_reseller_fees_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> Response[ResponseError]:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -9007,13 +9286,13 @@ def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9051,7 +9330,9 @@ def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_summarize_reseller_fees_job_asyncio(
+    *, client: StolonClient, body: ApiSummarizeFeesJobParams
+) -> ResponseError | None:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -9069,13 +9350,13 @@ def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiSummarizeFeesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
+    kwargs = enqueue_summarize_reseller_fees_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9099,7 +9380,9 @@ def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> Resp
     return None
 
 
-def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_invoiced_balances_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9117,13 +9400,13 @@ def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_invoiced_balances_job._get_kwargs()
+    kwargs = exec_validate_invoiced_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9161,7 +9444,7 @@ def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_invoiced_balances_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ResponseError | None:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9179,13 +9462,13 @@ def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_invoiced_balances_job._get_kwargs()
+    kwargs = exec_validate_invoiced_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9209,7 +9492,9 @@ def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> Respons
     return None
 
 
-def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def exec_validate_invoiced_balances_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ResponseError]:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9227,13 +9512,13 @@ def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_invoiced_balances_job._get_kwargs()
+    kwargs = exec_validate_invoiced_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9271,7 +9556,9 @@ def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def exec_validate_invoiced_balances_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ResponseError | None:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9289,13 +9576,13 @@ def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = exec_validate_invoiced_balances_job._get_kwargs()
+    kwargs = exec_validate_invoiced_balances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9320,7 +9607,7 @@ def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> Resp
 
 
 def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
@@ -9339,13 +9626,13 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9383,7 +9670,9 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_merchant_job_sync(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9401,13 +9690,13 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9432,7 +9721,7 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonCl
 
 
 def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
 ) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
@@ -9451,13 +9740,13 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9495,7 +9784,9 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
     )
 
 
-def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateErrorReportsJobParams
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9513,13 +9804,13 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateErrorReportsJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
+    kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9543,7 +9834,9 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: Stolo
     return None
 
 
-def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_reseller_invoices_job_sync_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9561,13 +9854,13 @@ def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9605,7 +9898,9 @@ def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient
     )
 
 
-def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_reseller_invoices_job_sync(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9623,13 +9918,13 @@ def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9653,7 +9948,9 @@ def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_generate_reseller_invoices_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9671,13 +9968,13 @@ def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9715,7 +10012,9 @@ def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonCli
     )
 
 
-def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_generate_reseller_invoices_job_asyncio(
+    *, client: StolonClient, body: ApiGenerateInvoicesJobParams
+) -> ResponseError | None:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9733,13 +10032,13 @@ def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiGenerateInvoicesJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
+    kwargs = enqueue_generate_reseller_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9764,7 +10063,7 @@ def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> R
 
 
 def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiBackoutJobParams
 ) -> Response[ResponseError]:
     """Enqueues the backout-post-developer-revenue-actions job
 
@@ -9783,13 +10082,13 @@ def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9827,7 +10126,9 @@ def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
     )
 
 
-def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_developer_revenue_actions_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9845,13 +10146,13 @@ def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9876,7 +10177,7 @@ def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonCli
 
 
 def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiBackoutJobParams
 ) -> Response[ResponseError]:
     """Enqueues the backout-post-developer-revenue-actions job
 
@@ -9895,13 +10196,13 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9939,7 +10240,9 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
     )
 
 
-def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_post_developer_revenue_actions_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9957,13 +10260,13 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
+    kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -9987,7 +10290,9 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: Stolon
     return None
 
 
-def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_merchant_cycle_job_sync_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -10005,13 +10310,13 @@ def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10049,7 +10354,9 @@ def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_merchant_cycle_job_sync(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -10067,13 +10374,13 @@ def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10097,7 +10404,9 @@ def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> Respons
     return None
 
 
-def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_populate_merchant_cycle_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -10115,13 +10424,13 @@ def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10159,7 +10468,9 @@ def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_populate_merchant_cycle_job_asyncio(
+    *, client: StolonClient, body: ApiPopulateCycleJobParams
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -10177,13 +10488,13 @@ def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPopulateCycleJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
+    kwargs = enqueue_populate_merchant_cycle_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10207,7 +10518,9 @@ def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> Resp
     return None
 
 
-def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10225,13 +10538,13 @@ def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
+    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10269,7 +10582,9 @@ def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: Stolo
     )
 
 
-def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_delete_terms_for_closed_merchants_job_sync(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> ResponseError | None:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10287,13 +10602,13 @@ def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
+    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10317,7 +10632,9 @@ def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) 
     return None
 
 
-def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> Response[ResponseError]:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10335,13 +10652,13 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: St
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
+    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10379,7 +10696,9 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: St
     )
 
 
-def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_delete_terms_for_closed_merchants_job_asyncio(
+    *, client: StolonClient, body: ApiDateJobParams
+) -> ResponseError | None:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10397,13 +10716,13 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiDateJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
+    kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10427,7 +10746,9 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClien
     return None
 
 
-def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_generate_invoices_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10445,13 +10766,13 @@ def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
+    kwargs = enqueue_backout_generate_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10489,7 +10810,9 @@ def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_generate_invoices_job_sync(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10507,13 +10830,13 @@ def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
+    kwargs = enqueue_backout_generate_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10537,7 +10860,9 @@ def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> Respo
     return None
 
 
-def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def enqueue_backout_generate_invoices_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> Response[ResponseError]:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10555,13 +10880,13 @@ def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
+    kwargs = enqueue_backout_generate_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -10599,7 +10924,9 @@ def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClie
     )
 
 
-def enqueue_backout_generate_invoices_job_asyncio(*, client: StolonClient) -> ResponseError | None:
+def enqueue_backout_generate_invoices_job_asyncio(
+    *, client: StolonClient, body: ApiBackoutJobParams
+) -> ResponseError | None:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10617,13 +10944,13 @@ def enqueue_backout_generate_invoices_job_asyncio(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackoutJobParams
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
+    kwargs = enqueue_backout_generate_invoices_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import (
@@ -26,10 +28,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_ledger_account_transition_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountTransition]:
+def create_ledger_account_transition_sync_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountTransition
+) -> Response[ApiLedgerAccountTransition]:
     """Create ledger account transition
 
     Args:
@@ -47,13 +51,13 @@ def create_ledger_account_transition_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountTransition
 
     Returns:
         Response[ApiLedgerAccountTransition]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_transition._get_kwargs()
+    kwargs = create_ledger_account_transition._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +95,9 @@ def create_ledger_account_transition_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_ledger_account_transition_sync(*, client: StolonClient) -> ApiLedgerAccountTransition | None:
+def create_ledger_account_transition_sync(
+    *, client: StolonClient, body: ApiLedgerAccountTransition
+) -> ApiLedgerAccountTransition | None:
     """Create ledger account transition
 
     Args:
@@ -109,13 +115,13 @@ def create_ledger_account_transition_sync(*, client: StolonClient) -> ApiLedgerA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountTransition
 
     Returns:
         ApiLedgerAccountTransition | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_transition._get_kwargs()
+    kwargs = create_ledger_account_transition._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +145,9 @@ def create_ledger_account_transition_sync(*, client: StolonClient) -> ApiLedgerA
     return None
 
 
-def create_ledger_account_transition_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountTransition]:
+def create_ledger_account_transition_asyncio_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountTransition
+) -> Response[ApiLedgerAccountTransition]:
     """Create ledger account transition
 
     Args:
@@ -157,13 +165,13 @@ def create_ledger_account_transition_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountTransition
 
     Returns:
         Response[ApiLedgerAccountTransition]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_transition._get_kwargs()
+    kwargs = create_ledger_account_transition._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +209,9 @@ def create_ledger_account_transition_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def create_ledger_account_transition_asyncio(*, client: StolonClient) -> ApiLedgerAccountTransition | None:
+def create_ledger_account_transition_asyncio(
+    *, client: StolonClient, body: ApiLedgerAccountTransition
+) -> ApiLedgerAccountTransition | None:
     """Create ledger account transition
 
     Args:
@@ -219,13 +229,13 @@ def create_ledger_account_transition_asyncio(*, client: StolonClient) -> ApiLedg
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountTransition
 
     Returns:
         ApiLedgerAccountTransition | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_transition._get_kwargs()
+    kwargs = create_ledger_account_transition._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -460,7 +470,13 @@ def delete_ledger_account_transition_by_uuid_asyncio(*, client: StolonClient, uu
 
 
 def get_ledger_account_transitions_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    action: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]:
     """Get ledger account transitions using the purpose value
 
@@ -483,13 +499,19 @@ def get_ledger_account_transitions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        action: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs()
+    kwargs = get_ledger_account_transitions._get_kwargs(
+        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -528,7 +550,13 @@ def get_ledger_account_transitions_sync_detailed(
 
 
 def get_ledger_account_transitions_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    action: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None:
     """Get ledger account transitions using the purpose value
 
@@ -551,13 +579,19 @@ def get_ledger_account_transitions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        action: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs()
+    kwargs = get_ledger_account_transitions._get_kwargs(
+        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -575,7 +609,13 @@ def get_ledger_account_transitions_sync(
 
 
 def get_ledger_account_transitions_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    action: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]:
     """Get ledger account transitions using the purpose value
 
@@ -598,13 +638,19 @@ def get_ledger_account_transitions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        action: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs()
+    kwargs = get_ledger_account_transitions._get_kwargs(
+        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -643,7 +689,13 @@ def get_ledger_account_transitions_asyncio_detailed(
 
 
 def get_ledger_account_transitions_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: Union[Unset, datetime.date] = UNSET,
+    action: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None:
     """Get ledger account transitions using the purpose value
 
@@ -666,13 +718,19 @@ def get_ledger_account_transitions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: Union[Unset, datetime.date]
+        action: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs()
+    kwargs = get_ledger_account_transitions._get_kwargs(
+        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -916,7 +974,7 @@ def get_ledger_account_transition_by_uuid_asyncio(
 
 
 def update_ledger_account_transition_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Update ledger account transition
 
@@ -937,12 +995,13 @@ def update_ledger_account_transition_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountTransition
 
     Returns:
         Response[ApiLedgerAccountTransition]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -980,7 +1039,9 @@ def update_ledger_account_transition_sync_detailed(
     )
 
 
-def update_ledger_account_transition_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountTransition | None:
+def update_ledger_account_transition_sync(
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+) -> ApiLedgerAccountTransition | None:
     """Update ledger account transition
 
     Args:
@@ -1000,12 +1061,13 @@ def update_ledger_account_transition_sync(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountTransition
 
     Returns:
         ApiLedgerAccountTransition | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1030,7 +1092,7 @@ def update_ledger_account_transition_sync(*, client: StolonClient, uuid: str) ->
 
 
 def update_ledger_account_transition_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Update ledger account transition
 
@@ -1051,12 +1113,13 @@ def update_ledger_account_transition_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountTransition
 
     Returns:
         Response[ApiLedgerAccountTransition]
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1094,7 +1157,9 @@ def update_ledger_account_transition_asyncio_detailed(
     )
 
 
-def update_ledger_account_transition_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerAccountTransition | None:
+def update_ledger_account_transition_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+) -> ApiLedgerAccountTransition | None:
     """Update ledger account transition
 
     Args:
@@ -1114,12 +1179,13 @@ def update_ledger_account_transition_asyncio(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiLedgerAccountTransition
 
     Returns:
         ApiLedgerAccountTransition | None
     """
     # Extract request parameters from generated function
-    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid)
+    kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

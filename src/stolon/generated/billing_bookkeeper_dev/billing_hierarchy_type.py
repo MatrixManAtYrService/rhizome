@@ -30,7 +30,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def get_billing_hierarchy_type_by_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_type_by_type_sync_detailed(*, client: StolonClient, type_: str) -> Response[ResponseError]:
     """Get billing hierarchy type by hierarchy type
 
     Args:
@@ -48,13 +48,13 @@ def get_billing_hierarchy_type_by_type_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_type_by_type._get_kwargs()
+    kwargs = get_billing_hierarchy_type_by_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -92,7 +92,7 @@ def get_billing_hierarchy_type_by_type_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def get_billing_hierarchy_type_by_type_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_type_by_type_sync(*, client: StolonClient, type_: str) -> ResponseError | None:
     """Get billing hierarchy type by hierarchy type
 
     Args:
@@ -110,13 +110,13 @@ def get_billing_hierarchy_type_by_type_sync(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_type_by_type._get_kwargs()
+    kwargs = get_billing_hierarchy_type_by_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -140,7 +140,7 @@ def get_billing_hierarchy_type_by_type_sync(*, client: StolonClient) -> Response
     return None
 
 
-def get_billing_hierarchy_type_by_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_hierarchy_type_by_type_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[ResponseError]:
     """Get billing hierarchy type by hierarchy type
 
     Args:
@@ -158,13 +158,13 @@ def get_billing_hierarchy_type_by_type_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_type_by_type._get_kwargs()
+    kwargs = get_billing_hierarchy_type_by_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -202,7 +202,7 @@ def get_billing_hierarchy_type_by_type_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def get_billing_hierarchy_type_by_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_hierarchy_type_by_type_asyncio(*, client: StolonClient, type_: str) -> ResponseError | None:
     """Get billing hierarchy type by hierarchy type
 
     Args:
@@ -220,13 +220,13 @@ def get_billing_hierarchy_type_by_type_asyncio(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_type_by_type._get_kwargs()
+    kwargs = get_billing_hierarchy_type_by_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -460,7 +460,9 @@ def delete_billing_hierarchy_type_by_uuid_asyncio(*, client: StolonClient, uuid:
     return None
 
 
-def create_billing_hierarchy_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_type_sync_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchyType
+) -> Response[ResponseError]:
     """Create billing hierarchy type
 
     Args:
@@ -478,13 +480,13 @@ def create_billing_hierarchy_type_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_type._get_kwargs()
+    kwargs = create_billing_hierarchy_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -522,7 +524,7 @@ def create_billing_hierarchy_type_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_billing_hierarchy_type_sync(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_type_sync(*, client: StolonClient, body: ApiBillingHierarchyType) -> ResponseError | None:
     """Create billing hierarchy type
 
     Args:
@@ -540,13 +542,13 @@ def create_billing_hierarchy_type_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_type._get_kwargs()
+    kwargs = create_billing_hierarchy_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -570,7 +572,9 @@ def create_billing_hierarchy_type_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def create_billing_hierarchy_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_billing_hierarchy_type_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingHierarchyType
+) -> Response[ResponseError]:
     """Create billing hierarchy type
 
     Args:
@@ -588,13 +592,13 @@ def create_billing_hierarchy_type_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_type._get_kwargs()
+    kwargs = create_billing_hierarchy_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -632,7 +636,9 @@ def create_billing_hierarchy_type_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_billing_hierarchy_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_billing_hierarchy_type_asyncio(
+    *, client: StolonClient, body: ApiBillingHierarchyType
+) -> ResponseError | None:
     """Create billing hierarchy type
 
     Args:
@@ -650,13 +656,13 @@ def create_billing_hierarchy_type_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingHierarchyType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy_type._get_kwargs()
+    kwargs = create_billing_hierarchy_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -889,7 +895,7 @@ def get_all_billing_hierarchy_types_asyncio(*, client: StolonClient) -> Response
 
 
 def update_billing_hierarchy_type_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingHierarchyType
 ) -> Response[ApiBillingHierarchyType | ResponseError]:
     """Update billing hierarchy type
 
@@ -910,12 +916,13 @@ def update_billing_hierarchy_type_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingHierarchyType
 
     Returns:
         Response[ApiBillingHierarchyType | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid)
+    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -954,7 +961,7 @@ def update_billing_hierarchy_type_sync_detailed(
 
 
 def update_billing_hierarchy_type_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingHierarchyType
 ) -> ApiBillingHierarchyType | ResponseError | None:
     """Update billing hierarchy type
 
@@ -975,12 +982,13 @@ def update_billing_hierarchy_type_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingHierarchyType
 
     Returns:
         ApiBillingHierarchyType | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid)
+    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -998,7 +1006,7 @@ def update_billing_hierarchy_type_sync(
 
 
 def update_billing_hierarchy_type_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingHierarchyType
 ) -> Response[ApiBillingHierarchyType | ResponseError]:
     """Update billing hierarchy type
 
@@ -1019,12 +1027,13 @@ def update_billing_hierarchy_type_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingHierarchyType
 
     Returns:
         Response[ApiBillingHierarchyType | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid)
+    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1063,7 +1072,7 @@ def update_billing_hierarchy_type_asyncio_detailed(
 
 
 def update_billing_hierarchy_type_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingHierarchyType
 ) -> ApiBillingHierarchyType | ResponseError | None:
     """Update billing hierarchy type
 
@@ -1084,12 +1093,13 @@ def update_billing_hierarchy_type_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingHierarchyType
 
     Returns:
         ApiBillingHierarchyType | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid)
+    kwargs = update_billing_hierarchy_type._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(

@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import (
@@ -36,7 +38,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_monetary_rule_set_by_uuid_sync_detailed(
@@ -251,7 +253,14 @@ def get_monetary_rule_set_by_uuid_asyncio(
     return None
 
 
-def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_sets_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -272,13 +281,18 @@ def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs()
+    kwargs = get_monetary_rule_sets._get_kwargs(
+        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -316,7 +330,14 @@ def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[Re
     )
 
 
-def get_monetary_rule_sets_sync(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_sets_sync(
+    *,
+    client: StolonClient,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -337,13 +358,18 @@ def get_monetary_rule_sets_sync(*, client: StolonClient) -> ResponseError | None
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs()
+    kwargs = get_monetary_rule_sets._get_kwargs(
+        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -367,7 +393,14 @@ def get_monetary_rule_sets_sync(*, client: StolonClient) -> ResponseError | None
     return None
 
 
-def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_sets_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -388,13 +421,18 @@ def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs()
+    kwargs = get_monetary_rule_sets._get_kwargs(
+        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -432,7 +470,14 @@ def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
 
-def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_sets_asyncio(
+    *,
+    client: StolonClient,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -453,13 +498,18 @@ def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ResponseError | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs()
+    kwargs = get_monetary_rule_sets._get_kwargs(
+        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1131,7 +1181,9 @@ def get_monetary_rule_set_with_rules_asyncio(
     return None
 
 
-def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_set_rule_sync_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleSetRule
+) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1149,13 +1201,13 @@ def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSetRule
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs()
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1193,7 +1245,7 @@ def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_set_rule_sync(*, client: StolonClient, body: ApiMonetaryRuleSetRule) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1211,13 +1263,13 @@ def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSetRule
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs()
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1241,7 +1293,9 @@ def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_set_rule_asyncio_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleSetRule
+) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1259,13 +1313,13 @@ def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSetRule
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs()
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1303,7 +1357,9 @@ def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_set_rule_asyncio(
+    *, client: StolonClient, body: ApiMonetaryRuleSetRule
+) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1321,13 +1377,13 @@ def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSetRule
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs()
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1351,7 +1407,15 @@ def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ResponseEr
     return None
 
 
-def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_set_rules_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_set_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1373,13 +1437,19 @@ def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_set_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs()
+    kwargs = get_monetary_rule_set_rules._get_kwargs(
+        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1417,7 +1487,15 @@ def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_set_rules_sync(
+    *,
+    client: StolonClient,
+    rule_set_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1439,13 +1517,19 @@ def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_set_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs()
+    kwargs = get_monetary_rule_set_rules._get_kwargs(
+        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1469,7 +1553,15 @@ def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_monetary_rule_set_rules_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_set_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1491,13 +1583,19 @@ def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_set_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs()
+    kwargs = get_monetary_rule_set_rules._get_kwargs(
+        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1535,7 +1633,15 @@ def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_monetary_rule_set_rules_asyncio(
+    *,
+    client: StolonClient,
+    rule_set_uuid: Union[Unset, str] = UNSET,
+    rule_uuid: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1557,13 +1663,19 @@ def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ResponseErro
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_set_uuid: Union[Unset, str]
+        rule_uuid: Union[Unset, str]
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs()
+    kwargs = get_monetary_rule_set_rules._get_kwargs(
+        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1793,7 +1905,9 @@ def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     return None
 
 
-def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_monetary_rule_set_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
+) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -1813,12 +1927,13 @@ def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1856,7 +1971,7 @@ def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
 
-def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -1876,12 +1991,13 @@ def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1905,7 +2021,9 @@ def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     return None
 
 
-def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_monetary_rule_set_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
+) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -1925,12 +2043,13 @@ def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1968,7 +2087,9 @@ def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
 
-def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_monetary_rule_set_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
+) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -1988,12 +2109,13 @@ def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2017,7 +2139,9 @@ def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     return None
 
 
-def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_set_sync_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleSet
+) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2035,13 +2159,13 @@ def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set._get_kwargs()
+    kwargs = create_monetary_rule_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2079,7 +2203,7 @@ def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[
     )
 
 
-def create_monetary_rule_set_sync(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_set_sync(*, client: StolonClient, body: ApiMonetaryRuleSet) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2097,13 +2221,13 @@ def create_monetary_rule_set_sync(*, client: StolonClient) -> ResponseError | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set._get_kwargs()
+    kwargs = create_monetary_rule_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2127,7 +2251,9 @@ def create_monetary_rule_set_sync(*, client: StolonClient) -> ResponseError | No
     return None
 
 
-def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_monetary_rule_set_asyncio_detailed(
+    *, client: StolonClient, body: ApiMonetaryRuleSet
+) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2145,13 +2271,13 @@ def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSet
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set._get_kwargs()
+    kwargs = create_monetary_rule_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2189,7 +2315,7 @@ def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_monetary_rule_set_asyncio(*, client: StolonClient, body: ApiMonetaryRuleSet) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2207,13 +2333,13 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMonetaryRuleSet
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set._get_kwargs()
+    kwargs = create_monetary_rule_set._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2445,7 +2571,9 @@ def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_monetary_rule_set_rule_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2465,12 +2593,13 @@ def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSetRule
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2508,7 +2637,9 @@ def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: s
     )
 
 
-def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_monetary_rule_set_rule_sync(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2528,12 +2659,13 @@ def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSetRule
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2557,7 +2689,9 @@ def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def update_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def update_monetary_rule_set_rule_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2577,12 +2711,13 @@ def update_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient, uuid
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSetRule
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2620,7 +2755,9 @@ def update_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient, uuid
     )
 
 
-def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def update_monetary_rule_set_rule_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2640,12 +2777,13 @@ def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMonetaryRuleSetRule
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+    kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

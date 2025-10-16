@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import (
@@ -34,11 +36,11 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -59,13 +61,17 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
+    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -104,7 +110,7 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync(
-    *, client: StolonClient
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -125,13 +131,17 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
+    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -149,7 +159,7 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -170,13 +180,17 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
+    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -215,7 +229,7 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -236,13 +250,17 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
+    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -260,7 +278,12 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_account_key: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -282,13 +305,18 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(
+        ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -327,7 +355,12 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_account_key: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -349,13 +382,18 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(
+        ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -373,7 +411,12 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_account_key: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -395,13 +438,18 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(
+        ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -440,7 +488,12 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_account_key: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -462,13 +515,18 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_account_key: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(
+        ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -910,7 +968,11 @@ def delete_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -931,13 +993,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
+    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -976,7 +1042,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -997,13 +1067,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
+    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1021,7 +1095,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1042,13 +1120,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
+    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1087,7 +1169,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1108,13 +1194,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
+    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1132,7 +1222,12 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    fee_category: str,
+    fee_code: str,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1156,13 +1251,16 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
+        billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date
     )
 
     # Proxy request through stolon server
@@ -1202,7 +1300,12 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    fee_category: str,
+    fee_code: str,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1226,13 +1329,16 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
+        billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date
     )
 
     # Proxy request through stolon server
@@ -1258,7 +1364,12 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    fee_category: str,
+    fee_code: str,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1282,13 +1393,16 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
+        billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date
     )
 
     # Proxy request through stolon server
@@ -1328,7 +1442,12 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    fee_category: str,
+    fee_code: str,
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1352,13 +1471,16 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        fee_category: str
+        fee_code: str
+        date: Union[Unset, datetime.date]
 
     Returns:
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
+        billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date
     )
 
     # Proxy request through stolon server
@@ -1384,7 +1506,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
 
 
 def update_fee_code_ledger_account_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1405,12 +1527,13 @@ def update_fee_code_ledger_account_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1449,7 +1572,7 @@ def update_fee_code_ledger_account_sync_detailed(
 
 
 def update_fee_code_ledger_account_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1470,12 +1593,13 @@ def update_fee_code_ledger_account_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1493,7 +1617,7 @@ def update_fee_code_ledger_account_sync(
 
 
 def update_fee_code_ledger_account_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1514,12 +1638,13 @@ def update_fee_code_ledger_account_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1558,7 +1683,7 @@ def update_fee_code_ledger_account_asyncio_detailed(
 
 
 def update_fee_code_ledger_account_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1579,12 +1704,13 @@ def update_fee_code_ledger_account_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
+    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1602,7 +1728,7 @@ def update_fee_code_ledger_account_asyncio(
 
 
 def create_fee_code_ledger_account_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -1621,13 +1747,13 @@ def create_fee_code_ledger_account_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs()
+    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1665,7 +1791,9 @@ def create_fee_code_ledger_account_sync_detailed(
     )
 
 
-def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | ResponseError | None:
+def create_fee_code_ledger_account_sync(
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1683,13 +1811,13 @@ def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs()
+    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1707,7 +1835,7 @@ def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLe
 
 
 def create_fee_code_ledger_account_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -1726,13 +1854,13 @@ def create_fee_code_ledger_account_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs()
+    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1770,7 +1898,9 @@ def create_fee_code_ledger_account_asyncio_detailed(
     )
 
 
-def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | ResponseError | None:
+def create_fee_code_ledger_account_asyncio(
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1788,13 +1918,13 @@ def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCod
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs()
+    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1812,7 +1942,12 @@ def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCod
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -1835,13 +1970,18 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1880,7 +2020,12 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -1903,13 +2048,18 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1927,7 +2077,12 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -1950,13 +2105,18 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1995,7 +2155,12 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    fee_category: str,
+    fee_code: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2018,13 +2183,18 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_category: str
+        fee_code: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(
+        fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -2042,7 +2212,14 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
 
 
 def get_fee_code_ledger_accounts_by_date_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2066,13 +2243,25 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(
+        date=date,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        ledger_account_key=ledger_account_key,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2111,7 +2300,14 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
 
 
 def get_fee_code_ledger_accounts_by_date_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2135,13 +2331,25 @@ def get_fee_code_ledger_accounts_by_date_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(
+        date=date,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        ledger_account_key=ledger_account_key,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -2159,7 +2367,14 @@ def get_fee_code_ledger_accounts_by_date_sync(
 
 
 def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2183,13 +2398,25 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(
+        date=date,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        ledger_account_key=ledger_account_key,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2228,7 +2455,14 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
 
 
 def get_fee_code_ledger_accounts_by_date_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    ledger_account_key: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2252,13 +2486,25 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        ledger_account_key: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
+    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(
+        date=date,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        ledger_account_key=ledger_account_key,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

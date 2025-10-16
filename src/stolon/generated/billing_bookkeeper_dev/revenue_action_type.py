@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import (
@@ -19,10 +20,13 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_revenue_action_type_by_uuid,
     get_revenue_action_types_by_action_type,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action_type import (
+    ApiRevenueActionType,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
@@ -465,7 +469,9 @@ def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def create_revenue_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_revenue_action_type_sync_detailed(
+    *, client: StolonClient, body: ApiRevenueActionType
+) -> Response[ResponseError]:
     """Create revenue action type
 
     Args:
@@ -483,13 +489,13 @@ def create_revenue_action_type_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_type._get_kwargs()
+    kwargs = create_revenue_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -527,7 +533,7 @@ def create_revenue_action_type_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_revenue_action_type_sync(*, client: StolonClient) -> ResponseError | None:
+def create_revenue_action_type_sync(*, client: StolonClient, body: ApiRevenueActionType) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -545,13 +551,13 @@ def create_revenue_action_type_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_type._get_kwargs()
+    kwargs = create_revenue_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -575,7 +581,9 @@ def create_revenue_action_type_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def create_revenue_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_revenue_action_type_asyncio_detailed(
+    *, client: StolonClient, body: ApiRevenueActionType
+) -> Response[ResponseError]:
     """Create revenue action type
 
     Args:
@@ -593,13 +601,13 @@ def create_revenue_action_type_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionType
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_type._get_kwargs()
+    kwargs = create_revenue_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -637,7 +645,7 @@ def create_revenue_action_type_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_revenue_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_revenue_action_type_asyncio(*, client: StolonClient, body: ApiRevenueActionType) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -655,13 +663,13 @@ def create_revenue_action_type_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiRevenueActionType
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_revenue_action_type._get_kwargs()
+    kwargs = create_revenue_action_type._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -685,7 +693,9 @@ def create_revenue_action_type_asyncio(*, client: StolonClient) -> ResponseError
     return None
 
 
-def get_revenue_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_revenue_action_types_by_action_type_sync_detailed(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get revenue action type by action type
 
     Args:
@@ -703,13 +713,13 @@ def get_revenue_action_types_by_action_type_sync_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_types_by_action_type._get_kwargs()
+    kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -747,7 +757,9 @@ def get_revenue_action_types_by_action_type_sync_detailed(*, client: StolonClien
     )
 
 
-def get_revenue_action_types_by_action_type_sync(*, client: StolonClient) -> ResponseError | None:
+def get_revenue_action_types_by_action_type_sync(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get revenue action type by action type
 
     Args:
@@ -765,13 +777,13 @@ def get_revenue_action_types_by_action_type_sync(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_types_by_action_type._get_kwargs()
+    kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -795,7 +807,9 @@ def get_revenue_action_types_by_action_type_sync(*, client: StolonClient) -> Res
     return None
 
 
-def get_revenue_action_types_by_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_revenue_action_types_by_action_type_asyncio_detailed(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> Response[ResponseError]:
     """Get revenue action type by action type
 
     Args:
@@ -813,13 +827,13 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_types_by_action_type._get_kwargs()
+    kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -857,7 +871,9 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(*, client: StolonCl
     )
 
 
-def get_revenue_action_types_by_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_revenue_action_types_by_action_type_asyncio(
+    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+) -> ResponseError | None:
     """Get revenue action type by action type
 
     Args:
@@ -875,13 +891,13 @@ def get_revenue_action_types_by_action_type_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                type_: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_revenue_action_types_by_action_type._get_kwargs()
+    kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

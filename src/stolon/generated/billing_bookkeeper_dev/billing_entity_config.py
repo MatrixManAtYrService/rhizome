@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import (
@@ -30,11 +32,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_unresolved_billing_entity_config_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -57,13 +65,23 @@ def get_unresolved_billing_entity_config_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs()
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -102,7 +120,13 @@ def get_unresolved_billing_entity_config_sync_detailed(
 
 
 def get_unresolved_billing_entity_config_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -125,13 +149,23 @@ def get_unresolved_billing_entity_config_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs()
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -149,7 +183,13 @@ def get_unresolved_billing_entity_config_sync(
 
 
 def get_unresolved_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -172,13 +212,23 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs()
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -217,7 +267,13 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
 
 
 def get_unresolved_billing_entity_config_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -240,13 +296,23 @@ def get_unresolved_billing_entity_config_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs()
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type=hierarchy_type,
+        date=date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -263,7 +329,9 @@ def get_unresolved_billing_entity_config_asyncio(
     return None
 
 
-def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Response[ApiBillingEntityConfig]:
+def create_billing_entity_config_sync_detailed(
+    *, client: StolonClient, body: ApiBillingEntityConfig
+) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
     Args:
@@ -281,13 +349,13 @@ def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEntityConfig
 
     Returns:
         Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_entity_config._get_kwargs()
+    kwargs = create_billing_entity_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -325,7 +393,9 @@ def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_billing_entity_config_sync(*, client: StolonClient) -> ApiBillingEntityConfig | None:
+def create_billing_entity_config_sync(
+    *, client: StolonClient, body: ApiBillingEntityConfig
+) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
     Args:
@@ -343,13 +413,13 @@ def create_billing_entity_config_sync(*, client: StolonClient) -> ApiBillingEnti
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEntityConfig
 
     Returns:
         ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_entity_config._get_kwargs()
+    kwargs = create_billing_entity_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -373,7 +443,9 @@ def create_billing_entity_config_sync(*, client: StolonClient) -> ApiBillingEnti
     return None
 
 
-def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingEntityConfig]:
+def create_billing_entity_config_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingEntityConfig
+) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
     Args:
@@ -391,13 +463,13 @@ def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEntityConfig
 
     Returns:
         Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_entity_config._get_kwargs()
+    kwargs = create_billing_entity_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -435,7 +507,9 @@ def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_billing_entity_config_asyncio(*, client: StolonClient) -> ApiBillingEntityConfig | None:
+def create_billing_entity_config_asyncio(
+    *, client: StolonClient, body: ApiBillingEntityConfig
+) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
     Args:
@@ -453,13 +527,13 @@ def create_billing_entity_config_asyncio(*, client: StolonClient) -> ApiBillingE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingEntityConfig
 
     Returns:
         ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_entity_config._get_kwargs()
+    kwargs = create_billing_entity_config._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -707,7 +781,9 @@ def get_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def update_billing_entity_config_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntityConfig]:
+def update_billing_entity_config_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
     Args:
@@ -727,12 +803,13 @@ def update_billing_entity_config_sync_detailed(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingEntityConfig
 
     Returns:
         Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
+    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -770,7 +847,9 @@ def update_billing_entity_config_sync_detailed(*, client: StolonClient, uuid: st
     )
 
 
-def update_billing_entity_config_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntityConfig | None:
+def update_billing_entity_config_sync(
+    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
     Args:
@@ -790,12 +869,13 @@ def update_billing_entity_config_sync(*, client: StolonClient, uuid: str) -> Api
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingEntityConfig
 
     Returns:
         ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
+    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -820,7 +900,7 @@ def update_billing_entity_config_sync(*, client: StolonClient, uuid: str) -> Api
 
 
 def update_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
 ) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
@@ -841,12 +921,13 @@ def update_billing_entity_config_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingEntityConfig
 
     Returns:
         Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
+    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -884,7 +965,9 @@ def update_billing_entity_config_asyncio_detailed(
     )
 
 
-def update_billing_entity_config_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntityConfig | None:
+def update_billing_entity_config_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
     Args:
@@ -904,12 +987,13 @@ def update_billing_entity_config_asyncio(*, client: StolonClient, uuid: str) -> 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingEntityConfig
 
     Returns:
         ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
+    kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -934,7 +1018,7 @@ def update_billing_entity_config_asyncio(*, client: StolonClient, uuid: str) -> 
 
 
 def get_resolved_billing_entity_config_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -956,13 +1040,17 @@ def get_resolved_billing_entity_config_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs()
+    kwargs = get_resolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1001,7 +1089,7 @@ def get_resolved_billing_entity_config_sync_detailed(
 
 
 def get_resolved_billing_entity_config_sync(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1023,13 +1111,17 @@ def get_resolved_billing_entity_config_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs()
+    kwargs = get_resolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1047,7 +1139,7 @@ def get_resolved_billing_entity_config_sync(
 
 
 def get_resolved_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1069,13 +1161,17 @@ def get_resolved_billing_entity_config_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs()
+    kwargs = get_resolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1114,7 +1210,7 @@ def get_resolved_billing_entity_config_asyncio_detailed(
 
 
 def get_resolved_billing_entity_config_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1136,13 +1232,17 @@ def get_resolved_billing_entity_config_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: str
+        hierarchy_type: str
+        date: datetime.date
 
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs()
+    kwargs = get_resolved_billing_entity_config._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

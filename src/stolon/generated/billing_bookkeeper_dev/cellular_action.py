@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import (
@@ -19,10 +21,13 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_cellular_actions,
     get_unposted_cellular_actions_by_billing_entity,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action import (
+    ApiCellularAction,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
@@ -473,7 +478,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
     return None
 
 
-def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_cellular_action_sync_detailed(*, client: StolonClient, body: ApiCellularAction) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -491,13 +496,13 @@ def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action._get_kwargs()
+    kwargs = create_cellular_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -535,7 +540,7 @@ def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[Re
     )
 
 
-def create_cellular_action_sync(*, client: StolonClient) -> ResponseError | None:
+def create_cellular_action_sync(*, client: StolonClient, body: ApiCellularAction) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -553,13 +558,13 @@ def create_cellular_action_sync(*, client: StolonClient) -> ResponseError | None
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action._get_kwargs()
+    kwargs = create_cellular_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -583,7 +588,9 @@ def create_cellular_action_sync(*, client: StolonClient) -> ResponseError | None
     return None
 
 
-def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_cellular_action_asyncio_detailed(
+    *, client: StolonClient, body: ApiCellularAction
+) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -601,13 +608,13 @@ def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularAction
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action._get_kwargs()
+    kwargs = create_cellular_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -645,7 +652,7 @@ def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
 
-def create_cellular_action_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_cellular_action_asyncio(*, client: StolonClient, body: ApiCellularAction) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -663,13 +670,13 @@ def create_cellular_action_asyncio(*, client: StolonClient) -> ResponseError | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularAction
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_cellular_action._get_kwargs()
+    kwargs = create_cellular_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -693,7 +700,20 @@ def create_cellular_action_asyncio(*, client: StolonClient) -> ResponseError | N
     return None
 
 
-def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_cellular_actions_sync_detailed(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -720,13 +740,33 @@ def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        cellular_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_actions._get_kwargs()
+    kwargs = get_cellular_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        cellular_action_type=cellular_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -764,7 +804,20 @@ def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[Resp
     )
 
 
-def get_cellular_actions_sync(*, client: StolonClient) -> ResponseError | None:
+def get_cellular_actions_sync(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -791,13 +844,33 @@ def get_cellular_actions_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        cellular_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_actions._get_kwargs()
+    kwargs = get_cellular_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        cellular_action_type=cellular_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -821,7 +894,20 @@ def get_cellular_actions_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_cellular_actions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -848,13 +934,33 @@ def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        cellular_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_actions._get_kwargs()
+    kwargs = get_cellular_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        cellular_action_type=cellular_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -892,7 +998,20 @@ def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[R
     )
 
 
-def get_cellular_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_cellular_actions_asyncio(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -919,13 +1038,33 @@ def get_cellular_actions_asyncio(*, client: StolonClient) -> ResponseError | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        carrier: Union[Unset, str]
+        cellular_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_cellular_actions._get_kwargs()
+    kwargs = get_cellular_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        carrier=carrier,
+        cellular_action_type=cellular_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

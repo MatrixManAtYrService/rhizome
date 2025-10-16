@@ -234,7 +234,7 @@ def delete_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def create_tier_detail_sync_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
+def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetail) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -252,13 +252,13 @@ def create_tier_detail_sync_detailed(*, client: StolonClient) -> Response[ApiTie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTierDetail
 
     Returns:
         Response[ApiTierDetail]
     """
     # Extract request parameters from generated function
-    kwargs = create_tier_detail._get_kwargs()
+    kwargs = create_tier_detail._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -296,7 +296,7 @@ def create_tier_detail_sync_detailed(*, client: StolonClient) -> Response[ApiTie
     )
 
 
-def create_tier_detail_sync(*, client: StolonClient) -> ApiTierDetail | None:
+def create_tier_detail_sync(*, client: StolonClient, body: ApiTierDetail) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -314,13 +314,13 @@ def create_tier_detail_sync(*, client: StolonClient) -> ApiTierDetail | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTierDetail
 
     Returns:
         ApiTierDetail | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tier_detail._get_kwargs()
+    kwargs = create_tier_detail._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -344,7 +344,7 @@ def create_tier_detail_sync(*, client: StolonClient) -> ApiTierDetail | None:
     return None
 
 
-def create_tier_detail_asyncio_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
+def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDetail) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -362,13 +362,13 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTierDetail
 
     Returns:
         Response[ApiTierDetail]
     """
     # Extract request parameters from generated function
-    kwargs = create_tier_detail._get_kwargs()
+    kwargs = create_tier_detail._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -406,7 +406,7 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def create_tier_detail_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
+def create_tier_detail_asyncio(*, client: StolonClient, body: ApiTierDetail) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -424,13 +424,13 @@ def create_tier_detail_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTierDetail
 
     Returns:
         ApiTierDetail | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tier_detail._get_kwargs()
+    kwargs = create_tier_detail._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -454,7 +454,7 @@ def create_tier_detail_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
     return None
 
 
-def get_tier_details_sync_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
+def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -472,13 +472,13 @@ def get_tier_details_sync_detailed(*, client: StolonClient) -> Response[ApiTierD
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
 
     Returns:
         Response[ApiTierDetail]
     """
     # Extract request parameters from generated function
-    kwargs = get_tier_details._get_kwargs()
+    kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -516,7 +516,7 @@ def get_tier_details_sync_detailed(*, client: StolonClient) -> Response[ApiTierD
     )
 
 
-def get_tier_details_sync(*, client: StolonClient) -> ApiTierDetail | None:
+def get_tier_details_sync(*, client: StolonClient, rule_uuid: str) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -534,13 +534,13 @@ def get_tier_details_sync(*, client: StolonClient) -> ApiTierDetail | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
 
     Returns:
         ApiTierDetail | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tier_details._get_kwargs()
+    kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -564,7 +564,7 @@ def get_tier_details_sync(*, client: StolonClient) -> ApiTierDetail | None:
     return None
 
 
-def get_tier_details_asyncio_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
+def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -582,13 +582,13 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient) -> Response[ApiTi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
 
     Returns:
         Response[ApiTierDetail]
     """
     # Extract request parameters from generated function
-    kwargs = get_tier_details._get_kwargs()
+    kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -626,7 +626,7 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient) -> Response[ApiTi
     )
 
 
-def get_tier_details_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
+def get_tier_details_asyncio(*, client: StolonClient, rule_uuid: str) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -644,13 +644,13 @@ def get_tier_details_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                rule_uuid: str
 
     Returns:
         ApiTierDetail | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tier_details._get_kwargs()
+    kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

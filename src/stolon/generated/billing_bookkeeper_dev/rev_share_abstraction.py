@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import (
@@ -19,13 +21,24 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     get_rev_share_abstractions,
     preview_rev_share_abstraction_for_create_or_update,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction import (
+    ApiRevShareAbstraction,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_rev_share_abstraction_details_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: str,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -47,13 +60,23 @@ def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: str
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs()
+    kwargs = get_rev_share_abstraction_details._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +114,15 @@ def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> 
     )
 
 
-def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ResponseError | None:
+def get_rev_share_abstraction_details_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: str,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -113,13 +144,23 @@ def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ResponseE
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: str
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs()
+    kwargs = get_rev_share_abstraction_details._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -143,7 +184,15 @@ def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ResponseE
     return None
 
 
-def get_rev_share_abstraction_details_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_rev_share_abstraction_details_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: str,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -165,13 +214,23 @@ def get_rev_share_abstraction_details_asyncio_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: str
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs()
+    kwargs = get_rev_share_abstraction_details._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -209,7 +268,15 @@ def get_rev_share_abstraction_details_asyncio_detailed(*, client: StolonClient) 
     )
 
 
-def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_rev_share_abstraction_details_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: str,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -231,13 +298,23 @@ def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: str
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs()
+    kwargs = get_rev_share_abstraction_details._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -262,7 +339,7 @@ def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> Respon
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -281,13 +358,13 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
+    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -325,7 +402,9 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
     )
 
 
-def preview_rev_share_abstraction_for_create_or_update_sync(*, client: StolonClient) -> ResponseError | None:
+def preview_rev_share_abstraction_for_create_or_update_sync(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -343,13 +422,13 @@ def preview_rev_share_abstraction_for_create_or_update_sync(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
+    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -374,7 +453,7 @@ def preview_rev_share_abstraction_for_create_or_update_sync(*, client: StolonCli
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -393,13 +472,13 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
+    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -437,7 +516,9 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
     )
 
 
-def preview_rev_share_abstraction_for_create_or_update_asyncio(*, client: StolonClient) -> ResponseError | None:
+def preview_rev_share_abstraction_for_create_or_update_asyncio(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -455,13 +536,13 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
+    kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -485,7 +566,9 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(*, client: Stolon
     return None
 
 
-def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_update_rev_share_abstractions_sync_detailed(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -503,13 +586,13 @@ def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_update_rev_share_abstractions._get_kwargs()
+    kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -547,7 +630,9 @@ def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) 
     )
 
 
-def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | None:
+def create_update_rev_share_abstractions_sync(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -565,13 +650,13 @@ def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_update_rev_share_abstractions._get_kwargs()
+    kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -595,7 +680,9 @@ def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> Respon
     return None
 
 
-def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def create_update_rev_share_abstractions_asyncio_detailed(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -613,13 +700,13 @@ def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = create_update_rev_share_abstractions._get_kwargs()
+    kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -657,7 +744,9 @@ def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClien
     )
 
 
-def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def create_update_rev_share_abstractions_asyncio(
+    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -675,13 +764,13 @@ def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list["ApiRevShareAbstraction"]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = create_update_rev_share_abstractions._get_kwargs()
+    kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -705,7 +794,15 @@ def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> Res
     return None
 
 
-def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_rev_share_abstractions_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -727,13 +824,23 @@ def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs()
+    kwargs = get_rev_share_abstractions._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -771,7 +878,15 @@ def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | None:
+def get_rev_share_abstractions_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -793,13 +908,23 @@ def get_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs()
+    kwargs = get_rev_share_abstractions._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -823,7 +948,15 @@ def get_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_rev_share_abstractions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -845,13 +978,23 @@ def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs()
+    kwargs = get_rev_share_abstractions._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -889,7 +1032,15 @@ def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_rev_share_abstractions_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    revenue_share_group: Union[Unset, str] = UNSET,
+    developer_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -911,13 +1062,23 @@ def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        currency: str
+        revenue_share_group: Union[Unset, str]
+        developer_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs()
+    kwargs = get_rev_share_abstractions._get_kwargs(
+        date=date,
+        currency=currency,
+        revenue_share_group=revenue_share_group,
+        developer_uuid=developer_uuid,
+        developer_app_uuid=developer_app_uuid,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

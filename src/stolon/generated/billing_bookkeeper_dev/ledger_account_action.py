@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_action import (
@@ -25,7 +26,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def delete_ledger_account_action_by_uuid_sync_detailed(
@@ -462,7 +463,9 @@ def get_ledger_account_action_by_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def create_ledger_account_action_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountAction]:
+def create_ledger_account_action_sync_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountAction
+) -> Response[ApiLedgerAccountAction]:
     """Create ledger account action
 
     Args:
@@ -480,13 +483,13 @@ def create_ledger_account_action_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountAction
 
     Returns:
         Response[ApiLedgerAccountAction]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_action._get_kwargs()
+    kwargs = create_ledger_account_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -524,7 +527,9 @@ def create_ledger_account_action_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_ledger_account_action_sync(*, client: StolonClient) -> ApiLedgerAccountAction | None:
+def create_ledger_account_action_sync(
+    *, client: StolonClient, body: ApiLedgerAccountAction
+) -> ApiLedgerAccountAction | None:
     """Create ledger account action
 
     Args:
@@ -542,13 +547,13 @@ def create_ledger_account_action_sync(*, client: StolonClient) -> ApiLedgerAccou
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountAction
 
     Returns:
         ApiLedgerAccountAction | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_action._get_kwargs()
+    kwargs = create_ledger_account_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -572,7 +577,9 @@ def create_ledger_account_action_sync(*, client: StolonClient) -> ApiLedgerAccou
     return None
 
 
-def create_ledger_account_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountAction]:
+def create_ledger_account_action_asyncio_detailed(
+    *, client: StolonClient, body: ApiLedgerAccountAction
+) -> Response[ApiLedgerAccountAction]:
     """Create ledger account action
 
     Args:
@@ -590,13 +597,13 @@ def create_ledger_account_action_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountAction
 
     Returns:
         Response[ApiLedgerAccountAction]
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_action._get_kwargs()
+    kwargs = create_ledger_account_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -634,7 +641,9 @@ def create_ledger_account_action_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_ledger_account_action_asyncio(*, client: StolonClient) -> ApiLedgerAccountAction | None:
+def create_ledger_account_action_asyncio(
+    *, client: StolonClient, body: ApiLedgerAccountAction
+) -> ApiLedgerAccountAction | None:
     """Create ledger account action
 
     Args:
@@ -652,13 +661,13 @@ def create_ledger_account_action_asyncio(*, client: StolonClient) -> ApiLedgerAc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiLedgerAccountAction
 
     Returns:
         ApiLedgerAccountAction | None
     """
     # Extract request parameters from generated function
-    kwargs = create_ledger_account_action._get_kwargs()
+    kwargs = create_ledger_account_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -683,7 +692,11 @@ def create_ledger_account_action_asyncio(*, client: StolonClient) -> ApiLedgerAc
 
 
 def get_ledger_account_action_by_action_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    partial_action: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountAction | list["ApiLedgerAccountAction"]]:
     """Get ledger account actions using the action value
 
@@ -704,13 +717,17 @@ def get_ledger_account_action_by_action_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_action: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountAction | list["ApiLedgerAccountAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_action_by_action._get_kwargs()
+    kwargs = get_ledger_account_action_by_action._get_kwargs(
+        partial_action=partial_action, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -749,7 +766,11 @@ def get_ledger_account_action_by_action_sync_detailed(
 
 
 def get_ledger_account_action_by_action_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    partial_action: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountAction | list["ApiLedgerAccountAction"] | None:
     """Get ledger account actions using the action value
 
@@ -770,13 +791,17 @@ def get_ledger_account_action_by_action_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_action: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountAction | list["ApiLedgerAccountAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_action_by_action._get_kwargs()
+    kwargs = get_ledger_account_action_by_action._get_kwargs(
+        partial_action=partial_action, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -794,7 +819,11 @@ def get_ledger_account_action_by_action_sync(
 
 
 def get_ledger_account_action_by_action_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    partial_action: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerAccountAction | list["ApiLedgerAccountAction"]]:
     """Get ledger account actions using the action value
 
@@ -815,13 +844,17 @@ def get_ledger_account_action_by_action_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_action: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerAccountAction | list["ApiLedgerAccountAction"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_action_by_action._get_kwargs()
+    kwargs = get_ledger_account_action_by_action._get_kwargs(
+        partial_action=partial_action, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -860,7 +893,11 @@ def get_ledger_account_action_by_action_asyncio_detailed(
 
 
 def get_ledger_account_action_by_action_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    partial_action: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerAccountAction | list["ApiLedgerAccountAction"] | None:
     """Get ledger account actions using the action value
 
@@ -881,13 +918,17 @@ def get_ledger_account_action_by_action_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                partial_action: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerAccountAction | list["ApiLedgerAccountAction"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_action_by_action._get_kwargs()
+    kwargs = get_ledger_account_action_by_action._get_kwargs(
+        partial_action=partial_action, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

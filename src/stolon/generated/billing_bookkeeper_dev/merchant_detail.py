@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_detail import (
@@ -24,11 +25,11 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_merchant_details_in_bulk_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> Response[ResponseError | list["ApiMerchantDetail"]]:
     """Get merchant details
 
@@ -47,13 +48,13 @@ def get_merchant_details_in_bulk_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         Response[ResponseError | list["ApiMerchantDetail"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_details_in_bulk._get_kwargs()
+    kwargs = get_merchant_details_in_bulk._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +92,9 @@ def get_merchant_details_in_bulk_sync_detailed(
     )
 
 
-def get_merchant_details_in_bulk_sync(*, client: StolonClient) -> ResponseError | list["ApiMerchantDetail"] | None:
+def get_merchant_details_in_bulk_sync(
+    *, client: StolonClient, body: list[str]
+) -> ResponseError | list["ApiMerchantDetail"] | None:
     """Get merchant details
 
     Args:
@@ -109,13 +112,13 @@ def get_merchant_details_in_bulk_sync(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         ResponseError | list["ApiMerchantDetail"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_details_in_bulk._get_kwargs()
+    kwargs = get_merchant_details_in_bulk._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -133,7 +136,7 @@ def get_merchant_details_in_bulk_sync(*, client: StolonClient) -> ResponseError 
 
 
 def get_merchant_details_in_bulk_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, body: list[str]
 ) -> Response[ResponseError | list["ApiMerchantDetail"]]:
     """Get merchant details
 
@@ -152,13 +155,13 @@ def get_merchant_details_in_bulk_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         Response[ResponseError | list["ApiMerchantDetail"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_details_in_bulk._get_kwargs()
+    kwargs = get_merchant_details_in_bulk._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -196,7 +199,9 @@ def get_merchant_details_in_bulk_asyncio_detailed(
     )
 
 
-def get_merchant_details_in_bulk_asyncio(*, client: StolonClient) -> ResponseError | list["ApiMerchantDetail"] | None:
+def get_merchant_details_in_bulk_asyncio(
+    *, client: StolonClient, body: list[str]
+) -> ResponseError | list["ApiMerchantDetail"] | None:
     """Get merchant details
 
     Args:
@@ -214,13 +219,13 @@ def get_merchant_details_in_bulk_asyncio(*, client: StolonClient) -> ResponseErr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: list[str]
 
     Returns:
         ResponseError | list["ApiMerchantDetail"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_details_in_bulk._get_kwargs()
+    kwargs = get_merchant_details_in_bulk._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -237,7 +242,9 @@ def get_merchant_details_in_bulk_asyncio(*, client: StolonClient) -> ResponseErr
     return None
 
 
-def get_merchant_detail_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantDetail | ResponseError]:
+def get_merchant_detail_sync_detailed(
+    *, client: StolonClient, billing_entity_uuid: Union[Unset, str] = UNSET, entity_uuid: Union[Unset, str] = UNSET
+) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail
 
     Args:
@@ -256,13 +263,14 @@ def get_merchant_detail_sync_detailed(*, client: StolonClient) -> Response[ApiMe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantDetail | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_detail._get_kwargs()
+    kwargs = get_merchant_detail._get_kwargs(billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -300,7 +308,9 @@ def get_merchant_detail_sync_detailed(*, client: StolonClient) -> Response[ApiMe
     )
 
 
-def get_merchant_detail_sync(*, client: StolonClient) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_sync(
+    *, client: StolonClient, billing_entity_uuid: Union[Unset, str] = UNSET, entity_uuid: Union[Unset, str] = UNSET
+) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail
 
     Args:
@@ -319,13 +329,14 @@ def get_merchant_detail_sync(*, client: StolonClient) -> ApiMerchantDetail | Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
 
     Returns:
         ApiMerchantDetail | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_detail._get_kwargs()
+    kwargs = get_merchant_detail._get_kwargs(billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -342,7 +353,9 @@ def get_merchant_detail_sync(*, client: StolonClient) -> ApiMerchantDetail | Res
     return None
 
 
-def get_merchant_detail_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantDetail | ResponseError]:
+def get_merchant_detail_asyncio_detailed(
+    *, client: StolonClient, billing_entity_uuid: Union[Unset, str] = UNSET, entity_uuid: Union[Unset, str] = UNSET
+) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail
 
     Args:
@@ -361,13 +374,14 @@ def get_merchant_detail_asyncio_detailed(*, client: StolonClient) -> Response[Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantDetail | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_detail._get_kwargs()
+    kwargs = get_merchant_detail._get_kwargs(billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -405,7 +419,9 @@ def get_merchant_detail_asyncio_detailed(*, client: StolonClient) -> Response[Ap
     )
 
 
-def get_merchant_detail_asyncio(*, client: StolonClient) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_asyncio(
+    *, client: StolonClient, billing_entity_uuid: Union[Unset, str] = UNSET, entity_uuid: Union[Unset, str] = UNSET
+) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail
 
     Args:
@@ -424,13 +440,14 @@ def get_merchant_detail_asyncio(*, client: StolonClient) -> ApiMerchantDetail | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                billing_entity_uuid: Union[Unset, str]
+        entity_uuid: Union[Unset, str]
 
     Returns:
         ApiMerchantDetail | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_detail._get_kwargs()
+    kwargs = get_merchant_detail._get_kwargs(billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid)
 
     # Proxy request through stolon server
     client.proxy_request(

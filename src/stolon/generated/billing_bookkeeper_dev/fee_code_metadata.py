@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_metadata import (
@@ -19,10 +20,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Response[ResponseError | list[str]]:
+def get_invoice_fee_code_metadata_sync_detailed(
+    *, client: StolonClient, fee_code: str, fee_category: Union[Unset, str] = UNSET
+) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -41,13 +44,14 @@ def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_code: str
+        fee_category: Union[Unset, str]
 
     Returns:
         Response[ResponseError | list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_fee_code_metadata._get_kwargs()
+    kwargs = get_invoice_fee_code_metadata._get_kwargs(fee_code=fee_code, fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -85,7 +89,9 @@ def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> ResponseError | list[str] | None:
+def get_invoice_fee_code_metadata_sync(
+    *, client: StolonClient, fee_code: str, fee_category: Union[Unset, str] = UNSET
+) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -104,13 +110,14 @@ def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_code: str
+        fee_category: Union[Unset, str]
 
     Returns:
         ResponseError | list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_fee_code_metadata._get_kwargs()
+    kwargs = get_invoice_fee_code_metadata._get_kwargs(fee_code=fee_code, fee_category=fee_category)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -127,7 +134,9 @@ def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> ResponseError
     return None
 
 
-def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError | list[str]]:
+def get_invoice_fee_code_metadata_asyncio_detailed(
+    *, client: StolonClient, fee_code: str, fee_category: Union[Unset, str] = UNSET
+) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -146,13 +155,14 @@ def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_code: str
+        fee_category: Union[Unset, str]
 
     Returns:
         Response[ResponseError | list[str]]
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_fee_code_metadata._get_kwargs()
+    kwargs = get_invoice_fee_code_metadata._get_kwargs(fee_code=fee_code, fee_category=fee_category)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -190,7 +200,9 @@ def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> ResponseError | list[str] | None:
+def get_invoice_fee_code_metadata_asyncio(
+    *, client: StolonClient, fee_code: str, fee_category: Union[Unset, str] = UNSET
+) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -209,13 +221,14 @@ def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_code: str
+        fee_category: Union[Unset, str]
 
     Returns:
         ResponseError | list[str] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_invoice_fee_code_metadata._get_kwargs()
+    kwargs = get_invoice_fee_code_metadata._get_kwargs(fee_code=fee_code, fee_category=fee_category)
 
     # Proxy request through stolon server
     client.proxy_request(

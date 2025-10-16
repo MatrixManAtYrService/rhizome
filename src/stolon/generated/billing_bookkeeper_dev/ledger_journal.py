@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import (
@@ -28,11 +30,18 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_ledger_journals_by_journal_date_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    min_date: Union[Unset, datetime.date] = UNSET,
+    max_date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_uuid: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -56,13 +65,25 @@ def get_ledger_journals_by_journal_date_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                min_date: Union[Unset, datetime.date]
+        max_date: Union[Unset, datetime.date]
+        ledger_account_uuid: Union[Unset, str]
+        currency: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs()
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
+        min_date=min_date,
+        max_date=max_date,
+        ledger_account_uuid=ledger_account_uuid,
+        currency=currency,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -101,7 +122,14 @@ def get_ledger_journals_by_journal_date_sync_detailed(
 
 
 def get_ledger_journals_by_journal_date_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    min_date: Union[Unset, datetime.date] = UNSET,
+    max_date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_uuid: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -125,13 +153,25 @@ def get_ledger_journals_by_journal_date_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                min_date: Union[Unset, datetime.date]
+        max_date: Union[Unset, datetime.date]
+        ledger_account_uuid: Union[Unset, str]
+        currency: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs()
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
+        min_date=min_date,
+        max_date=max_date,
+        ledger_account_uuid=ledger_account_uuid,
+        currency=currency,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -149,7 +189,14 @@ def get_ledger_journals_by_journal_date_sync(
 
 
 def get_ledger_journals_by_journal_date_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    min_date: Union[Unset, datetime.date] = UNSET,
+    max_date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_uuid: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -173,13 +220,25 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                min_date: Union[Unset, datetime.date]
+        max_date: Union[Unset, datetime.date]
+        ledger_account_uuid: Union[Unset, str]
+        currency: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs()
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
+        min_date=min_date,
+        max_date=max_date,
+        ledger_account_uuid=ledger_account_uuid,
+        currency=currency,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -218,7 +277,14 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
 
 
 def get_ledger_journals_by_journal_date_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    min_date: Union[Unset, datetime.date] = UNSET,
+    max_date: Union[Unset, datetime.date] = UNSET,
+    ledger_account_uuid: Union[Unset, str] = UNSET,
+    currency: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -242,13 +308,25 @@ def get_ledger_journals_by_journal_date_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                min_date: Union[Unset, datetime.date]
+        max_date: Union[Unset, datetime.date]
+        ledger_account_uuid: Union[Unset, str]
+        currency: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs()
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
+        min_date=min_date,
+        max_date=max_date,
+        ledger_account_uuid=ledger_account_uuid,
+        currency=currency,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -266,7 +344,12 @@ def get_ledger_journals_by_journal_date_asyncio(
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    journal_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -289,13 +372,18 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        journal_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -334,7 +422,12 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    journal_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -357,13 +450,18 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        journal_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -381,7 +479,12 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    journal_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -404,13 +507,18 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        journal_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -449,7 +557,12 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    ledger_acct_uuid: str,
+    journal_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -472,13 +585,18 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ledger_acct_uuid: str
+        journal_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
+        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -496,7 +614,7 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
 
 
 def get_ledger_journals_by_ref_uuid_sync_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -517,13 +635,17 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ref_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
+        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -561,7 +683,9 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
     )
 
 
-def get_ledger_journals_by_ref_uuid_sync(*, client: StolonClient) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
+def get_ledger_journals_by_ref_uuid_sync(
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
     Args:
@@ -581,13 +705,17 @@ def get_ledger_journals_by_ref_uuid_sync(*, client: StolonClient) -> ApiLedgerJo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ref_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
+        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -605,7 +733,7 @@ def get_ledger_journals_by_ref_uuid_sync(*, client: StolonClient) -> ApiLedgerJo
 
 
 def get_ledger_journals_by_ref_uuid_asyncio_detailed(
-    *, client: StolonClient
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -626,13 +754,17 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ref_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
+        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -671,7 +803,7 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
 
 
 def get_ledger_journals_by_ref_uuid_asyncio(
-    *, client: StolonClient
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
@@ -692,13 +824,17 @@ def get_ledger_journals_by_ref_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                ref_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs()
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
+        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

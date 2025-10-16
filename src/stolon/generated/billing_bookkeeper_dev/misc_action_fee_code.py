@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import (
@@ -26,7 +28,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def delete_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
@@ -473,7 +475,17 @@ def get_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str)
     return None
 
 
-def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ApiMiscActionFeeCode]:
+def get_misc_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    misc_specifier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    misc_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -497,13 +509,27 @@ def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        misc_specifier: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        misc_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_action_fee_codes._get_kwargs()
+    kwargs = get_misc_action_fee_codes._get_kwargs(
+        date=date,
+        misc_specifier=misc_specifier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        misc_action_type=misc_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -541,7 +567,17 @@ def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ApiMiscActionFeeCode | None:
+def get_misc_action_fee_codes_sync(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    misc_specifier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    misc_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee codes
 
     Args:
@@ -565,13 +601,27 @@ def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ApiMiscActionFeeC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        misc_specifier: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        misc_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_action_fee_codes._get_kwargs()
+    kwargs = get_misc_action_fee_codes._get_kwargs(
+        date=date,
+        misc_specifier=misc_specifier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        misc_action_type=misc_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -595,7 +645,17 @@ def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ApiMiscActionFeeC
     return None
 
 
-def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ApiMiscActionFeeCode]:
+def get_misc_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    misc_specifier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    misc_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -619,13 +679,27 @@ def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        misc_specifier: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        misc_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_action_fee_codes._get_kwargs()
+    kwargs = get_misc_action_fee_codes._get_kwargs(
+        date=date,
+        misc_specifier=misc_specifier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        misc_action_type=misc_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -663,7 +737,17 @@ def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ApiMiscActionFeeCode | None:
+def get_misc_action_fee_codes_asyncio(
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    misc_specifier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    misc_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee codes
 
     Args:
@@ -687,13 +771,27 @@ def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ApiMiscActionF
 
     Args:
         client: StolonClient instance for proxying requests
-
+                date: datetime.date
+        misc_specifier: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        misc_action_type: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = get_misc_action_fee_codes._get_kwargs()
+    kwargs = get_misc_action_fee_codes._get_kwargs(
+        date=date,
+        misc_specifier=misc_specifier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        misc_action_type=misc_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -717,7 +815,9 @@ def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ApiMiscActionF
     return None
 
 
-def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscActionFeeCode]:
+def update_misc_action_fee_code_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMiscActionFeeCode
+) -> Response[ApiMiscActionFeeCode]:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -737,12 +837,13 @@ def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMiscActionFeeCode
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -780,7 +881,9 @@ def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str
     )
 
 
-def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiMiscActionFeeCode | None:
+def update_misc_action_fee_code_sync(
+    *, client: StolonClient, uuid: str, body: ApiMiscActionFeeCode
+) -> ApiMiscActionFeeCode | None:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -800,12 +903,13 @@ def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiM
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMiscActionFeeCode
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -829,7 +933,9 @@ def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiM
     return None
 
 
-def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscActionFeeCode]:
+def update_misc_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiMiscActionFeeCode
+) -> Response[ApiMiscActionFeeCode]:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -849,12 +955,13 @@ def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMiscActionFeeCode
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -892,7 +999,9 @@ def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: 
     )
 
 
-def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiMiscActionFeeCode | None:
+def update_misc_action_fee_code_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiMiscActionFeeCode
+) -> ApiMiscActionFeeCode | None:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -912,12 +1021,13 @@ def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> A
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiMiscActionFeeCode
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
+    kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -941,7 +1051,9 @@ def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> A
     return None
 
 
-def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiMiscActionFeeCode]:
+def create_misc_action_fee_code_sync_detailed(
+    *, client: StolonClient, body: ApiMiscActionFeeCode
+) -> Response[ApiMiscActionFeeCode]:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -959,13 +1071,13 @@ def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscActionFeeCode
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action_fee_code._get_kwargs()
+    kwargs = create_misc_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1003,7 +1115,9 @@ def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def create_misc_action_fee_code_sync(*, client: StolonClient) -> ApiMiscActionFeeCode | None:
+def create_misc_action_fee_code_sync(
+    *, client: StolonClient, body: ApiMiscActionFeeCode
+) -> ApiMiscActionFeeCode | None:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -1021,13 +1135,13 @@ def create_misc_action_fee_code_sync(*, client: StolonClient) -> ApiMiscActionFe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscActionFeeCode
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action_fee_code._get_kwargs()
+    kwargs = create_misc_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1051,7 +1165,9 @@ def create_misc_action_fee_code_sync(*, client: StolonClient) -> ApiMiscActionFe
     return None
 
 
-def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiMiscActionFeeCode]:
+def create_misc_action_fee_code_asyncio_detailed(
+    *, client: StolonClient, body: ApiMiscActionFeeCode
+) -> Response[ApiMiscActionFeeCode]:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -1069,13 +1185,13 @@ def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscActionFeeCode
 
     Returns:
         Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action_fee_code._get_kwargs()
+    kwargs = create_misc_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1113,7 +1229,9 @@ def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def create_misc_action_fee_code_asyncio(*, client: StolonClient) -> ApiMiscActionFeeCode | None:
+def create_misc_action_fee_code_asyncio(
+    *, client: StolonClient, body: ApiMiscActionFeeCode
+) -> ApiMiscActionFeeCode | None:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -1131,13 +1249,13 @@ def create_misc_action_fee_code_asyncio(*, client: StolonClient) -> ApiMiscActio
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMiscActionFeeCode
 
     Returns:
         ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
-    kwargs = create_misc_action_fee_code._get_kwargs()
+    kwargs = create_misc_action_fee_code._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

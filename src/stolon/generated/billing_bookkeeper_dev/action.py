@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.action import (
@@ -20,10 +21,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_actions_sync_detailed(
+    *, client: StolonClient, fee_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get action
 
     Args:
@@ -43,13 +46,15 @@ def get_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_actions._get_kwargs()
+    kwargs = get_actions._get_kwargs(fee_uuid=fee_uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +92,9 @@ def get_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError
     )
 
 
-def get_actions_sync(*, client: StolonClient) -> ResponseError | None:
+def get_actions_sync(
+    *, client: StolonClient, fee_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get action
 
     Args:
@@ -107,13 +114,15 @@ def get_actions_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_actions._get_kwargs()
+    kwargs = get_actions._get_kwargs(fee_uuid=fee_uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -137,7 +146,9 @@ def get_actions_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_actions_asyncio_detailed(
+    *, client: StolonClient, fee_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get action
 
     Args:
@@ -157,13 +168,15 @@ def get_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseEr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_actions._get_kwargs()
+    kwargs = get_actions._get_kwargs(fee_uuid=fee_uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +214,9 @@ def get_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseEr
     )
 
 
-def get_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_actions_asyncio(
+    *, client: StolonClient, fee_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get action
 
     Args:
@@ -221,13 +236,15 @@ def get_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_actions._get_kwargs()
+    kwargs = get_actions._get_kwargs(fee_uuid=fee_uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -251,7 +268,15 @@ def get_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_action_by_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_action_by_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    fee_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get action by reseller
 
     Args:
@@ -274,12 +299,18 @@ def get_action_by_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> 
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_action_by_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_action_by_reseller._get_kwargs(
+        r_id=r_id, fee_uuid=fee_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -317,7 +348,15 @@ def get_action_by_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> 
     )
 
 
-def get_action_by_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_action_by_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str,
+    fee_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get action by reseller
 
     Args:
@@ -340,12 +379,18 @@ def get_action_by_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseE
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_action_by_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_action_by_reseller._get_kwargs(
+        r_id=r_id, fee_uuid=fee_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -369,7 +414,15 @@ def get_action_by_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseE
     return None
 
 
-def get_action_by_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
+def get_action_by_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str,
+    fee_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> Response[ResponseError]:
     """Get action by reseller
 
     Args:
@@ -392,12 +445,18 @@ def get_action_by_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) 
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_action_by_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_action_by_reseller._get_kwargs(
+        r_id=r_id, fee_uuid=fee_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -435,7 +494,15 @@ def get_action_by_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) 
     )
 
 
-def get_action_by_reseller_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
+def get_action_by_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str,
+    fee_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: str,
+) -> ResponseError | None:
     """Get action by reseller
 
     Args:
@@ -458,12 +525,18 @@ def get_action_by_reseller_asyncio(*, client: StolonClient, r_id: str) -> Respon
     Args:
         client: StolonClient instance for proxying requests
                 r_id: str
+        fee_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: str
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_action_by_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_action_by_reseller._get_kwargs(
+        r_id=r_id, fee_uuid=fee_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

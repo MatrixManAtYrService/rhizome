@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action import (
@@ -22,7 +24,7 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_action import (
     ApiPlanAction,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_plan_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPlanAction]:
@@ -245,7 +247,19 @@ def get_plan_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiPl
     return None
 
 
-def get_plan_actions_sync_detailed(*, client: StolonClient) -> Response[ApiPlanAction]:
+def get_plan_actions_sync_detailed(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    plan_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiPlanAction]:
     """Get plan actions
 
     Args:
@@ -271,13 +285,31 @@ def get_plan_actions_sync_detailed(*, client: StolonClient) -> Response[ApiPlanA
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        plan_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiPlanAction]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_actions._get_kwargs()
+    kwargs = get_plan_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        plan_action_type=plan_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -315,7 +347,19 @@ def get_plan_actions_sync_detailed(*, client: StolonClient) -> Response[ApiPlanA
     )
 
 
-def get_plan_actions_sync(*, client: StolonClient) -> ApiPlanAction | None:
+def get_plan_actions_sync(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    plan_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiPlanAction | None:
     """Get plan actions
 
     Args:
@@ -341,13 +385,31 @@ def get_plan_actions_sync(*, client: StolonClient) -> ApiPlanAction | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        plan_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiPlanAction | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_actions._get_kwargs()
+    kwargs = get_plan_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        plan_action_type=plan_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -371,7 +433,19 @@ def get_plan_actions_sync(*, client: StolonClient) -> ApiPlanAction | None:
     return None
 
 
-def get_plan_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanAction]:
+def get_plan_actions_asyncio_detailed(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    plan_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiPlanAction]:
     """Get plan actions
 
     Args:
@@ -397,13 +471,31 @@ def get_plan_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiPl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        plan_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiPlanAction]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_actions._get_kwargs()
+    kwargs = get_plan_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        plan_action_type=plan_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -441,7 +533,19 @@ def get_plan_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiPl
     )
 
 
-def get_plan_actions_asyncio(*, client: StolonClient) -> ApiPlanAction | None:
+def get_plan_actions_asyncio(
+    *,
+    client: StolonClient,
+    plan_uuid: Union[Unset, str] = UNSET,
+    plan_action_type: Union[Unset, str] = UNSET,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiPlanAction | None:
     """Get plan actions
 
     Args:
@@ -467,13 +571,31 @@ def get_plan_actions_asyncio(*, client: StolonClient) -> ApiPlanAction | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                plan_uuid: Union[Unset, str]
+        plan_action_type: Union[Unset, str]
+        billing_entity_uuid: Union[Unset, str]
+        fee_category: Union[Unset, str]
+        fee_code: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiPlanAction | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_actions._get_kwargs()
+    kwargs = get_plan_actions._get_kwargs(
+        plan_uuid=plan_uuid,
+        plan_action_type=plan_action_type,
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -725,7 +847,7 @@ def get_unposted_plan_actions_by_billing_entity_asyncio(
     return None
 
 
-def create_plan_action_sync_detailed(*, client: StolonClient) -> Response[ApiPlanAction]:
+def create_plan_action_sync_detailed(*, client: StolonClient, body: ApiPlanAction) -> Response[ApiPlanAction]:
     """Create plan action
 
     Args:
@@ -743,13 +865,13 @@ def create_plan_action_sync_detailed(*, client: StolonClient) -> Response[ApiPla
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanAction
 
     Returns:
         Response[ApiPlanAction]
     """
     # Extract request parameters from generated function
-    kwargs = create_plan_action._get_kwargs()
+    kwargs = create_plan_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -787,7 +909,7 @@ def create_plan_action_sync_detailed(*, client: StolonClient) -> Response[ApiPla
     )
 
 
-def create_plan_action_sync(*, client: StolonClient) -> ApiPlanAction | None:
+def create_plan_action_sync(*, client: StolonClient, body: ApiPlanAction) -> ApiPlanAction | None:
     """Create plan action
 
     Args:
@@ -805,13 +927,13 @@ def create_plan_action_sync(*, client: StolonClient) -> ApiPlanAction | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanAction
 
     Returns:
         ApiPlanAction | None
     """
     # Extract request parameters from generated function
-    kwargs = create_plan_action._get_kwargs()
+    kwargs = create_plan_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -835,7 +957,7 @@ def create_plan_action_sync(*, client: StolonClient) -> ApiPlanAction | None:
     return None
 
 
-def create_plan_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanAction]:
+def create_plan_action_asyncio_detailed(*, client: StolonClient, body: ApiPlanAction) -> Response[ApiPlanAction]:
     """Create plan action
 
     Args:
@@ -853,13 +975,13 @@ def create_plan_action_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanAction
 
     Returns:
         Response[ApiPlanAction]
     """
     # Extract request parameters from generated function
-    kwargs = create_plan_action._get_kwargs()
+    kwargs = create_plan_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -897,7 +1019,7 @@ def create_plan_action_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def create_plan_action_asyncio(*, client: StolonClient) -> ApiPlanAction | None:
+def create_plan_action_asyncio(*, client: StolonClient, body: ApiPlanAction) -> ApiPlanAction | None:
     """Create plan action
 
     Args:
@@ -915,13 +1037,13 @@ def create_plan_action_asyncio(*, client: StolonClient) -> ApiPlanAction | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanAction
 
     Returns:
         ApiPlanAction | None
     """
     # Extract request parameters from generated function
-    kwargs = create_plan_action._get_kwargs()
+    kwargs = create_plan_action._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

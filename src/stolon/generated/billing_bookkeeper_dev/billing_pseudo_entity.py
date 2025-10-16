@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_pseudo_entity import (
@@ -26,10 +27,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_billing_pseudo_entity_sync_detailed(*, client: StolonClient) -> Response[ApiBillingPseudoEntity]:
+def create_billing_pseudo_entity_sync_detailed(
+    *, client: StolonClient, body: ApiBillingPseudoEntity
+) -> Response[ApiBillingPseudoEntity]:
     """Create billing pseudo entity
 
     Args:
@@ -47,13 +50,13 @@ def create_billing_pseudo_entity_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingPseudoEntity
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_pseudo_entity._get_kwargs()
+    kwargs = create_billing_pseudo_entity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -91,7 +94,9 @@ def create_billing_pseudo_entity_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_billing_pseudo_entity_sync(*, client: StolonClient) -> ApiBillingPseudoEntity | None:
+def create_billing_pseudo_entity_sync(
+    *, client: StolonClient, body: ApiBillingPseudoEntity
+) -> ApiBillingPseudoEntity | None:
     """Create billing pseudo entity
 
     Args:
@@ -109,13 +114,13 @@ def create_billing_pseudo_entity_sync(*, client: StolonClient) -> ApiBillingPseu
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingPseudoEntity
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_pseudo_entity._get_kwargs()
+    kwargs = create_billing_pseudo_entity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -139,7 +144,9 @@ def create_billing_pseudo_entity_sync(*, client: StolonClient) -> ApiBillingPseu
     return None
 
 
-def create_billing_pseudo_entity_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingPseudoEntity]:
+def create_billing_pseudo_entity_asyncio_detailed(
+    *, client: StolonClient, body: ApiBillingPseudoEntity
+) -> Response[ApiBillingPseudoEntity]:
     """Create billing pseudo entity
 
     Args:
@@ -157,13 +164,13 @@ def create_billing_pseudo_entity_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingPseudoEntity
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_pseudo_entity._get_kwargs()
+    kwargs = create_billing_pseudo_entity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -201,7 +208,9 @@ def create_billing_pseudo_entity_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def create_billing_pseudo_entity_asyncio(*, client: StolonClient) -> ApiBillingPseudoEntity | None:
+def create_billing_pseudo_entity_asyncio(
+    *, client: StolonClient, body: ApiBillingPseudoEntity
+) -> ApiBillingPseudoEntity | None:
     """Create billing pseudo entity
 
     Args:
@@ -219,13 +228,13 @@ def create_billing_pseudo_entity_asyncio(*, client: StolonClient) -> ApiBillingP
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBillingPseudoEntity
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = create_billing_pseudo_entity._get_kwargs()
+    kwargs = create_billing_pseudo_entity._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -249,7 +258,9 @@ def create_billing_pseudo_entity_asyncio(*, client: StolonClient) -> ApiBillingP
     return None
 
 
-def update_billing_pseudo_entity_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingPseudoEntity]:
+def update_billing_pseudo_entity_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiBillingPseudoEntity
+) -> Response[ApiBillingPseudoEntity]:
     """Update billing pseudo entity
 
     Args:
@@ -269,12 +280,13 @@ def update_billing_pseudo_entity_sync_detailed(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingPseudoEntity
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid)
+    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -312,7 +324,9 @@ def update_billing_pseudo_entity_sync_detailed(*, client: StolonClient, uuid: st
     )
 
 
-def update_billing_pseudo_entity_sync(*, client: StolonClient, uuid: str) -> ApiBillingPseudoEntity | None:
+def update_billing_pseudo_entity_sync(
+    *, client: StolonClient, uuid: str, body: ApiBillingPseudoEntity
+) -> ApiBillingPseudoEntity | None:
     """Update billing pseudo entity
 
     Args:
@@ -332,12 +346,13 @@ def update_billing_pseudo_entity_sync(*, client: StolonClient, uuid: str) -> Api
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingPseudoEntity
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid)
+    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -362,7 +377,7 @@ def update_billing_pseudo_entity_sync(*, client: StolonClient, uuid: str) -> Api
 
 
 def update_billing_pseudo_entity_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, body: ApiBillingPseudoEntity
 ) -> Response[ApiBillingPseudoEntity]:
     """Update billing pseudo entity
 
@@ -383,12 +398,13 @@ def update_billing_pseudo_entity_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingPseudoEntity
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid)
+    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -426,7 +442,9 @@ def update_billing_pseudo_entity_asyncio_detailed(
     )
 
 
-def update_billing_pseudo_entity_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingPseudoEntity | None:
+def update_billing_pseudo_entity_asyncio(
+    *, client: StolonClient, uuid: str, body: ApiBillingPseudoEntity
+) -> ApiBillingPseudoEntity | None:
     """Update billing pseudo entity
 
     Args:
@@ -446,12 +464,13 @@ def update_billing_pseudo_entity_asyncio(*, client: StolonClient, uuid: str) -> 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiBillingPseudoEntity
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid)
+    kwargs = update_billing_pseudo_entity._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -699,7 +718,9 @@ def get_billing_pseudo_entity_by_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def get_all_billing_pseudo_entities_sync_detailed(*, client: StolonClient) -> Response[ApiBillingPseudoEntity]:
+def get_all_billing_pseudo_entities_sync_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ApiBillingPseudoEntity]:
     """Get all billing pseudo entities
 
     Args:
@@ -718,13 +739,14 @@ def get_all_billing_pseudo_entities_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_billing_pseudo_entities._get_kwargs()
+    kwargs = get_all_billing_pseudo_entities._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -762,7 +784,9 @@ def get_all_billing_pseudo_entities_sync_detailed(*, client: StolonClient) -> Re
     )
 
 
-def get_all_billing_pseudo_entities_sync(*, client: StolonClient) -> ApiBillingPseudoEntity | None:
+def get_all_billing_pseudo_entities_sync(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ApiBillingPseudoEntity | None:
     """Get all billing pseudo entities
 
     Args:
@@ -781,13 +805,14 @@ def get_all_billing_pseudo_entities_sync(*, client: StolonClient) -> ApiBillingP
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = get_all_billing_pseudo_entities._get_kwargs()
+    kwargs = get_all_billing_pseudo_entities._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -811,7 +836,9 @@ def get_all_billing_pseudo_entities_sync(*, client: StolonClient) -> ApiBillingP
     return None
 
 
-def get_all_billing_pseudo_entities_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingPseudoEntity]:
+def get_all_billing_pseudo_entities_asyncio_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ApiBillingPseudoEntity]:
     """Get all billing pseudo entities
 
     Args:
@@ -830,13 +857,14 @@ def get_all_billing_pseudo_entities_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiBillingPseudoEntity]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_billing_pseudo_entities._get_kwargs()
+    kwargs = get_all_billing_pseudo_entities._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -874,7 +902,9 @@ def get_all_billing_pseudo_entities_asyncio_detailed(*, client: StolonClient) ->
     )
 
 
-def get_all_billing_pseudo_entities_asyncio(*, client: StolonClient) -> ApiBillingPseudoEntity | None:
+def get_all_billing_pseudo_entities_asyncio(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ApiBillingPseudoEntity | None:
     """Get all billing pseudo entities
 
     Args:
@@ -893,13 +923,14 @@ def get_all_billing_pseudo_entities_asyncio(*, client: StolonClient) -> ApiBilli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiBillingPseudoEntity | None
     """
     # Extract request parameters from generated function
-    kwargs = get_all_billing_pseudo_entities._get_kwargs()
+    kwargs = get_all_billing_pseudo_entities._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

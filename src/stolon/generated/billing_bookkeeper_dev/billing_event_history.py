@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import (
@@ -23,10 +25,12 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_merchant_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_merchant_billing_event_history_sync_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -47,12 +51,14 @@ def get_merchant_billing_event_history_sync_detailed(*, client: StolonClient, uu
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -90,7 +96,9 @@ def get_merchant_billing_event_history_sync_detailed(*, client: StolonClient, uu
     )
 
 
-def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_merchant_billing_event_history_sync(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -111,12 +119,14 @@ def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -140,7 +150,9 @@ def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_merchant_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_merchant_billing_event_history_asyncio_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -161,12 +173,14 @@ def get_merchant_billing_event_history_asyncio_detailed(*, client: StolonClient,
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -204,7 +218,9 @@ def get_merchant_billing_event_history_asyncio_detailed(*, client: StolonClient,
     )
 
 
-def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_merchant_billing_event_history_asyncio(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -225,12 +241,14 @@ def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -254,7 +272,16 @@ def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_event_history_sync_detailed(
+    *,
+    client: StolonClient,
+    entity_uuid: Union[Unset, str] = UNSET,
+    event_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -277,13 +304,25 @@ def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entity_uuid: Union[Unset, str]
+        event_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs()
+    kwargs = get_billing_event_history._get_kwargs(
+        entity_uuid=entity_uuid,
+        event_uuid=event_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -321,7 +360,16 @@ def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def get_billing_event_history_sync(*, client: StolonClient) -> ResponseError | None:
+def get_billing_event_history_sync(
+    *,
+    client: StolonClient,
+    entity_uuid: Union[Unset, str] = UNSET,
+    event_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -344,13 +392,25 @@ def get_billing_event_history_sync(*, client: StolonClient) -> ResponseError | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entity_uuid: Union[Unset, str]
+        event_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs()
+    kwargs = get_billing_event_history._get_kwargs(
+        entity_uuid=entity_uuid,
+        event_uuid=event_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -374,7 +434,16 @@ def get_billing_event_history_sync(*, client: StolonClient) -> ResponseError | N
     return None
 
 
-def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_billing_event_history_asyncio_detailed(
+    *,
+    client: StolonClient,
+    entity_uuid: Union[Unset, str] = UNSET,
+    event_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -397,13 +466,25 @@ def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entity_uuid: Union[Unset, str]
+        event_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs()
+    kwargs = get_billing_event_history._get_kwargs(
+        entity_uuid=entity_uuid,
+        event_uuid=event_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -441,7 +522,16 @@ def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_billing_event_history_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_billing_event_history_asyncio(
+    *,
+    client: StolonClient,
+    entity_uuid: Union[Unset, str] = UNSET,
+    event_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -464,13 +554,25 @@ def get_billing_event_history_asyncio(*, client: StolonClient) -> ResponseError 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                entity_uuid: Union[Unset, str]
+        event_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs()
+    kwargs = get_billing_event_history._get_kwargs(
+        entity_uuid=entity_uuid,
+        event_uuid=event_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -494,7 +596,9 @@ def get_billing_event_history_asyncio(*, client: StolonClient) -> ResponseError 
     return None
 
 
-def get_reseller_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_reseller_billing_event_history_sync_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -515,12 +619,14 @@ def get_reseller_billing_event_history_sync_detailed(*, client: StolonClient, uu
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -558,7 +664,9 @@ def get_reseller_billing_event_history_sync_detailed(*, client: StolonClient, uu
     )
 
 
-def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_reseller_billing_event_history_sync(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -579,12 +687,14 @@ def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -608,7 +718,9 @@ def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_reseller_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_reseller_billing_event_history_asyncio_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -629,12 +741,14 @@ def get_reseller_billing_event_history_asyncio_detailed(*, client: StolonClient,
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -672,7 +786,9 @@ def get_reseller_billing_event_history_asyncio_detailed(*, client: StolonClient,
     )
 
 
-def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_reseller_billing_event_history_asyncio(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -693,12 +809,14 @@ def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -722,7 +840,9 @@ def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def get_billing_event_history_by_entity_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_billing_event_history_by_entity_sync_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -743,12 +863,14 @@ def get_billing_event_history_by_entity_sync_detailed(*, client: StolonClient, u
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
+    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -786,7 +908,9 @@ def get_billing_event_history_by_entity_sync_detailed(*, client: StolonClient, u
     )
 
 
-def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_event_history_by_entity_sync(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -807,12 +931,14 @@ def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
+    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -836,7 +962,9 @@ def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str)
     return None
 
 
-def get_billing_event_history_by_entity_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_billing_event_history_by_entity_asyncio_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -857,12 +985,14 @@ def get_billing_event_history_by_entity_asyncio_detailed(*, client: StolonClient
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
+    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -900,7 +1030,9 @@ def get_billing_event_history_by_entity_asyncio_detailed(*, client: StolonClient
     )
 
 
-def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_billing_event_history_by_entity_asyncio(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -921,12 +1053,14 @@ def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
+    kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -950,7 +1084,9 @@ def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: s
     return None
 
 
-def get_developer_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_developer_billing_event_history_sync_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -971,12 +1107,14 @@ def get_developer_billing_event_history_sync_detailed(*, client: StolonClient, u
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1014,7 +1152,9 @@ def get_developer_billing_event_history_sync_detailed(*, client: StolonClient, u
     )
 
 
-def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_developer_billing_event_history_sync(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1035,12 +1175,14 @@ def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1064,7 +1206,9 @@ def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str)
     return None
 
 
-def get_developer_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def get_developer_billing_event_history_asyncio_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -1085,12 +1229,14 @@ def get_developer_billing_event_history_asyncio_detailed(*, client: StolonClient
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1128,7 +1274,9 @@ def get_developer_billing_event_history_asyncio_detailed(*, client: StolonClient
     )
 
 
-def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+def get_developer_billing_event_history_asyncio(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1149,12 +1297,14 @@ def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: s
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
+    kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

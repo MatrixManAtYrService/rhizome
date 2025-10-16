@@ -28,7 +28,7 @@ class FunctionInfo:
     module_path: str  # Relative path like "billing_entity.create_billing_entity"
     api_function_name: str  # e.g., "create_billing_entity"
     variant: str  # "sync", "sync_detailed", "asyncio", "asyncio_detailed"
-    parameters: list[ParameterInfo] = field(default_factory=list)
+    parameters: list[ParameterInfo] = field(default_factory=lambda: [])
     return_type: str = "None"
     docstring: str = ""
     response_model: str | None = None  # Model class for parsing response
@@ -37,7 +37,7 @@ class FunctionInfo:
 class ApiFunctionExtractor(cst.CSTVisitor):
     """Extract API function metadata from generated OpenAPI client files."""
 
-    METADATA_DEPENDENCIES = (cst.metadata.ParentNodeProvider,)
+    METADATA_DEPENDENCIES = (cst.metadata.ParentNodeProvider,)  # type: ignore[attr-defined]
 
     def __init__(self, module_path: str) -> None:
         """Initialize the extractor.
@@ -93,23 +93,24 @@ class ApiFunctionExtractor(cst.CSTVisitor):
 
     def _extract_parameters(self, node: cst.FunctionDef) -> list[ParameterInfo]:
         """Extract parameter information from function definition."""
-        parameters = []
+        parameters: list[ParameterInfo] = []
 
         # Extract both regular params and keyword-only params
         # OpenAPI-generated functions use *, client: ..., body: ... syntax
-        # So parameters are in kwonlyparams, not params
+        # So parameters are in kwonly_params, not params
         all_params = list(node.params.params)
 
         # Some functions have keyword-only params (after *), some don't
-        if hasattr(node.params, 'kwonlyparams') and node.params.kwonlyparams:
-            all_params.extend(node.params.kwonlyparams)
+        if hasattr(node.params, "kwonly_params") and node.params.kwonly_params:
+            all_params.extend(node.params.kwonly_params)
 
         for param in all_params:
             # Skip 'client' parameter as we'll replace it with StolonClient
-            if isinstance(param.name, cst.Name) and param.name.value == "client":
+            # param.name is always a Name or other specific type at this point
+            if param.name.value == "client":
                 continue
 
-            param_name = param.name.value if isinstance(param.name, cst.Name) else str(param.name)
+            param_name = param.name.value if hasattr(param.name, "value") else str(param.name)
 
             # Extract type annotation
             type_annotation = "Any"
@@ -139,22 +140,28 @@ class ApiFunctionExtractor(cst.CSTVisitor):
 
     def _extract_docstring(self, node: cst.FunctionDef) -> str:
         """Extract docstring from function definition."""
-        if node.body.body:
-            first_stmt = node.body.body[0]
-            if m.matches(first_stmt, m.SimpleStatementLine(body=[m.Expr(value=m.SimpleString())])):
-                expr_stmt = first_stmt.body[0]
-                if isinstance(expr_stmt, cst.Expr) and isinstance(expr_stmt.value, cst.SimpleString):
-                    # Remove quotes and clean up
-                    docstring = expr_stmt.value.value
-                    # Remove triple quotes if present
-                    if (
-                        docstring.startswith('"""')
-                        and docstring.endswith('"""')
-                        or docstring.startswith("'''")
-                        and docstring.endswith("'''")
-                    ):
-                        docstring = docstring[3:-3]
-                    return docstring.strip()
+        if not isinstance(node.body, cst.IndentedBlock) or not node.body.body:
+            return ""
+
+        first_stmt = node.body.body[0]
+        if (
+            m.matches(first_stmt, m.SimpleStatementLine(body=[m.Expr(value=m.SimpleString())]))
+            and isinstance(first_stmt, cst.SimpleStatementLine)
+            and first_stmt.body
+        ):
+            expr_stmt = first_stmt.body[0]
+            if isinstance(expr_stmt, cst.Expr) and isinstance(expr_stmt.value, cst.SimpleString):
+                # Remove quotes and clean up
+                docstring = expr_stmt.value.value
+                # Remove triple quotes if present
+                if (
+                    docstring.startswith('"""')
+                    and docstring.endswith('"""')
+                    or docstring.startswith("'''")
+                    and docstring.endswith("'''")
+                ):
+                    docstring = docstring[3:-3]
+                return docstring.strip()
         return ""
 
     def _extract_response_model(self, return_type: str, variant: str) -> str | None:
@@ -236,7 +243,7 @@ def discover_api_functions(generated_client_path: Path) -> list[FunctionInfo]:
         logger.warning("API path not found", path=str(api_path))
         return []
 
-    all_functions = []
+    all_functions: list[FunctionInfo] = []
 
     # Scan all API modules
     for api_file in api_path.rglob("*.py"):
@@ -253,11 +260,11 @@ def discover_api_functions(generated_client_path: Path) -> list[FunctionInfo]:
             module = cst.parse_module(source_code)
 
             # Wrap with metadata for parent node access
-            wrapper = cst.metadata.MetadataWrapper(module)
+            wrapper = cst.metadata.MetadataWrapper(module)  # type: ignore[attr-defined]
 
             # Extract functions
             extractor = ApiFunctionExtractor(module_path)
-            wrapper.visit(extractor)
+            wrapper.visit(extractor)  # type: ignore[attr-defined]
 
             all_functions.extend(extractor.functions)
 
@@ -301,7 +308,7 @@ def convert_to_pipe_union(type_annotation: str) -> str:
         inner = type_annotation[6:-1]  # Remove "Union[" and "]"
 
         # Split by comma, but respect nested brackets
-        types = []
+        types: list[str] = []
         current = ""
         depth = 0
         for char in inner:
@@ -318,7 +325,7 @@ def convert_to_pipe_union(type_annotation: str) -> str:
             types.append(current.strip())
 
         # Convert each type recursively and join with pipe
-        converted_types = [convert_to_pipe_union(t) for t in types]
+        converted_types: list[str] = [convert_to_pipe_union(t) for t in types]
         return " | ".join(converted_types)
 
     # Handle generic types like Response[X], list[Y], dict[K, V]
@@ -350,7 +357,7 @@ def extract_model_names_from_type(type_annotation: str) -> set[str]:
     """
     import re
 
-    models = set()
+    models: set[str] = set()
 
     # Pattern to match capitalized identifiers (potential model names)
     # This will match things like ApiModel, ResponseError, etc.
@@ -381,35 +388,28 @@ def extract_model_names_from_type(type_annotation: str) -> set[str]:
     return models
 
 
-def generate_wrapper_code(
+def _build_imports(
     func_info: FunctionInfo,
     service: str,
     env: str,
-    domain: str,
-) -> tuple[dict[str, str], str]:
-    """Generate wrapper function code for a single API function.
+    return_type: str,
+    module_dir: str,
+) -> dict[str, str]:
+    """Build import statements for a wrapper function.
 
     Args:
         func_info: Function metadata
-        service: Service name (e.g., "billing_bookkeeper")
-        env: Environment name (e.g., "dev")
-        domain: Domain for the environment (e.g., "dev1.dev.clover.com")
+        service: Service name
+        env: Environment name
+        return_type: Converted return type annotation
+        module_dir: Module directory name
 
     Returns:
-        Tuple of (imports_dict, function_code)
-        - imports_dict maps import statement to a key for deduplication
-        - function_code is the generated function body
+        Dictionary mapping import keys to import statements
     """
     service_underscore = service.replace("-", "_")
 
-    # Convert return type to pipe union syntax (Union[X, Y] -> X | Y, Optional[X] -> X | None)
-    return_type = convert_to_pipe_union(func_info.return_type)
-
-    # Extract module directory name (first part of module_path before any dots)
-    # e.g., "billing_entity.create_billing_entity" -> "billing_entity"
-    module_dir = func_info.module_path.split(".")[0]
-
-    # Build import statements as a dict for deduplication
+    # Build base imports
     imports = {
         "typing_Any": "from typing import Any",
         "stolon_client": "from stolon.client import StolonClient",
@@ -430,28 +430,38 @@ def generate_wrapper_code(
     # Add JSON import (always needed)
     imports["json"] = "import json"
 
-    # Collect all type annotations to check for standard library types
+    # Collect all type annotations and default values
     all_type_annotations = [return_type]
     all_type_annotations.extend(param.type_annotation for param in func_info.parameters)
+    all_type_annotations.extend(param.default for param in func_info.parameters if param.default)
     full_type_string = " ".join(all_type_annotations)
 
-    # Add standard library imports if they appear in any type annotation
+    # Add standard library imports if needed
     if "UUID" in full_type_string:
         imports["uuid_UUID"] = "from uuid import UUID"
     if "datetime" in full_type_string:
         imports["datetime"] = "import datetime"
+    if "Union" in full_type_string:
+        imports["typing_Union"] = "from typing import Union"
+    if "Unset" in full_type_string or "UNSET" in full_type_string:
+        imports["types_Unset_UNSET"] = (
+            f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types "
+            f"import UNSET, Unset"
+        )
 
-    # Extract all model names from return type AND parameter types
-    # This handles models in various positions: Response[Model], Model | ResponseError, list["Model"], etc.
+    # Extract model names and add model imports
     model_names = extract_model_names_from_type(return_type)
-
-    # Also extract models from parameter types
     for param in func_info.parameters:
         model_names.update(extract_model_names_from_type(param.type_annotation))
 
+    # Skip Union and Unset - handled separately above
+    skip_models = {"Union", "Unset"}
+
     for model_name in model_names:
-        # Convert model name to module path (CamelCase -> snake_case)
-        # e.g., ApiMerchantDetail -> api_merchant_detail
+        if model_name in skip_models:
+            continue
+
+        # Convert CamelCase to snake_case
         model_module = "".join(["_" + c.lower() if c.isupper() else c for c in model_name]).lstrip("_")
         imports[f"model_{model_name}"] = (
             f"from stolon.openapi_generated.{service_underscore}_{env}."
@@ -459,9 +469,20 @@ def generate_wrapper_code(
             f"import {model_name}"
         )
 
-    # Build function parameters
-    params = ["*", "client: StolonClient"]
-    call_params = []
+    return imports
+
+
+def _build_function_params(func_info: FunctionInfo) -> tuple[str, str]:
+    """Build function parameter strings.
+
+    Args:
+        func_info: Function metadata
+
+    Returns:
+        Tuple of (param_str, call_param_str) for function signature and call
+    """
+    params: list[str] = ["*", "client: StolonClient"]
+    call_params: list[str] = []
 
     for param in func_info.parameters:
         if param.default:
@@ -473,10 +494,25 @@ def generate_wrapper_code(
     param_str = ",\n    ".join(params)
     call_param_str = ", ".join(call_params)
 
-    # Build response parsing logic based on variant
+    return param_str, call_param_str
+
+
+def _build_response_parsing(func_info: FunctionInfo, service: str, env: str) -> str:
+    """Build response parsing logic for a wrapper function.
+
+    Args:
+        func_info: Function metadata
+        service: Service name
+        env: Environment name
+
+    Returns:
+        Response parsing code as a string
+    """
+    service_underscore = service.replace("-", "_")
+
     if "detailed" in func_info.variant:
-        # For detailed variants, we need to return a Response object
-        response_parsing = f"""
+        # Detailed variants return Response objects
+        return f"""
     # Parse response into Response object (detailed variant)
     import json
     from http import HTTPStatus
@@ -503,10 +539,9 @@ def generate_wrapper_code(
         parsed=parsed,
     )
 """
-    else:
-        # For non-detailed variants, return parsed model or None
-        if func_info.response_model:
-            response_parsing = f"""
+    elif func_info.response_model:
+        # Non-detailed variants with a response model
+        return f"""
     # Parse response body
     import json
     if proxy_response.body and proxy_response.status_code == 200:
@@ -517,11 +552,43 @@ def generate_wrapper_code(
             pass
     return None
 """
-        else:
-            response_parsing = """
+    else:
+        # No response model
+        return """
     # No response model, return None
     return None
 """
+
+
+def generate_wrapper_code(
+    func_info: FunctionInfo,
+    service: str,
+    env: str,
+    domain: str,
+) -> tuple[dict[str, str], str]:
+    """Generate wrapper function code for a single API function.
+
+    Args:
+        func_info: Function metadata
+        service: Service name (e.g., "billing_bookkeeper")
+        env: Environment name (e.g., "dev")
+        domain: Domain for the environment (e.g., "dev1.dev.clover.com")
+
+    Returns:
+        Tuple of (imports_dict, function_code)
+        - imports_dict maps import statement to a key for deduplication
+        - function_code is the generated function body
+    """
+    # Convert return type to pipe union syntax
+    return_type = convert_to_pipe_union(func_info.return_type)
+
+    # Extract module directory name
+    module_dir = func_info.module_path.split(".")[0]
+
+    # Build all components using helper functions
+    imports = _build_imports(func_info, service, env, return_type, module_dir)
+    param_str, call_param_str = _build_function_params(func_info)
+    response_parsing = _build_response_parsing(func_info, service, env)
 
     # Build complete function code
     function_code = f'''
@@ -556,7 +623,6 @@ def {func_info.api_function_name}_{func_info.variant}(
 {response_parsing}
 '''
 
-    # Return imports dict and function code separately for deduplication
     return imports, function_code
 
 
@@ -613,12 +679,12 @@ def generate_wrappers_for_service(
         functions_by_module[module_key].append(func)
 
     # Generate wrapper code for each module
-    generated_files = {}
+    generated_files: dict[str, str] = {}
 
     for module_key, module_functions in functions_by_module.items():
         # Collect all imports and function code
         all_imports: dict[str, str] = {}
-        function_codes = []
+        function_codes: list[str] = []
 
         # Generate each function
         for func_info in module_functions:

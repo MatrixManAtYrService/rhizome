@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import (
@@ -22,13 +23,23 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     create_unit_rule_intent,
     delete_rule_intent,
 )
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.activation_rule import (
+    ActivationRule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.conditional_rule import (
+    ConditionalRule,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.lexi_attr_intent import (
     LexiAttrIntent,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.simple_rule import SimpleRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.unit_rule import UnitRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def apply_rules_sync_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+def apply_rules_sync_detailed(
+    *, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -46,12 +57,13 @@ def apply_rules_sync_detailed(*, client: StolonClient, lexicon: str) -> Response
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -89,7 +101,7 @@ def apply_rules_sync_detailed(*, client: StolonClient, lexicon: str) -> Response
     )
 
 
-def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
+def apply_rules_sync(*, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -107,12 +119,13 @@ def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -129,7 +142,9 @@ def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
     return None
 
 
-def apply_rules_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+def apply_rules_asyncio_detailed(
+    *, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -147,12 +162,13 @@ def apply_rules_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -190,7 +206,7 @@ def apply_rules_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Respo
     )
 
 
-def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
+def apply_rules_asyncio(*, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -208,12 +224,13 @@ def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -230,7 +247,9 @@ def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
     return None
 
 
-def apply_rules_from_input_sync_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+def apply_rules_from_input_sync_detailed(
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -249,12 +268,14 @@ def apply_rules_from_input_sync_detailed(*, client: StolonClient, lexicon: str) 
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        body: list[str]
+        dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -292,7 +313,9 @@ def apply_rules_from_input_sync_detailed(*, client: StolonClient, lexicon: str) 
     )
 
 
-def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | None:
+def apply_rules_from_input_sync(
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -311,12 +334,14 @@ def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | 
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        body: list[str]
+        dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -333,7 +358,9 @@ def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | 
     return None
 
 
-def apply_rules_from_input_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+def apply_rules_from_input_asyncio_detailed(
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -352,12 +379,14 @@ def apply_rules_from_input_asyncio_detailed(*, client: StolonClient, lexicon: st
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        body: list[str]
+        dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -395,7 +424,9 @@ def apply_rules_from_input_asyncio_detailed(*, client: StolonClient, lexicon: st
     )
 
 
-def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
+def apply_rules_from_input_asyncio(
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -414,12 +445,14 @@ def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int
     Args:
         client: StolonClient instance for proxying requests
                 lexicon: str
+        body: list[str]
+        dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
     # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
+    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -436,7 +469,13 @@ def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int
     return None
 
 
-def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_conditional_rule_intent_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ConditionalRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -454,13 +493,15 @@ def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs()
+    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -498,7 +539,13 @@ def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_conditional_rule_intent_sync(
+    *,
+    client: StolonClient,
+    body: ConditionalRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -516,13 +563,15 @@ def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAt
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs()
+    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -539,7 +588,13 @@ def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAt
     return None
 
 
-def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_conditional_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ConditionalRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -557,13 +612,15 @@ def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs()
+    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -601,7 +658,13 @@ def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_conditional_rule_intent_asyncio(
+    *,
+    client: StolonClient,
+    body: ConditionalRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -619,13 +682,15 @@ def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["Lex
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ConditionalRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs()
+    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -642,7 +707,9 @@ def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["Lex
     return None
 
 
-def delete_rule_intent_sync_detailed(*, client: StolonClient, uuid: str) -> Response[list["LexiAttrIntent"]]:
+def delete_rule_intent_sync_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -661,12 +728,14 @@ def delete_rule_intent_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
+    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -704,7 +773,9 @@ def delete_rule_intent_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAttrIntent"] | None:
+def delete_rule_intent_sync(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -723,12 +794,14 @@ def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAtt
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
+    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -745,7 +818,9 @@ def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAtt
     return None
 
 
-def delete_rule_intent_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[list["LexiAttrIntent"]]:
+def delete_rule_intent_asyncio_detailed(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -764,12 +839,14 @@ def delete_rule_intent_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
+    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -807,7 +884,9 @@ def delete_rule_intent_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["LexiAttrIntent"] | None:
+def delete_rule_intent_asyncio(
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -826,12 +905,14 @@ def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["Lexi
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
+    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -848,7 +929,13 @@ def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["Lexi
     return None
 
 
-def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_unit_rule_intent_sync_detailed(
+    *,
+    client: StolonClient,
+    body: UnitRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -866,13 +953,15 @@ def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[l
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs()
+    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -910,7 +999,13 @@ def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[l
     )
 
 
-def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_unit_rule_intent_sync(
+    *,
+    client: StolonClient,
+    body: UnitRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -928,13 +1023,15 @@ def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInten
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs()
+    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -951,7 +1048,13 @@ def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInten
     return None
 
 
-def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_unit_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: UnitRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -969,13 +1072,15 @@ def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs()
+    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1013,7 +1118,13 @@ def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_unit_rule_intent_asyncio(
+    *,
+    client: StolonClient,
+    body: UnitRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1031,13 +1142,15 @@ def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIn
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: UnitRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs()
+    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1054,7 +1167,13 @@ def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIn
     return None
 
 
-def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_activation_rule_intent_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ActivationRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1072,13 +1191,15 @@ def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs()
+    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1116,7 +1237,13 @@ def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_activation_rule_intent_sync(
+    *,
+    client: StolonClient,
+    body: ActivationRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1134,13 +1261,15 @@ def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAtt
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs()
+    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1157,7 +1286,13 @@ def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAtt
     return None
 
 
-def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_activation_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ActivationRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1175,13 +1310,15 @@ def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs()
+    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1219,7 +1356,13 @@ def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_activation_rule_intent_asyncio(
+    *,
+    client: StolonClient,
+    body: ActivationRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1237,13 +1380,15 @@ def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["Lexi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ActivationRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs()
+    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1260,7 +1405,13 @@ def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["Lexi
     return None
 
 
-def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_simple_rule_intent_sync_detailed(
+    *,
+    client: StolonClient,
+    body: SimpleRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1278,13 +1429,15 @@ def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs()
+    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1322,7 +1475,13 @@ def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response
     )
 
 
-def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_simple_rule_intent_sync(
+    *,
+    client: StolonClient,
+    body: SimpleRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1340,13 +1499,15 @@ def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInt
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs()
+    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1363,7 +1524,13 @@ def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInt
     return None
 
 
-def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+def create_simple_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: SimpleRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1381,13 +1548,15 @@ def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[list["LexiAttrIntent"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs()
+    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1425,7 +1594,13 @@ def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+def create_simple_rule_intent_asyncio(
+    *,
+    client: StolonClient,
+    body: SimpleRule,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1443,13 +1618,15 @@ def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: SimpleRule
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         list["LexiAttrIntent"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs()
+    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     client.proxy_request(

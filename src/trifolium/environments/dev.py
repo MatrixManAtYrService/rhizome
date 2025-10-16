@@ -13,19 +13,6 @@ from typing import TYPE_CHECKING, Any
 from rhizome.environments.dev.billing_event import DevBillingEvent as BillingEvent
 from stolon.environments import base
 
-# Generated API imports - Agreement K8s
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
-    get_bulk_acceptances_service_scope,
-)
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
-    get_latest_agreement,
-)
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.models import (
-    get_bulk_acceptances_service_scope_body,
-    get_bulk_acceptances_service_scope_body_request_body,
-)
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
-
 # Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
 from stolon.generated.billing_bookkeeper_dev.alliance_code import (
     create_invoice_alliance_code_sync_detailed,
@@ -43,22 +30,6 @@ from stolon.generated.billing_bookkeeper_dev.cellular_action_fee_code import (
     create_cellular_action_fee_code_sync_detailed,
 )
 from stolon.generated.billing_bookkeeper_dev.fee_rate import create_fee_rate_sync_detailed
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models import (
-    api_billing_entity,
-    api_billing_entity_entity_type,
-    api_billing_hierarchy,
-    api_billing_schedule,
-    api_billing_schedule_frequency,
-    api_cellular_action_fee_code,
-    api_fee_rate,
-    api_fee_rate_apply_type,
-    api_invoice_alliance_code,
-    api_partner_config,
-    api_plan_action_fee_code,
-    api_processing_group_dates,
-    api_revenue_share_group,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET
 from stolon.generated.billing_bookkeeper_dev.partner_config import (
     create_partner_config_sync_detailed,
 )
@@ -73,14 +44,43 @@ from stolon.generated.billing_bookkeeper_dev.revenue_share_group import (
     delete_revenue_share_group_by_uuid_sync,
 )
 
+# Generated API imports - Agreement K8s (using openapi_generated for models and raw API)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
+    get_bulk_acceptances_service_scope,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
+    get_latest_agreement,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models import (
+    get_bulk_acceptances_service_scope_body,
+    get_bulk_acceptances_service_scope_body_request_body,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models import (
+    api_billing_entity,
+    api_billing_entity_entity_type,
+    api_billing_hierarchy,
+    api_billing_schedule,
+    api_billing_schedule_frequency,
+    api_cellular_action_fee_code,
+    api_fee_rate,
+    api_fee_rate_apply_type,
+    api_invoice_alliance_code,
+    api_partner_config,
+    api_plan_action_fee_code,
+    api_processing_group_dates,
+    api_revenue_share_group,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET
+
 if TYPE_CHECKING:
     from rhizome.client import RhizomeClient
     from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
     from stolon.client import StolonClient
-    from stolon.generated.agreement_k8s_dev.open_api_definition_client import (
+    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client import (
         AuthenticatedClient as AgreementAuthenticatedClient,
     )
-    from stolon.generated.billing_event_dev.open_api_definition_client import (
+    from stolon.openapi_generated.billing_event_dev.open_api_definition_client import (
         AuthenticatedClient as BillingEventAuthenticatedClient,
     )
 
@@ -239,9 +239,7 @@ class DevBillingBookkeeperAPI(base.Environment):
 
         # Call API wrapper (automatically proxies through stolon server)
         response = create_billing_entity_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=entity_model,
         )
 
@@ -273,9 +271,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_invoice_alliance_code_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -306,9 +302,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_revenue_share_group_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -326,9 +320,7 @@ class DevBillingBookkeeperAPI(base.Environment):
             uuid: UUID of the revenue share group to delete
         """
         delete_revenue_share_group_by_uuid_sync(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             uuid=uuid,
         )
 
@@ -367,9 +359,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_billing_schedule_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -418,9 +408,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_fee_rate_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -463,9 +451,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_processing_group_dates_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -502,9 +488,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_billing_hierarchy_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -559,9 +543,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_partner_config_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -604,9 +586,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_plan_action_fee_code_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -649,9 +629,7 @@ class DevBillingBookkeeperAPI(base.Environment):
         )
 
         response = create_cellular_action_fee_code_sync_detailed(
-            stolon_client=self.client,
-            domain=self.domain,
-            environment_name=self.name,
+            client=self.client,
             body=model,
         )
 
@@ -1006,7 +984,7 @@ class DevAgreementAPI(base.Environment):
             assert self.handle is not None
 
             # Import generated client
-            from stolon.generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
+            from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
 
             # Add /agreement path prefix to base URL
             agreement_base_url = f"{self.handle.base_url}/agreement"
@@ -1045,7 +1023,7 @@ class DevAgreementAPI(base.Environment):
             assert self.handle is not None
 
             # Import generated client
-            from stolon.generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
+            from stolon.openapi_generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
 
             # Add /billing-event path prefix to base URL
             billing_event_base_url = f"{self.handle.base_url}/billing-event"
@@ -1162,13 +1140,18 @@ class DevAgreementAPI(base.Environment):
 
         # Use the billing-event backfill endpoint instead of the agreement API
         # This is the correct way to programmatically create acceptances
-        from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
-        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import (
+            create_4,
+        )
+
+        # fmt: off
+        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (  # noqa: E501
             ApiBackfillAcceptance,
         )
-        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (
+        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (  # noqa: E501
             ApiBackfillAcceptanceType,
         )
+        # fmt: on
 
         # Get authenticated client for billing-event service
         billing_event_client = self._ensure_billing_event_client_authenticated()

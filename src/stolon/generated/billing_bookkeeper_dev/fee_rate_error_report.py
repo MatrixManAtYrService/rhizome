@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate_error_report import (
@@ -26,11 +27,15 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_fee_rate_error_report_by_billing_entity_uuid_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get fee rate error report by Billing Entity UUID
 
@@ -52,12 +57,16 @@ def get_fee_rate_error_report_by_billing_entity_uuid_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -96,7 +105,11 @@ def get_fee_rate_error_report_by_billing_entity_uuid_sync_detailed(
 
 
 def get_fee_rate_error_report_by_billing_entity_uuid_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get fee rate error report by Billing Entity UUID
 
@@ -118,12 +131,16 @@ def get_fee_rate_error_report_by_billing_entity_uuid_sync(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -148,7 +165,11 @@ def get_fee_rate_error_report_by_billing_entity_uuid_sync(
 
 
 def get_fee_rate_error_report_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get fee rate error report by Billing Entity UUID
 
@@ -170,12 +191,16 @@ def get_fee_rate_error_report_by_billing_entity_uuid_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -214,7 +239,11 @@ def get_fee_rate_error_report_by_billing_entity_uuid_asyncio_detailed(
 
 
 def get_fee_rate_error_report_by_billing_entity_uuid_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get fee rate error report by Billing Entity UUID
 
@@ -236,12 +265,16 @@ def get_fee_rate_error_report_by_billing_entity_uuid_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 billing_entity_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_fee_rate_error_report_by_billing_entity_uuid._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -486,7 +519,7 @@ def get_fee_rate_error_report_by_uuid_asyncio(*, client: StolonClient, uuid: str
 
 
 def update_fee_rate_error_resolved_status_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, resolved_status: Union[Unset, bool] = UNSET
 ) -> Response[ApiFeeRateErrorReport | ResponseError]:
     """Update the resolved status of a fee rate error report item
 
@@ -507,12 +540,13 @@ def update_fee_rate_error_resolved_status_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        resolved_status: Union[Unset, bool]
 
     Returns:
         Response[ApiFeeRateErrorReport | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid)
+    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid, resolved_status=resolved_status)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -551,7 +585,7 @@ def update_fee_rate_error_resolved_status_sync_detailed(
 
 
 def update_fee_rate_error_resolved_status_sync(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, resolved_status: Union[Unset, bool] = UNSET
 ) -> ApiFeeRateErrorReport | ResponseError | None:
     """Update the resolved status of a fee rate error report item
 
@@ -572,12 +606,13 @@ def update_fee_rate_error_resolved_status_sync(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        resolved_status: Union[Unset, bool]
 
     Returns:
         ApiFeeRateErrorReport | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid)
+    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid, resolved_status=resolved_status)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -595,7 +630,7 @@ def update_fee_rate_error_resolved_status_sync(
 
 
 def update_fee_rate_error_resolved_status_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, resolved_status: Union[Unset, bool] = UNSET
 ) -> Response[ApiFeeRateErrorReport | ResponseError]:
     """Update the resolved status of a fee rate error report item
 
@@ -616,12 +651,13 @@ def update_fee_rate_error_resolved_status_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        resolved_status: Union[Unset, bool]
 
     Returns:
         Response[ApiFeeRateErrorReport | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid)
+    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid, resolved_status=resolved_status)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -660,7 +696,7 @@ def update_fee_rate_error_resolved_status_asyncio_detailed(
 
 
 def update_fee_rate_error_resolved_status_asyncio(
-    *, client: StolonClient, uuid: str
+    *, client: StolonClient, uuid: str, resolved_status: Union[Unset, bool] = UNSET
 ) -> ApiFeeRateErrorReport | ResponseError | None:
     """Update the resolved status of a fee rate error report item
 
@@ -681,12 +717,13 @@ def update_fee_rate_error_resolved_status_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        resolved_status: Union[Unset, bool]
 
     Returns:
         ApiFeeRateErrorReport | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid)
+    kwargs = update_fee_rate_error_resolved_status._get_kwargs(uuid=uuid, resolved_status=resolved_status)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -703,7 +740,13 @@ def update_fee_rate_error_resolved_status_asyncio(
     return None
 
 
-def get_fee_rate_error_reports_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_rate_error_reports_by_action_type_sync_detailed(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get fee rate error reports by error type
 
     Args:
@@ -723,13 +766,17 @@ def get_fee_rate_error_reports_by_action_type_sync_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs()
+    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -767,7 +814,13 @@ def get_fee_rate_error_reports_by_action_type_sync_detailed(*, client: StolonCli
     )
 
 
-def get_fee_rate_error_reports_by_action_type_sync(*, client: StolonClient) -> ResponseError | None:
+def get_fee_rate_error_reports_by_action_type_sync(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get fee rate error reports by error type
 
     Args:
@@ -787,13 +840,17 @@ def get_fee_rate_error_reports_by_action_type_sync(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs()
+    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -817,7 +874,13 @@ def get_fee_rate_error_reports_by_action_type_sync(*, client: StolonClient) -> R
     return None
 
 
-def get_fee_rate_error_reports_by_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_rate_error_reports_by_action_type_asyncio_detailed(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get fee rate error reports by error type
 
     Args:
@@ -837,13 +900,17 @@ def get_fee_rate_error_reports_by_action_type_asyncio_detailed(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs()
+    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -881,7 +948,13 @@ def get_fee_rate_error_reports_by_action_type_asyncio_detailed(*, client: Stolon
     )
 
 
-def get_fee_rate_error_reports_by_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_fee_rate_error_reports_by_action_type_asyncio(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get fee rate error reports by error type
 
     Args:
@@ -901,13 +974,17 @@ def get_fee_rate_error_reports_by_action_type_asyncio(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs()
+    kwargs = get_fee_rate_error_reports_by_action_type._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -931,7 +1008,13 @@ def get_fee_rate_error_reports_by_action_type_asyncio(*, client: StolonClient) -
     return None
 
 
-def get_fee_rate_error_reports_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_rate_error_reports_sync_detailed(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get fee rate error reports
 
     Args:
@@ -951,13 +1034,17 @@ def get_fee_rate_error_reports_sync_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports._get_kwargs()
+    kwargs = get_fee_rate_error_reports._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -995,7 +1082,13 @@ def get_fee_rate_error_reports_sync_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_fee_rate_error_reports_sync(*, client: StolonClient) -> ResponseError | None:
+def get_fee_rate_error_reports_sync(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get fee rate error reports
 
     Args:
@@ -1015,13 +1108,17 @@ def get_fee_rate_error_reports_sync(*, client: StolonClient) -> ResponseError | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports._get_kwargs()
+    kwargs = get_fee_rate_error_reports._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1045,7 +1142,13 @@ def get_fee_rate_error_reports_sync(*, client: StolonClient) -> ResponseError | 
     return None
 
 
-def get_fee_rate_error_reports_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+def get_fee_rate_error_reports_asyncio_detailed(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ResponseError]:
     """Get fee rate error reports
 
     Args:
@@ -1065,13 +1168,17 @@ def get_fee_rate_error_reports_asyncio_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports._get_kwargs()
+    kwargs = get_fee_rate_error_reports._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1109,7 +1216,13 @@ def get_fee_rate_error_reports_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_fee_rate_error_reports_asyncio(*, client: StolonClient) -> ResponseError | None:
+def get_fee_rate_error_reports_asyncio(
+    *,
+    client: StolonClient,
+    filter_resolved: Union[Unset, bool] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ResponseError | None:
     """Get fee rate error reports
 
     Args:
@@ -1129,13 +1242,17 @@ def get_fee_rate_error_reports_asyncio(*, client: StolonClient) -> ResponseError
 
     Args:
         client: StolonClient instance for proxying requests
-
+                filter_resolved: Union[Unset, bool]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_rate_error_reports._get_kwargs()
+    kwargs = get_fee_rate_error_reports._get_kwargs(
+        filter_resolved=filter_resolved, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

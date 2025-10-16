@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import (
@@ -30,10 +31,10 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
     ResponseError,
 )
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_tiered_rule_sync_detailed(*, client: StolonClient) -> Response[ApiTieredRuleSet]:
+def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRuleSet) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -51,13 +52,13 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient) -> Response[ApiTie
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredRuleSet
 
     Returns:
         Response[ApiTieredRuleSet]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_rule._get_kwargs()
+    kwargs = create_tiered_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -95,7 +96,7 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient) -> Response[ApiTie
     )
 
 
-def create_tiered_rule_sync(*, client: StolonClient) -> ApiTieredRuleSet | None:
+def create_tiered_rule_sync(*, client: StolonClient, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -113,13 +114,13 @@ def create_tiered_rule_sync(*, client: StolonClient) -> ApiTieredRuleSet | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredRuleSet
 
     Returns:
         ApiTieredRuleSet | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_rule._get_kwargs()
+    kwargs = create_tiered_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -143,7 +144,7 @@ def create_tiered_rule_sync(*, client: StolonClient) -> ApiTieredRuleSet | None:
     return None
 
 
-def create_tiered_rule_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredRuleSet]:
+def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTieredRuleSet) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -161,13 +162,13 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredRuleSet
 
     Returns:
         Response[ApiTieredRuleSet]
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_rule._get_kwargs()
+    kwargs = create_tiered_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -205,7 +206,7 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def create_tiered_rule_asyncio(*, client: StolonClient) -> ApiTieredRuleSet | None:
+def create_tiered_rule_asyncio(*, client: StolonClient, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -223,13 +224,13 @@ def create_tiered_rule_asyncio(*, client: StolonClient) -> ApiTieredRuleSet | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTieredRuleSet
 
     Returns:
         ApiTieredRuleSet | None
     """
     # Extract request parameters from generated function
-    kwargs = create_tiered_rule._get_kwargs()
+    kwargs = create_tiered_rule._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -253,7 +254,9 @@ def create_tiered_rule_asyncio(*, client: StolonClient) -> ApiTieredRuleSet | No
     return None
 
 
-def get_tiered_rules_sync_detailed(*, client: StolonClient) -> Response[ApiTieredRule]:
+def get_tiered_rules_sync_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ApiTieredRule]:
     """Get tiered rules
 
     Args:
@@ -272,13 +275,14 @@ def get_tiered_rules_sync_detailed(*, client: StolonClient) -> Response[ApiTiere
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiTieredRule]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rules._get_kwargs()
+    kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -316,7 +320,9 @@ def get_tiered_rules_sync_detailed(*, client: StolonClient) -> Response[ApiTiere
     )
 
 
-def get_tiered_rules_sync(*, client: StolonClient) -> ApiTieredRule | None:
+def get_tiered_rules_sync(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ApiTieredRule | None:
     """Get tiered rules
 
     Args:
@@ -335,13 +341,14 @@ def get_tiered_rules_sync(*, client: StolonClient) -> ApiTieredRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiTieredRule | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rules._get_kwargs()
+    kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -365,7 +372,9 @@ def get_tiered_rules_sync(*, client: StolonClient) -> ApiTieredRule | None:
     return None
 
 
-def get_tiered_rules_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredRule]:
+def get_tiered_rules_asyncio_detailed(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> Response[ApiTieredRule]:
     """Get tiered rules
 
     Args:
@@ -384,13 +393,14 @@ def get_tiered_rules_asyncio_detailed(*, client: StolonClient) -> Response[ApiTi
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiTieredRule]
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rules._get_kwargs()
+    kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -428,7 +438,9 @@ def get_tiered_rules_asyncio_detailed(*, client: StolonClient) -> Response[ApiTi
     )
 
 
-def get_tiered_rules_asyncio(*, client: StolonClient) -> ApiTieredRule | None:
+def get_tiered_rules_asyncio(
+    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+) -> ApiTieredRule | None:
     """Get tiered rules
 
     Args:
@@ -447,13 +459,14 @@ def get_tiered_rules_asyncio(*, client: StolonClient) -> ApiTieredRule | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiTieredRule | None
     """
     # Extract request parameters from generated function
-    kwargs = get_tiered_rules._get_kwargs()
+    kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1123,7 +1136,9 @@ def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
     return None
 
 
-def update_tiered_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
+def update_tiered_rule_sync_detailed(
+    *, client: StolonClient, uuid: str, body: ApiTieredRuleSet
+) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
     Args:
@@ -1143,12 +1158,13 @@ def update_tiered_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredRuleSet
 
     Returns:
         Response[ApiTieredRuleSet]
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_rule._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1186,7 +1202,7 @@ def update_tiered_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def update_tiered_rule_sync(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
+def update_tiered_rule_sync(*, client: StolonClient, uuid: str, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1206,12 +1222,13 @@ def update_tiered_rule_sync(*, client: StolonClient, uuid: str) -> ApiTieredRule
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredRuleSet
 
     Returns:
         ApiTieredRuleSet | None
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_rule._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1235,7 +1252,9 @@ def update_tiered_rule_sync(*, client: StolonClient, uuid: str) -> ApiTieredRule
     return None
 
 
-def update_tiered_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
+def update_tiered_rule_asyncio_detailed(
+    *, client: StolonClient, uuid: str, body: ApiTieredRuleSet
+) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
     Args:
@@ -1255,12 +1274,13 @@ def update_tiered_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredRuleSet
 
     Returns:
         Response[ApiTieredRuleSet]
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_rule._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1298,7 +1318,7 @@ def update_tiered_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
 
-def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
+def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1318,12 +1338,13 @@ def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredR
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiTieredRuleSet
 
     Returns:
         ApiTieredRuleSet | None
     """
     # Extract request parameters from generated function
-    kwargs = update_tiered_rule._get_kwargs(uuid=uuid)
+    kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
