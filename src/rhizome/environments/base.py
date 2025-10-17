@@ -219,15 +219,8 @@ class Environment(ABC):
         """
 
     def __init__(self, client: EnvironmentClient) -> None:
-        """Initialize environment with optional port forwarding."""
+        """Initialize environment."""
         self.client = client
-
-        # Set up port forwarding if needed
-        port_forward_config = self.get_port_forward_config()
-        if port_forward_config is not None:
-            self.setup_port_forwarding(port_forward_config)
-
-        # Initialize table situation
         self.table_situation = {table: self.situate_table(table) for table in self.tables()}
 
     def get_versioned(self, model_class: type[TModel]) -> type[TModel]:

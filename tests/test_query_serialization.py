@@ -16,8 +16,8 @@ from sqlmodel import Field, SQLModel, select
 
 
 # Test models
-class TestModel(SQLModel, table=True):
-    """Simple test model for query serialization tests."""
+class SampleModel(SQLModel, table=True):
+    """Simple model for query serialization tests."""
 
     __tablename__ = "test_table"  # type: ignore[assignment]
 
@@ -63,7 +63,7 @@ def serialize_query(query: select) -> tuple[str, dict[str, any]]:
 
 def test_simple_select_all() -> None:
     """Test serialization of simple SELECT * query."""
-    query = select(TestModel)
+    query = select(SampleModel)
     sql, params = serialize_query(query)
 
     # Should produce basic SELECT statement
@@ -74,7 +74,7 @@ def test_simple_select_all() -> None:
 
 def test_simple_where_clause() -> None:
     """Test serialization of query with WHERE clause."""
-    query = select(TestModel).where(TestModel.name == "test_name")
+    query = select(SampleModel).where(SampleModel.name == "test_name")
     sql, params = serialize_query(query)
 
     assert "SELECT" in sql
@@ -87,7 +87,10 @@ def test_simple_where_clause() -> None:
 def test_multiple_where_conditions() -> None:
     """Test serialization with multiple WHERE conditions."""
     query = (
-        select(TestModel).where(TestModel.name == "test").where(TestModel.value > 10).where(TestModel.active.is_(True))
+        select(SampleModel)
+        .where(SampleModel.name == "test")
+        .where(SampleModel.value > 10)
+        .where(SampleModel.active.is_(True))
     )
     sql, params = serialize_query(query)
 
@@ -101,7 +104,7 @@ def test_multiple_where_conditions() -> None:
 def test_in_clause() -> None:
     """Test serialization of IN clause."""
     test_ids = [1, 2, 3, 4, 5]
-    query = select(TestModel).where(TestModel.id.in_(test_ids))
+    query = select(SampleModel).where(SampleModel.id.in_(test_ids))
     sql, params = serialize_query(query)
 
     assert "IN" in sql
@@ -114,10 +117,10 @@ def test_in_clause() -> None:
 
 def test_null_checks() -> None:
     """Test serialization of NULL checks (IS NULL / IS NOT NULL)."""
-    query_null = select(TestModel).where(TestModel.uuid.is_(None))
+    query_null = select(SampleModel).where(SampleModel.uuid.is_(None))
     sql_null, params_null = serialize_query(query_null)
 
-    query_not_null = select(TestModel).where(TestModel.uuid.is_not(None))
+    query_not_null = select(SampleModel).where(SampleModel.uuid.is_not(None))
     sql_not_null, params_not_null = serialize_query(query_not_null)
 
     assert "IS NULL" in sql_null.upper()
@@ -129,7 +132,7 @@ def test_null_checks() -> None:
 
 def test_like_pattern() -> None:
     """Test serialization of LIKE patterns."""
-    query = select(TestModel).where(TestModel.name.like("test%"))
+    query = select(SampleModel).where(SampleModel.name.like("test%"))
     sql, params = serialize_query(query)
 
     assert "LIKE" in sql.upper()
@@ -139,7 +142,7 @@ def test_like_pattern() -> None:
 
 def test_order_by() -> None:
     """Test serialization with ORDER BY clause."""
-    query = select(TestModel).where(TestModel.active.is_(True)).order_by(TestModel.created_at.desc())
+    query = select(SampleModel).where(SampleModel.active.is_(True)).order_by(SampleModel.created_at.desc())
     sql, params = serialize_query(query)
 
     assert "ORDER BY" in sql.upper()
@@ -148,7 +151,7 @@ def test_order_by() -> None:
 
 def test_limit_offset() -> None:
     """Test serialization with LIMIT and OFFSET."""
-    query = select(TestModel).where(TestModel.active.is_(True)).limit(10).offset(20)
+    query = select(SampleModel).where(SampleModel.active.is_(True)).limit(10).offset(20)
     sql, params = serialize_query(query)
 
     assert "LIMIT" in sql.upper()
@@ -158,7 +161,9 @@ def test_limit_offset() -> None:
 def test_join_query() -> None:
     """Test serialization of query with JOIN."""
     query = (
-        select(ComplexModel).join(TestModel, ComplexModel.parent_id == TestModel.id).where(TestModel.name == "parent")
+        select(ComplexModel)
+        .join(SampleModel, ComplexModel.parent_id == SampleModel.id)
+        .where(SampleModel.name == "parent")
     )
     sql, params = serialize_query(query)
 
@@ -169,7 +174,7 @@ def test_join_query() -> None:
 def test_uuid_parameter() -> None:
     """Test serialization with UUID parameter."""
     test_uuid = str(uuid.uuid4())
-    query = select(TestModel).where(TestModel.uuid == test_uuid)
+    query = select(SampleModel).where(SampleModel.uuid == test_uuid)
     sql, params = serialize_query(query)
 
     assert len(params) == 1
@@ -179,7 +184,7 @@ def test_uuid_parameter() -> None:
 def test_datetime_parameter() -> None:
     """Test serialization with datetime parameter."""
     test_time = datetime(2024, 1, 1, 12, 0, 0)
-    query = select(TestModel).where(TestModel.created_at > test_time)
+    query = select(SampleModel).where(SampleModel.created_at > test_time)
     sql, params = serialize_query(query)
 
     assert len(params) == 1
@@ -191,7 +196,7 @@ def test_datetime_parameter() -> None:
 def test_subquery() -> None:
     """Test serialization with subquery."""
     subquery = select(ComplexModel.parent_id).where(ComplexModel.status == "active").subquery()
-    query = select(TestModel).where(TestModel.id.in_(select(subquery.c.parent_id)))
+    query = select(SampleModel).where(SampleModel.id.in_(select(subquery.c.parent_id)))
     sql, params = serialize_query(query)
 
     assert "SELECT" in sql
@@ -221,7 +226,7 @@ def test_complex_expression() -> None:
 def test_parameter_names_are_unique() -> None:
     """Test that parameter names don't collide when using same value twice."""
     query = (
-        select(TestModel).where(TestModel.name == "test").where(TestModel.uuid == "test")  # Same value "test"
+        select(SampleModel).where(SampleModel.name == "test").where(SampleModel.uuid == "test")  # Same value "test"
     )
     sql, params = serialize_query(query)
 
@@ -234,7 +239,7 @@ def test_parameter_names_are_unique() -> None:
 
 def test_empty_params_dict() -> None:
     """Test that queries without parameters return empty dict, not None."""
-    query = select(TestModel).where(TestModel.active.is_(True))
+    query = select(SampleModel).where(SampleModel.active.is_(True))
     sql, params = serialize_query(query)
 
     assert params is not None
@@ -257,7 +262,7 @@ def test_parameter_type_preservation(test_value: str | int | float | bool | None
         # Skip None - it typically doesn't create parameters
         pytest.skip("NULL values don't create parameters")
 
-    query = select(TestModel).where(TestModel.value == test_value)
+    query = select(SampleModel).where(SampleModel.value == test_value)
     sql, params = serialize_query(query)
 
     if params:  # Some values might not create params (e.g., True/False literals)

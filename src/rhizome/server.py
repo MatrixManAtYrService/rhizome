@@ -80,6 +80,9 @@ logger = structlog.get_logger()
 # Global variable to store the home instance for cleanup
 _home: Home | None = None
 
+# Global mapping of database_id → local_port for active port forwards
+_active_port_forwards: dict[str, int] = {}
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -252,6 +255,78 @@ class _ServerTools:
     def is_mocked(self) -> bool:
         """Check if tools are mocked - always False for server."""
         return False
+
+
+async def _ensure_port_forward(database_id: str, port_forward_config: Any) -> int:  # noqa: ANN401
+    """
+    Ensure port forward exists for the given database, reusing if already active.
+
+    Args:
+        database_id: Database identifier for tracking
+        port_forward_config: PortForwardConfig with kubectl details
+
+    Returns:
+        Local port number for the active port forward
+
+    Raises:
+        RuntimeError: If port forward setup fails
+    """
+    from rhizome.cluster import connect_cluster
+    from rhizome.portforward import cloudsql_port_forward
+
+    # Check if we already have an active port forward for this database
+    if database_id in _active_port_forwards:
+        local_port = _active_port_forwards[database_id]
+        logger.info("Reusing existing port forward", database_id=database_id, local_port=local_port)
+        return local_port
+
+    # Find an unused port
+    import socket
+
+    for port in range(30000, 31000):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.bind(("127.0.0.1", port))
+                local_port = port
+                break
+        except OSError:
+            continue
+    else:
+        raise RuntimeError("No unused ports available in range 30000-31000")
+
+    logger.info(
+        "Setting up new port forward",
+        database_id=database_id,
+        local_port=local_port,
+        kube_context=port_forward_config.kube_context,
+        sql_connection=port_forward_config.sql_connection,
+    )
+
+    # Connect to the cluster
+    server_tools = _ServerTools()
+    await connect_cluster(
+        project=port_forward_config.project,
+        cluster=port_forward_config.cluster,
+        region=port_forward_config.region,
+        server=port_forward_config.server,
+        tools=server_tools,
+    )
+
+    # Start CloudSQL port forward
+    await cloudsql_port_forward(
+        kube_context=port_forward_config.kube_context,
+        kube_namespace=port_forward_config.kube_namespace,
+        kube_deployment=port_forward_config.kube_deployment,
+        sql_connection=port_forward_config.sql_connection,
+        local_port=local_port,
+        tools=server_tools,
+    )
+
+    # Track this port forward
+    _active_port_forwards[database_id] = local_port
+    logger.info("Port forward established", database_id=database_id, local_port=local_port)
+
+    return local_port
 
 
 def _get_database_config(database_id: str) -> Any:  # noqa: ANN401
@@ -526,17 +601,18 @@ def _execute_query_one(
 
 
 @app.post("/execute_query")
-def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
+async def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
     """
     Execute a query server-side and return serialized results.
 
     This endpoint:
     1. Gets the environment and database config
-    2. Creates a database connection
-    3. Executes the SQL query with parameters
-    4. Deserializes results into model instances
-    5. Applies sanitization if requested
-    6. Serializes results for transmission
+    2. Sets up port forwarding if needed (lazy, reuses existing)
+    3. Creates a database connection
+    4. Executes the SQL query with parameters
+    5. Deserializes results into model instances
+    6. Applies sanitization if requested
+    7. Serializes results for transmission
 
     Args:
         request: Query execution request with SQL, parameters, model info
@@ -544,15 +620,42 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
     Returns:
         ExecuteQueryResponse with serialized results or error
     """
+    import sys
+    import textwrap
+    import time
+    import uuid
     from urllib.parse import quote_plus
 
     from sqlmodel import Session, create_engine
 
+    from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
     from rhizome.serialization import import_model_class
 
+    query_id = uuid.uuid4().hex[:8]
+    start_time = time.time()
+
     try:
-        # Get database config (read-only, without initializing environment)
+        # Get the environment class to check if port forwarding is needed
+        try:
+            env_enum = RhizomeEnvironment(request.database_id)
+        except ValueError:
+            raise ValueError(f"Unknown database: {request.database_id}") from None
+
+        env_class = environment_type.get(env_enum)
+        if not env_class:
+            raise ValueError(f"Unknown database: {request.database_id}")
+
+        # Check if this environment needs port forwarding
+        port_forward_config = env_class.get_port_forward_config()
+
+        # Get database config
         db_config = _get_database_config(request.database_id)
+
+        # If port forwarding is needed, ensure it's set up and update the port
+        if port_forward_config is not None:
+            local_port = await _ensure_port_forward(request.database_id, port_forward_config)
+            # Override the port in db_config with the actual local port
+            db_config.port = local_port
 
         # Build connection string
         encoded_password = quote_plus(db_config.password)
@@ -560,6 +663,19 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
             f"mysql+pymysql://{db_config.username}:{encoded_password}"
             f"@{db_config.host}:{db_config.port}/{db_config.database}"
         )
+
+        # Log query with details
+        logger.info(
+            "SQL query",
+            query_id=query_id,
+            database=request.database_id,
+            connection_string=connection_string,
+            parameters=request.parameters if request.parameters else None,
+        )
+
+        # Print statement to stderr for readability
+        indented_statement = textwrap.indent(request.sql, "    ")
+        print(f"  Statement:\n{indented_statement}", file=sys.stderr)
 
         # Import the model class for result deserialization
         model_class = import_model_class(request.model_module, request.model_class)
@@ -569,11 +685,11 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
 
         with Session(engine) as session:
             if request.mode == GetMode.FIRST:
-                return _execute_query_first(session, request, model_class)
+                response = _execute_query_first(session, request, model_class)
             elif request.mode == GetMode.ALL:
-                return _execute_query_all(session, request, model_class)
+                response = _execute_query_all(session, request, model_class)
             elif request.mode == GetMode.ONE:
-                return _execute_query_one(session, request, model_class)
+                response = _execute_query_one(session, request, model_class)
             else:
                 return ExecuteQueryResponse(
                     success=False,
@@ -581,9 +697,27 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
                     error=f"Unknown query mode: {request.mode}",
                 )
 
+        # Log result
+        duration_ms = int((time.time() - start_time) * 1000)
+        logger.info(
+            "SQL query result",
+            query_id=query_id,
+            duration_ms=duration_ms,
+            row_count=response.row_count,
+        )
+
+        return response
+
     except Exception as e:
         error_msg = f"{type(e).__name__}: {e}"
-        logger.error("Query execution failed", error=error_msg, database=request.database_id)
+        duration_ms = int((time.time() - start_time) * 1000)
+        logger.error(
+            "Query execution failed",
+            query_id=query_id,
+            error=error_msg,
+            database=request.database_id,
+            duration_ms=duration_ms,
+        )
         return ExecuteQueryResponse(success=False, result=None, error=error_msg)
 
 
