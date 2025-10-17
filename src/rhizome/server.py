@@ -601,7 +601,7 @@ def _execute_query_one(
 
 
 @app.post("/execute_query")
-async def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
+def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
     """
     Execute a query server-side and return serialized results.
 
@@ -620,6 +620,7 @@ async def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
     Returns:
         ExecuteQueryResponse with serialized results or error
     """
+    import asyncio
     import sys
     import textwrap
     import time
@@ -653,7 +654,7 @@ async def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
 
         # If port forwarding is needed, ensure it's set up and update the port
         if port_forward_config is not None:
-            local_port = await _ensure_port_forward(request.database_id, port_forward_config)
+            local_port = asyncio.run(_ensure_port_forward(request.database_id, port_forward_config))
             # Override the port in db_config with the actual local port
             db_config.port = local_port
 
