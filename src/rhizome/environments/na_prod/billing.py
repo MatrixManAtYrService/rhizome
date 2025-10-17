@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager, Tools
 from rhizome.environments.na_prod.expected_data.billing_app_suppression import AppSuppressionNaProd
 from rhizome.environments.na_prod.expected_data.billing_auto_debit_no_auth_config import AutoDebitNoAuthConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_bank_routing import BankRoutingNaProd
@@ -392,20 +392,23 @@ class NorthAmericaBilling(Environment):
             raise NotImplementedError(f"Emplacement class for {table_name} not yet implemented")
         return model_class, emplacement_class
 
-    def get_database_config(self) -> DatabaseConfig:
+    @classmethod
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
         """Get database configuration using pybritive temporary credentials."""
         import asyncio
 
-        # Use the new generic credential system with default pattern
+        # Use the static method with tools parameter
         return asyncio.run(
-            self.get_database_config_from_credentials(
+            Environment.get_database_config_from_credentials(
+                tools=tools,
                 secret_reference="Resources/COS-RO-USProd/COS-RO-USProd-profile",
                 secret_manager=SecretManager.PYBRITIVE,
                 database_name="billing",
             )
         )
 
-    def get_port_forward_config(self) -> PortForwardConfig | None:
+    @classmethod
+    def get_port_forward_config(cls) -> PortForwardConfig | None:
         """No port forwarding needed - direct connection."""
         return None
 
@@ -423,7 +426,7 @@ class NorthAmericaBilling(Environment):
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus
 
-        db_config = self.get_database_config()
+        db_config = self.get_database_config(self.client.tools)
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}?ssl_verify_cert=false"
 

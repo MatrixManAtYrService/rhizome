@@ -14,11 +14,15 @@ traffic from a local port to a service/pod port in a Kubernetes cluster.
 
 import asyncio
 import re
+from typing import TYPE_CHECKING
 
 import structlog
 
 from rhizome.proc import NewProcessResponse, process_manager
-from rhizome.tools import Tools
+from rhizome.tools import SubprocessTools
+
+if TYPE_CHECKING:
+    from rhizome.environments.base import Tools
 
 
 async def port_forward(
@@ -27,7 +31,7 @@ async def port_forward(
     kube_deployment: str,
     local_port: int,
     remote_port: int,
-    tools: Tools | None = None,
+    tools: "Tools | None" = None,
 ) -> NewProcessResponse:
     """
     Start a simple kubectl port-forward subprocess.
@@ -46,7 +50,7 @@ async def port_forward(
         NewProcessResponse: Process info for the started port-forward
     """
     process_name = "portforward"
-    tools = tools or Tools()
+    tools = tools or SubprocessTools()
 
     process = await tools.kubectl.port_forward(
         context=kube_context,
@@ -63,7 +67,7 @@ async def port_forward(
 
 
 async def _discover_remote_port(
-    tools: Tools,
+    tools: "Tools",
     kube_context: str,
     kube_namespace: str,
     kube_deployment: str,
@@ -109,7 +113,7 @@ async def _discover_remote_port(
 
 
 async def _wait_for_port_forward(
-    tools: Tools,
+    tools: "Tools",
     local_port: int,
     log: structlog.BoundLogger,
 ) -> None:
@@ -132,7 +136,7 @@ async def cloudsql_port_forward(
     kube_deployment: str,
     sql_connection: str,
     local_port: int,
-    tools: Tools | None = None,
+    tools: "Tools | None" = None,
 ) -> NewProcessResponse:
     """
     Start a Cloud SQL proxy port-forward subprocess.
@@ -144,7 +148,7 @@ async def cloudsql_port_forward(
     4. Set up port forwarding
     """
     process_name = "cloudsql-portforward"
-    tools = tools or Tools()
+    tools = tools or SubprocessTools()
     log = structlog.get_logger()
 
     # 1. Check if port is already forwarded
@@ -208,7 +212,7 @@ async def start_portforward(
     kube_deployment: str,
     sql_connection: str,
     local_port: int = 3306,
-    tools: Tools | None = None,
+    tools: "Tools | None" = None,
 ) -> NewProcessResponse:
     """
     Legacy function that routes to the appropriate implementation.

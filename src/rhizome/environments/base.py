@@ -7,19 +7,83 @@ import socket
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Protocol, TypeVar
 from urllib.parse import quote_plus
 
 if TYPE_CHECKING:
     from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
-    from rhizome.client import RhizomeClient
     from rhizome.models.base import Emplacement, RhizomeModel
+    from rhizome.tools import OnePasswordTool, PybritiveTool
 
 TFirst = TypeVar("TFirst", bound="RhizomeModel")
 TAll = TypeVar("TAll", bound="RhizomeModel")
 TOne = TypeVar("TOne", bound="RhizomeModel")
 TModel = TypeVar("TModel", bound="RhizomeModel")
+
+
+class Tools(Protocol):
+    """Protocol for tools used by Environment instances and related operations."""
+
+    @property
+    def onepassword(self) -> OnePasswordTool:
+        """OnePassword CLI tool."""
+        ...
+
+    @property
+    def pybritive(self) -> PybritiveTool:
+        """Pybritive tool for temporary credentials."""
+        ...
+
+    @property
+    def kubectl(self) -> Any:  # noqa: ANN401  # KubectlTool - avoiding import to prevent circular dependency
+        """Kubectl tool for Kubernetes operations."""
+        ...
+
+    @property
+    def gcloud(self) -> Any:  # noqa: ANN401  # GcloudTool - avoiding import to prevent circular dependency
+        """Google Cloud tool."""
+        ...
+
+    @property
+    def lsof(self) -> Any:  # noqa: ANN401  # LsofTool - avoiding import to prevent circular dependency
+        """Lsof tool for port checking."""
+        ...
+
+    def is_mocked(self) -> bool:
+        """Check if any tools are mocked (for testing)."""
+        ...
+
+
+class EnvironmentClient(Protocol):
+    """
+    Minimal protocol for clients used by Environment instances.
+
+    This protocol defines the minimum interface needed for an Environment to function.
+    Both RhizomeClient (full client) and server-side minimal stubs implement this.
+    """
+
+    @property
+    def tools(self) -> Tools:
+        """Access to external tools (kubectl, gcloud, 1password, pybritive, etc.)."""
+        ...
+
+    @property
+    def base_url(self) -> str:
+        """Server base URL for logging and API requests."""
+        ...
+
+    def select_first(self, database_id: str, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
+        """Execute a query and return the first result or None."""
+        ...
+
+    def select_all(self, database_id: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
+        """Execute a query and return all results."""
+        ...
+
+    def select_one(self, database_id: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
+        """Execute a query and return exactly one result."""
+        ...
 
 
 class SecretManager(StrEnum):
@@ -105,24 +169,38 @@ class Environment(ABC):
         Returns tuple of (ModelClass, EmplacementClass).
         """
 
+    @classmethod
     @abstractmethod
-    def get_database_config(self) -> DatabaseConfig:
-        """Get the database configuration for this environment."""
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
+        """
+        Get the database configuration for this environment.
 
-    def get_database_config_rw(self) -> DatabaseConfigWithRW | None:
+        Args:
+            tools: Tools for retrieving secrets (onepassword, pybritive, etc.)
+
+        Returns:
+            DatabaseConfig with connection details including retrieved credentials
+        """
+
+    @classmethod
+    def get_database_config_rw(cls, tools: Tools) -> DatabaseConfigWithRW | None:
         """
         Get the database configuration with RW credentials if available.
 
         Returns None by default. Environments that support write operations
         should override this method to provide RW credentials.
 
+        Args:
+            tools: Tools for retrieving secrets (onepassword, pybritive, etc.)
+
         Returns:
             DatabaseConfigWithRW if write access is supported, None otherwise
         """
         return None
 
+    @classmethod
     @abstractmethod
-    def get_port_forward_config(self) -> PortForwardConfig | None:
+    def get_port_forward_config(cls) -> PortForwardConfig | None:
         """Get port forwarding config, or None if direct connection."""
 
     @property
@@ -140,7 +218,7 @@ class Environment(ABC):
         This is used by the client to tell the server which database to query.
         """
 
-    def __init__(self, client: RhizomeClient) -> None:
+    def __init__(self, client: EnvironmentClient) -> None:
         """Initialize environment with optional port forwarding."""
         self.client = client
 
@@ -287,7 +365,7 @@ class Environment(ABC):
     def get_database_config_from_port_forward(self, port_forward_config: PortForwardConfig) -> DatabaseConfig:
         """Helper method to get database config for port forwarding environments."""
         password = asyncio.run(
-            self.get_secret(port_forward_config.secret_reference, port_forward_config.secret_manager)
+            self.get_secret(self.client.tools, port_forward_config.secret_reference, port_forward_config.secret_manager)
         )
         return DatabaseConfig(
             host="127.0.0.1",
@@ -297,19 +375,21 @@ class Environment(ABC):
             password=password,
         )
 
-    async def get_secret(self, secret_reference: str, secret_manager: SecretManager) -> str:
+    @staticmethod
+    async def get_secret(tools: Tools, secret_reference: str, secret_manager: SecretManager) -> str:
         """Get secret from the appropriate credential manager."""
         if secret_manager == SecretManager.ONEPASSWORD:
-            return await self.client.tools.onepassword.read_secret(secret_reference)
+            return await tools.onepassword.read_secret(secret_reference)
         elif secret_manager == SecretManager.PYBRITIVE:
             # For pybritive, the secret_reference is the resource path
-            britive_info = await self.client.tools.pybritive.checkout(secret_reference)
+            britive_info = await tools.pybritive.checkout(secret_reference)
             return britive_info.password
         else:
             raise ValueError(f"Unsupported secret manager: {secret_manager}")
 
+    @staticmethod
     async def get_database_config_from_credentials(
-        self,
+        tools: Tools,
         secret_reference: str,
         secret_manager: SecretManager,
         database_name: str,
@@ -318,7 +398,7 @@ class Environment(ABC):
         """Helper method to get database config for direct credential access (pybritive)."""
         if secret_manager == SecretManager.PYBRITIVE:
             # For pybritive, we get all connection details from the checkout
-            britive_info = await self.client.tools.pybritive.checkout(
+            britive_info = await tools.pybritive.checkout(
                 resource_path=secret_reference, pattern=pattern, database_name=database_name
             )
             return DatabaseConfig(
@@ -377,7 +457,7 @@ class Environment(ABC):
 
     def get_connection_string(self) -> str:
         """Build the connection string for this environment."""
-        db_config = self.get_database_config()
+        db_config = self.get_database_config(self.client.tools)
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}"
 

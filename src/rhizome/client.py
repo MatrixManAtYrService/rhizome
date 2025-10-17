@@ -19,7 +19,7 @@ from sqlmodel import create_engine
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 from rhizome.models.base import RhizomeModel
-from rhizome.tools import Tools
+from rhizome.tools import SubprocessTools
 from trifolium.config import Home
 
 TFirst = TypeVar("TFirst", bound=RhizomeModel)
@@ -49,10 +49,10 @@ class Handle:
 class RhizomeClient:
     """Client for communicating with the rhizome server."""
 
-    def __init__(self, home: Home | None = None, tools: Tools | None = None, *, data_in_logs: bool) -> None:
+    def __init__(self, home: Home | None = None, tools: SubprocessTools | None = None, *, data_in_logs: bool) -> None:
         self.home = home or Home()
         self.logger = structlog.get_logger("rhizome.client")
-        self.tools = tools or Tools()
+        self.tools = tools or SubprocessTools()
         self._base_url: str | None = None
         self.data_in_logs = data_in_logs
 
@@ -334,9 +334,7 @@ class RhizomeClient:
 
         return engine
 
-    def select_first(
-        self, database_id: str, query: SelectOfScalar[TFirst], sanitize: bool = True
-    ) -> TFirst | None:
+    def select_first(self, database_id: str, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
         """
         Execute a query server-side and return the first result or None.
 

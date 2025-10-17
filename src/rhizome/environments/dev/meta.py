@@ -16,6 +16,7 @@ from rhizome.environments.base import (
     Environment,
     PortForwardConfig,
     SecretManager,
+    Tools,
 )
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.meta.account import Account
@@ -181,11 +182,14 @@ class DevMeta(Environment):
             raise ValueError(f"Expected MetaTable, got {type(table_name)}")
         return models.get(table_name, (None, None))
 
-    def get_database_config(self) -> DatabaseConfig:
+    @classmethod
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
         """Get database configuration using legacy MySQL credentials (read-only)."""
         import asyncio
 
-        password = asyncio.run(self.get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
+        password = asyncio.run(
+            Environment.get_secret(tools, "op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
+        )
 
         return DatabaseConfig(
             host="dev1-db01.dev.pdx10.clover.network",
@@ -195,12 +199,17 @@ class DevMeta(Environment):
             password=password,
         )
 
-    def get_database_config_rw(self) -> DatabaseConfigWithRW | None:
+    @classmethod
+    def get_database_config_rw(cls, tools: Tools) -> DatabaseConfigWithRW | None:
         """Get database configuration with both RO and RW credentials."""
         import asyncio
 
-        ro_password = asyncio.run(self.get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
-        rw_password = asyncio.run(self.get_secret("op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD))
+        ro_password = asyncio.run(
+            Environment.get_secret(tools, "op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
+        )
+        rw_password = asyncio.run(
+            Environment.get_secret(tools, "op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD)
+        )
 
         return DatabaseConfigWithRW(
             host="dev1-db01.dev.pdx10.clover.network",
@@ -212,7 +221,8 @@ class DevMeta(Environment):
             rw_password=rw_password,
         )
 
-    def get_port_forward_config(self) -> PortForwardConfig | None:
+    @classmethod
+    def get_port_forward_config(cls) -> PortForwardConfig | None:
         """No port forwarding needed - direct connection."""
         return None
 
@@ -230,7 +240,7 @@ class DevMeta(Environment):
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus
 
-        db_config = self.get_database_config()
+        db_config = self.get_database_config(self.client.tools)
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}?ssl_verify_cert=false"
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager, Tools
 from rhizome.environments.na_prod.expected_data.billing_event_app_metered_event import AppMeteredEventNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_app_subscription_current import (
     AppSubscriptionCurrentNaProd,
@@ -218,7 +218,8 @@ class NorthAmericaBillingEvent(Environment):
             raise NotImplementedError(f"Model class for {table_name} not yet implemented")
         return model_class, emplacement_class
 
-    def get_port_forward_config(self) -> PortForwardConfig:
+    @classmethod
+    def get_port_forward_config(cls) -> PortForwardConfig:
         """Get port forwarding configuration for NA production environment."""
         return PortForwardConfig(
             project="clover-prod-kubernetes",
@@ -235,10 +236,25 @@ class NorthAmericaBillingEvent(Environment):
             secret_manager=SecretManager.ONEPASSWORD,
         )
 
-    def get_database_config(self) -> DatabaseConfig:
-        """Get database configuration using port forwarding."""
-        port_forward_config = self.get_port_forward_config()
-        return self.get_database_config_from_port_forward(port_forward_config)
+    @classmethod
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
+        """Get database configuration using port forwarding credentials."""
+        import asyncio
+
+        # Get the port forward config to access secret reference
+        pf_config = cls.get_port_forward_config()
+
+        # Retrieve password directly without needing port forwarding setup
+        password = asyncio.run(Environment.get_secret(tools, pf_config.secret_reference, pf_config.secret_manager))
+
+        # Return config with placeholder port (actual port assigned during __init__)
+        return DatabaseConfig(
+            host="127.0.0.1",  # Port forwarding always uses localhost
+            port=0,  # Placeholder - actual port set during instance initialization
+            database=pf_config.database_name,
+            username=pf_config.username,
+            password=password,
+        )
 
     @property
     def name(self) -> str:
@@ -249,3 +265,32 @@ class NorthAmericaBillingEvent(Environment):
     def database_id(cls) -> str:
         """Database identifier for server-side query execution."""
         return "na_prod_billing_event"
+
+    def get_connection_string(self) -> str:
+        """Build the connection string for this port-forwarded environment."""
+        from urllib.parse import quote_plus
+
+        # Get the config with credentials
+        db_config = self.get_database_config(self.client.tools)
+
+        # Use the actual local port that was set up during __init__
+        encoded_password = quote_plus(db_config.password)
+        connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{self.local_port}/{db_config.database}"
+
+        # Log connection details
+        mysql_command = (
+            f"mysql --user={db_config.username} --password=[REDACTED] --host={db_config.host} "
+            f"--port={self.local_port} --batch {db_config.database}"
+        )
+        self._log_connection_if_new(
+            DatabaseConfig(
+                host=db_config.host,
+                port=self.local_port,
+                database=db_config.database,
+                username=db_config.username,
+                password=db_config.password,
+            ),
+            mysql_command,
+        )
+
+        return connection_string

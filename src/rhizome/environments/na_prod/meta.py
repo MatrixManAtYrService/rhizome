@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager, Tools
 from rhizome.environments.na_prod.expected_data.meta_account import AccountNaProd
 from rhizome.environments.na_prod.expected_data.meta_app_app_bundle import AppAppBundleNaProd
 from rhizome.environments.na_prod.expected_data.meta_app_bundle import AppBundleNaProd
@@ -184,20 +184,23 @@ class NorthAmericaMeta(Environment):
             raise ValueError(f"Expected MetaTable, got {type(table_name)}")
         return models.get(table_name, (None, None))
 
-    def get_database_config(self) -> DatabaseConfig:
+    @classmethod
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
         """Get database configuration using pybritive temporary credentials."""
         import asyncio
 
         # Use the default pattern which handles billing/log/orders variants
         return asyncio.run(
-            self.get_database_config_from_credentials(
+            Environment.get_database_config_from_credentials(
+                tools=tools,
                 secret_reference="Resources/COS-RO-USProd/COS-RO-USProd-profile",
                 secret_manager=SecretManager.PYBRITIVE,
                 database_name="meta",
             )
         )
 
-    def get_port_forward_config(self) -> PortForwardConfig | None:
+    @classmethod
+    def get_port_forward_config(cls) -> PortForwardConfig | None:
         """No port forwarding needed - direct connection."""
         return None
 
@@ -215,7 +218,7 @@ class NorthAmericaMeta(Environment):
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus
 
-        db_config = self.get_database_config()
+        db_config = self.get_database_config(self.client.tools)
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}?ssl_verify_cert=false"
 

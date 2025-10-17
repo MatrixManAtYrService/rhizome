@@ -380,7 +380,7 @@ class ExternalPybritiveTool(PybritiveTool):
         )
 
 
-class Tools:
+class SubprocessTools:
     """Container for all external tool dependencies with dependency injection."""
 
     def __init__(

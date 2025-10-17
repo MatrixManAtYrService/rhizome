@@ -4,9 +4,12 @@ Cluster connection management.
 This module handles connecting to Kubernetes clusters.
 """
 
+from typing import TYPE_CHECKING
+
 import structlog
 
-from rhizome.tools import Tools
+if TYPE_CHECKING:
+    from rhizome.environments.base import Tools
 
 
 async def connect_cluster(
@@ -14,7 +17,7 @@ async def connect_cluster(
     cluster: str,
     region: str,
     server: str,
-    tools: Tools,
+    tools: "Tools",
 ) -> None:
     """
     Connect to a Kubernetes cluster.

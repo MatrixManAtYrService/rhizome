@@ -2,7 +2,7 @@ import asyncio
 import json
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import structlog
 import uvicorn
@@ -23,6 +23,9 @@ from rhizome.server_models import (
 )
 from rhizome.sleeper import start_sleeper
 from trifolium.config import Home
+
+if TYPE_CHECKING:
+    from rhizome.tools import GcloudTool, KubectlTool, LsofTool, OnePasswordTool, PybritiveTool
 
 
 class PortforwardRequest(BaseModel):
@@ -192,12 +195,71 @@ def ps() -> ProcessListResponse:
     return process_manager.list_processes()
 
 
+class _ServerTools:
+    """Server-side tools implementation with real external tool access."""
+
+    def __init__(self) -> None:
+        from rhizome.tools import (
+            ExternalGcloudTool,
+            ExternalKubectlTool,
+            ExternalLsofTool,
+            ExternalOnePasswordTool,
+            ExternalPybritiveTool,
+            GcloudTool,
+            KubectlTool,
+            LsofTool,
+            OnePasswordTool,
+            PybritiveTool,
+        )
+
+        # Use real external tools for all operations
+        self._onepassword: OnePasswordTool = ExternalOnePasswordTool()
+        self._pybritive: PybritiveTool = ExternalPybritiveTool()
+        self._kubectl: KubectlTool = ExternalKubectlTool()
+        self._gcloud: GcloudTool = ExternalGcloudTool()
+        self._lsof: LsofTool = ExternalLsofTool()
+
+    @property
+    def onepassword(self) -> "OnePasswordTool":
+        """OnePassword CLI tool."""
+
+        return self._onepassword
+
+    @property
+    def pybritive(self) -> "PybritiveTool":
+        """Pybritive tool for temporary credentials."""
+
+        return self._pybritive
+
+    @property
+    def kubectl(self) -> "KubectlTool":
+        """Kubectl tool for Kubernetes operations."""
+
+        return self._kubectl
+
+    @property
+    def gcloud(self) -> "GcloudTool":
+        """Google Cloud tool."""
+
+        return self._gcloud
+
+    @property
+    def lsof(self) -> "LsofTool":
+        """Lsof tool for port checking."""
+
+        return self._lsof
+
+    def is_mocked(self) -> bool:
+        """Check if tools are mocked - always False for server."""
+        return False
+
+
 def _get_database_config(database_id: str) -> Any:  # noqa: ANN401
     """
-    Get database config from database ID WITHOUT initializing the environment.
+    Get database config from database ID using class methods.
 
-    This is crucial for server-side execution - we don't want to set up port-forwards
-    or connect to clusters on the server. We just need the database connection details.
+    The refactored Environment classes use class methods for credential retrieval,
+    so we can call them directly without creating instances.
 
     Args:
         database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
@@ -221,20 +283,14 @@ def _get_database_config(database_id: str) -> Any:  # noqa: ANN401
     if not env_class:
         raise ValueError(f"Unknown database: {database_id}")
 
-    # IMPORTANT: Don't create an environment instance! That would trigger port-forwarding.
-    # Instead, create a temporary instance just to call get_database_config()
-    # but we need to bypass __init__. We'll use __new__ and call the method directly.
-
-    # Create instance without calling __init__
-    env = env_class.__new__(env_class)
-
-    # Call get_database_config() - this doesn't need __init__ to have run
-    return env.get_database_config()
+    # Call the class method directly with server tools
+    server_tools = _ServerTools()
+    return env_class.get_database_config(server_tools)
 
 
 def _get_database_config_rw(database_id: str) -> Any:  # noqa: ANN401
     """
-    Get RW database config from database ID WITHOUT initializing the environment.
+    Get RW database config from database ID using class methods.
 
     Args:
         database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
@@ -258,11 +314,9 @@ def _get_database_config_rw(database_id: str) -> Any:  # noqa: ANN401
     if not env_class:
         raise ValueError(f"Unknown database: {database_id}")
 
-    # Create instance without calling __init__
-    env = env_class.__new__(env_class)
-
-    # Call get_database_config_rw() - this doesn't need __init__ to have run
-    return env.get_database_config_rw()
+    # Call the class method directly with server tools
+    server_tools = _ServerTools()
+    return env_class.get_database_config_rw(server_tools)
 
 
 @app.post("/write_query")

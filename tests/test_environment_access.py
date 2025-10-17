@@ -29,7 +29,7 @@ from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.environments.na_prod.meta import NorthAmericaMeta
-from rhizome.tools import Tools
+from rhizome.tools import SubprocessTools
 from tests.mocked_subprocesses import (
     MockGcloudTool,
     MockKubectlTool,
@@ -45,7 +45,7 @@ class EnvironmentMocks:
     """Container for mocks associated with an environment class."""
 
     environment_class: type
-    mock_tools: Tools
+    mock_tools: SubprocessTools
     client: RhizomeClient
     env_instance: Any
     table_mocks: dict[Any, tuple[Any, Callable[[object], object], Callable[[str], MagicMock]]]
@@ -55,7 +55,7 @@ def create_environment_mocks(environment_class: type) -> EnvironmentMocks | None
     """Create all mocks needed for testing an environment class."""
     try:
         # Create mocked tools
-        mock_tools = Tools(
+        mock_tools = SubprocessTools(
             kubectl=MockKubectlTool(),
             onepassword=MockOnePasswordTool(),
             lsof=MockLsofTool(),
@@ -141,7 +141,7 @@ ENVIRONMENT_INSTANCES = {}
 for cls in ENVIRONMENT_CLASSES:
     try:
         # Create mocked tools
-        mock_tools = Tools(
+        mock_tools = SubprocessTools(
             kubectl=MockKubectlTool(),
             onepassword=MockOnePasswordTool(),
             lsof=MockLsofTool(),

@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager, Tools
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.table_list import BillingTable
 
@@ -109,11 +109,14 @@ class DemoBilling(Environment):
             raise ValueError(f"Expected BillingTable, got {type(table_name)}")
         return models.get(table_name, (None, None))
 
-    def get_database_config(self) -> DatabaseConfig:
+    @classmethod
+    def get_database_config(cls, tools: Tools) -> DatabaseConfig:
         """Get database configuration using legacy MySQL credentials."""
         import asyncio
 
-        password = asyncio.run(self.get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
+        password = asyncio.run(
+            Environment.get_secret(tools, "op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
+        )
 
         return DatabaseConfig(
             host="demo2-db01.dev.pdx10.clover.network",
@@ -123,7 +126,8 @@ class DemoBilling(Environment):
             password=password,
         )
 
-    def get_port_forward_config(self) -> PortForwardConfig | None:
+    @classmethod
+    def get_port_forward_config(cls) -> PortForwardConfig | None:
         """No port forwarding needed - direct connection."""
         return None
 
@@ -141,7 +145,7 @@ class DemoBilling(Environment):
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus
 
-        db_config = self.get_database_config()
+        db_config = self.get_database_config(self.client.tools)
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}?ssl_verify_cert=false"
 

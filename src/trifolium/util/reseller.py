@@ -108,7 +108,7 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
     print("   ⚠️  This requires user approval in the rhizome server terminal")
     account_result = rhizome_client.execute_write_query(
         query_name="create_account",
-        environment_name="dev_meta",
+        database_id="dev_meta",
         params={
             "uuid": account_uuid,
             "name": "MFF User",
@@ -145,7 +145,7 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
     print("   ⚠️  This requires user approval in the rhizome server terminal")
     role_result = rhizome_client.execute_write_query(
         query_name="create_reseller_role",
-        environment_name="dev_meta",
+        database_id="dev_meta",
         params={
             "reseller_id": clover_reseller_id,
             "account_id": account_id,
@@ -185,7 +185,7 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
     print("   ⚠️  This requires user approval in the rhizome server terminal")
     primary_role_result = rhizome_client.execute_write_query(
         query_name="update_account_primary_role",
-        environment_name="dev_meta",
+        database_id="dev_meta",
         params={
             "account_id": account_id,
             "primary_reseller_role_id": reseller_role_id,
@@ -278,8 +278,18 @@ def create_reseller(
 
 def _get_credentials_from_1password(meta_db: DevMeta) -> tuple[str, str]:
     """Get username and password from 1Password."""
-    username = asyncio.run(meta_db.get_secret("op://Shared/MFF-reseller-owner/username", SecretManager.ONEPASSWORD))
-    password = asyncio.run(meta_db.get_secret("op://Shared/MFF-reseller-owner/password", SecretManager.ONEPASSWORD))
+    from rhizome.environments.base import Environment
+
+    username = asyncio.run(
+        Environment.get_secret(
+            meta_db.client.tools, "op://Shared/MFF-reseller-owner/username", SecretManager.ONEPASSWORD
+        )
+    )
+    password = asyncio.run(
+        Environment.get_secret(
+            meta_db.client.tools, "op://Shared/MFF-reseller-owner/password", SecretManager.ONEPASSWORD
+        )
+    )
     return username, password
 
 
