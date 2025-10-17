@@ -26,6 +26,9 @@ TFirst = TypeVar("TFirst", bound=RhizomeModel)
 TAll = TypeVar("TAll", bound=RhizomeModel)
 TOne = TypeVar("TOne", bound=RhizomeModel)
 
+# Timeout for query execution requests (includes time for server-side port forward setup)
+QUERY_TIMEOUT = 30.0
+
 
 @dataclass
 class Handle:
@@ -364,7 +367,7 @@ class RhizomeClient:
             sanitize=sanitize,
         )
 
-        with httpx.Client() as client:
+        with httpx.Client(timeout=QUERY_TIMEOUT) as client:
             response = client.post(
                 f"{self.base_url}/execute_query",
                 json=request.model_dump(),
@@ -421,7 +424,7 @@ class RhizomeClient:
             sanitize=sanitize,
         )
 
-        with httpx.Client() as client:
+        with httpx.Client(timeout=QUERY_TIMEOUT) as client:
             response = client.post(
                 f"{self.base_url}/execute_query",
                 json=request.model_dump(),
@@ -478,7 +481,7 @@ class RhizomeClient:
             sanitize=sanitize,
         )
 
-        with httpx.Client() as client:
+        with httpx.Client(timeout=QUERY_TIMEOUT) as client:
             response = client.post(
                 f"{self.base_url}/execute_query",
                 json=request.model_dump(),

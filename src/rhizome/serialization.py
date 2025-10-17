@@ -110,6 +110,9 @@ def deserialize_result[TModel: SQLModel](data: dict[str, Any] | None, model_clas
     """
     Deserialize a dict back to a SQLModel instance.
 
+    Handles partial results (when queries select specific columns) by using
+    model_construct which bypasses validation for missing fields.
+
     Args:
         data: Dictionary with serialized data, or None
         model_class: The model class to instantiate
@@ -126,7 +129,9 @@ def deserialize_result[TModel: SQLModel](data: dict[str, Any] | None, model_clas
     if data is None:
         return None
 
-    return model_class.model_validate(data)
+    # Use model_construct to allow partial models (when queries select specific columns)
+    # This bypasses Pydantic validation for missing required fields
+    return model_class.model_construct(**data)
 
 
 def deserialize_result_list[TModel: SQLModel](
@@ -134,6 +139,9 @@ def deserialize_result_list[TModel: SQLModel](
 ) -> list[TModel]:
     """
     Deserialize a list of dicts back to SQLModel instances.
+
+    Handles partial results (when queries select specific columns) by using
+    model_construct which bypasses validation for missing fields.
 
     Args:
         data_list: List of dictionaries with serialized data
@@ -148,7 +156,7 @@ def deserialize_result_list[TModel: SQLModel](
         >>> resellers = deserialize_result_list(data_list, Reseller)
         >>> len(resellers)  # 2
     """
-    return [model_class.model_validate(data) for data in data_list]
+    return [model_class.model_construct(**data) for data in data_list]
 
 
 def get_model_info[TModel: SQLModel](query: SelectOfScalar[TModel]) -> dict[str, str]:
