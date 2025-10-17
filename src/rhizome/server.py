@@ -55,7 +55,7 @@ class WriteQueryRequest(BaseModel):
     """Request model for prompted write query execution."""
 
     query_name: str
-    environment_name: str  # e.g., "DevMeta"
+    database_id: str  # RhizomeEnvironment enum value, e.g., "dev_meta"
     params: dict[str, str | int | float | None]
     reason: str | None = None  # Why this operation is necessary
     entity_descriptions: dict[str, str] | None = (
@@ -192,35 +192,77 @@ def ps() -> ProcessListResponse:
     return process_manager.list_processes()
 
 
-def _get_environment_instance(environment_name: str) -> Any:  # noqa: ANN401
+def _get_database_config(database_id: str) -> Any:  # noqa: ANN401
     """
-    Get environment instance from environment name.
+    Get database config from database ID WITHOUT initializing the environment.
+
+    This is crucial for server-side execution - we don't want to set up port-forwards
+    or connect to clusters on the server. We just need the database connection details.
 
     Args:
-        environment_name: Environment name (e.g., "DevMeta")
+        database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
 
     Returns:
-        Environment instance
+        DatabaseConfig with connection details
 
     Raises:
-        ValueError: If environment not found
+        ValueError: If database not found
     """
-    from rhizome.client import RhizomeClient
-    from rhizome.environments.environment_list import get_environment_enum_by_name
+    from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
 
-    env_enum = get_environment_enum_by_name(environment_name)
-    if env_enum is None:
-        raise ValueError(f"Unknown environment: {environment_name}")
+    # Convert string to enum
+    try:
+        env_enum = RhizomeEnvironment(database_id)
+    except ValueError:
+        raise ValueError(f"Unknown database: {database_id}") from None
 
     # Get the environment class
-    from rhizome.environments.environment_list import environment_type
-
     env_class = environment_type.get(env_enum)
     if not env_class:
-        raise ValueError(f"Unknown environment: {environment_name}")
+        raise ValueError(f"Unknown database: {database_id}")
 
-    # Create environment instance (needs a dummy client)
-    return env_class(RhizomeClient(data_in_logs=False))
+    # IMPORTANT: Don't create an environment instance! That would trigger port-forwarding.
+    # Instead, create a temporary instance just to call get_database_config()
+    # but we need to bypass __init__. We'll use __new__ and call the method directly.
+
+    # Create instance without calling __init__
+    env = env_class.__new__(env_class)
+
+    # Call get_database_config() - this doesn't need __init__ to have run
+    return env.get_database_config()
+
+
+def _get_database_config_rw(database_id: str) -> Any:  # noqa: ANN401
+    """
+    Get RW database config from database ID WITHOUT initializing the environment.
+
+    Args:
+        database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
+
+    Returns:
+        DatabaseConfigWithRW with RO and RW connection details, or None if not supported
+
+    Raises:
+        ValueError: If database not found
+    """
+    from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
+
+    # Convert string to enum
+    try:
+        env_enum = RhizomeEnvironment(database_id)
+    except ValueError:
+        raise ValueError(f"Unknown database: {database_id}") from None
+
+    # Get the environment class
+    env_class = environment_type.get(env_enum)
+    if not env_class:
+        raise ValueError(f"Unknown database: {database_id}")
+
+    # Create instance without calling __init__
+    env = env_class.__new__(env_class)
+
+    # Call get_database_config_rw() - this doesn't need __init__ to have run
+    return env.get_database_config_rw()
 
 
 @app.post("/write_query")
@@ -257,16 +299,13 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         # Get the canned query
         query = get_query(request.query_name)
 
-        # Get environment instance
-        env = _get_environment_instance(request.environment_name)
-
-        # Get RW database config
-        db_config_rw = env.get_database_config_rw()
+        # Get RW database config (without initializing environment)
+        db_config_rw = _get_database_config_rw(request.database_id)
         if not db_config_rw:
             return WriteQueryResponse(
                 approved=False,
                 executed=False,
-                error=f"Environment {request.environment_name} does not support write operations",
+                error=f"Database {request.database_id} does not support write operations",
             )
 
         # Render query for display
@@ -276,8 +315,8 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         panel_content = (
             f"[bold cyan]Query:[/bold cyan] {query.name}\n"
             f"[bold cyan]Description:[/bold cyan] {query.description}\n"
-            f"[bold cyan]Environment:[/bold cyan] {request.environment_name}\n"
-            f"[bold cyan]Database:[/bold cyan] {db_config_rw.database}\n"
+            f"[bold cyan]Database:[/bold cyan] {request.database_id}\n"
+            f"[bold cyan]Database Name:[/bold cyan] {db_config_rw.database}\n"
         )
 
         # Add reason if provided
@@ -458,11 +497,8 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
     from rhizome.serialization import import_model_class
 
     try:
-        # Get environment instance
-        env = _get_environment_instance(request.environment_name)
-
-        # Get database config (read-only)
-        db_config = env.get_database_config()
+        # Get database config (read-only, without initializing environment)
+        db_config = _get_database_config(request.database_id)
 
         # Build connection string
         encoded_password = quote_plus(db_config.password)
@@ -493,7 +529,7 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
 
     except Exception as e:
         error_msg = f"{type(e).__name__}: {e}"
-        logger.error("Query execution failed", error=error_msg, environment=request.environment_name)
+        logger.error("Query execution failed", error=error_msg, database=request.database_id)
         return ExecuteQueryResponse(success=False, result=None, error=error_msg)
 
 

@@ -244,3 +244,8 @@ class NorthAmericaBillingEvent(Environment):
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
         return "NorthAmericaBillingEvent"
+
+    @classmethod
+    def database_id(cls) -> str:
+        """Database identifier for server-side query execution."""
+        return "na_prod_billing_event"

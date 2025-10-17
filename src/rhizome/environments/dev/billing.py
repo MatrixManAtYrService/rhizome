@@ -132,6 +132,11 @@ class DevBilling(Environment):
         """Environment name for display purposes in logs and debugging, not used for connections."""
         return "DevBilling"
 
+    @classmethod
+    def database_id(cls) -> str:
+        """Database identifier for server-side query execution."""
+        return "dev_billing"
+
     def get_connection_string(self) -> str:
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus

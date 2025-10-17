@@ -45,8 +45,8 @@ class GetMode(StrEnum):
 class ExecuteQueryRequest(BaseModel):
     """Request model for server-side query execution."""
 
-    # Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
-    environment_name: str
+    # Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
+    database_id: str
 
     # Query details
     sql: str  # Compiled SQL string

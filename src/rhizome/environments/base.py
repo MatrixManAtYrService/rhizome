@@ -130,6 +130,16 @@ class Environment(ABC):
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
 
+    @classmethod
+    @abstractmethod
+    def database_id(cls) -> str:
+        """
+        Database identifier enum value for this environment.
+
+        Returns the RhizomeEnvironment enum value as a string (e.g., "dev_meta").
+        This is used by the client to tell the server which database to query.
+        """
+
     def __init__(self, client: RhizomeClient) -> None:
         """Initialize environment with optional port forwarding."""
         self.client = client
@@ -390,7 +400,7 @@ class Environment(ABC):
         Returns:
             First model instance (sanitized or raw) or None
         """
-        return self.client.select_first(self.name, query, sanitize=sanitize)
+        return self.client.select_first(self.database_id(), query, sanitize=sanitize)
 
     def select_all(self, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
         """Execute a query and return all results.
@@ -402,7 +412,7 @@ class Environment(ABC):
         Returns:
             List of model instances (sanitized or raw)
         """
-        return self.client.select_all(self.name, query, sanitize=sanitize)
+        return self.client.select_all(self.database_id(), query, sanitize=sanitize)
 
     def select_one(self, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
         """Execute a query and return exactly one result.
@@ -414,4 +424,4 @@ class Environment(ABC):
         Returns:
             Single model instance (sanitized or raw)
         """
-        return self.client.select_one(self.name, query, sanitize=sanitize)
+        return self.client.select_one(self.database_id(), query, sanitize=sanitize)

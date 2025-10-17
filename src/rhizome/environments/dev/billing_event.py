@@ -234,3 +234,8 @@ class DevBillingEvent(Environment):
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
         return "DevBillingEvent"
+
+    @classmethod
+    def database_id(cls) -> str:
+        """Database identifier for server-side query execution."""
+        return "dev_billing_event"

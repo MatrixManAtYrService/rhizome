@@ -529,3 +529,8 @@ class DevBillingBookkeeper(Environment):
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
         return "DevBillingBookkeeper"
+
+    @classmethod
+    def database_id(cls) -> str:
+        """Database identifier for server-side query execution."""
+        return "dev_billing_bookkeeper"

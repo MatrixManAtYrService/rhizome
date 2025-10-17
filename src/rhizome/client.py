@@ -335,13 +335,13 @@ class RhizomeClient:
         return engine
 
     def select_first(
-        self, environment_name: str, query: SelectOfScalar[TFirst], sanitize: bool = True
+        self, database_id: str, query: SelectOfScalar[TFirst], sanitize: bool = True
     ) -> TFirst | None:
         """
         Execute a query server-side and return the first result or None.
 
         Args:
-            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
+            database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
             query: SQLModel query to execute
             sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
@@ -357,7 +357,7 @@ class RhizomeClient:
 
         # Send to server
         request = ExecuteQueryRequest(
-            environment_name=environment_name,
+            database_id=database_id,
             sql=sql,
             parameters=parameters,
             model_module=model_info["model_module"],
@@ -393,12 +393,12 @@ class RhizomeClient:
         assert isinstance(result.result, dict)
         return deserialize_result(result.result, model_class)  # type: ignore[return-value]
 
-    def select_all(self, environment_name: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
+    def select_all(self, database_id: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
         """
         Execute a query server-side and return all results.
 
         Args:
-            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
+            database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
             query: SQLModel query to execute
             sanitize: If True, return sanitized results. If False, return raw results. Default: True
 
@@ -414,7 +414,7 @@ class RhizomeClient:
 
         # Send to server
         request = ExecuteQueryRequest(
-            environment_name=environment_name,
+            database_id=database_id,
             sql=sql,
             parameters=parameters,
             model_module=model_info["model_module"],
@@ -447,12 +447,12 @@ class RhizomeClient:
         model_class = import_model_class(model_info["model_module"], model_info["model_class"])
         return deserialize_result_list(result.result, model_class)  # type: ignore[arg-type]
 
-    def select_one(self, environment_name: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
+    def select_one(self, database_id: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
         """
         Execute a query server-side and return exactly one result.
 
         Args:
-            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
+            database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
             query: SQLModel query to execute
             sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
@@ -471,7 +471,7 @@ class RhizomeClient:
 
         # Send to server
         request = ExecuteQueryRequest(
-            environment_name=environment_name,
+            database_id=database_id,
             sql=sql,
             parameters=parameters,
             model_module=model_info["model_module"],
@@ -530,7 +530,7 @@ class RhizomeClient:
     def execute_write_query(
         self,
         query_name: str,
-        environment_name: str,
+        database_id: str,
         params: dict[str, str | int | float | None],
         reason: str | None = None,
         entity_descriptions: dict[str, str] | None = None,
@@ -548,7 +548,7 @@ class RhizomeClient:
 
         Args:
             query_name: Name of the canned query to execute
-            environment_name: Environment to execute in (e.g., "dev_meta")
+            database_id: Database identifier (RhizomeEnvironment enum value, e.g., "dev_meta")
             params: Parameters to pass to the query
             reason: Optional explanation of why this operation is necessary
             entity_descriptions: Optional dict providing context about entities being modified
@@ -564,7 +564,7 @@ class RhizomeClient:
         Example:
             >>> client.execute_write_query(
             ...     query_name="create_reseller_role",
-            ...     environment_name="dev_meta",
+            ...     database_id="dev_meta",
             ...     params={"reseller_id": 123, "account_id": 456, "permissions_id": 789},
             ...     reason="Grant Super Administrator permissions to MFF test account",
             ...     entity_descriptions={
@@ -577,7 +577,7 @@ class RhizomeClient:
         """
         payload: dict[str, Any] = {
             "query_name": query_name,
-            "environment_name": environment_name,
+            "database_id": database_id,
             "params": params,
         }
 
