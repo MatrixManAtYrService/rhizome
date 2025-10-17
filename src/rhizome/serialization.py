@@ -6,12 +6,65 @@ for transmission between client and server. Query execution happens on
 the server side, with queries serialized as SQL + parameters.
 """
 
-from typing import Any, TypeVar
+import enum
+from typing import Any, TypeVar, get_args, get_origin
 
 from sqlmodel import SQLModel
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 TModel = TypeVar("TModel", bound=SQLModel)
+
+
+def _normalize_types(data: dict[str, Any], model_class: type[SQLModel]) -> dict[str, Any]:
+    """
+    Normalize MySQL data types to Python types based on model field definitions.
+
+    Handles common MySQL → Python type conversions:
+    - int (0/1) → bool
+    - str → Enum
+
+    Args:
+        data: Raw data dict from database
+        model_class: Model class with field type annotations
+
+    Returns:
+        Normalized data dict with correct Python types
+    """
+    normalized: dict[str, Any] = {}
+
+    # Get model field information
+    model_fields = model_class.model_fields
+
+    for key, value in data.items():
+        if value is None or key not in model_fields:
+            normalized[key] = value
+            continue
+
+        # Get the field's annotation
+        field_info = model_fields[key]
+        annotation = field_info.annotation
+
+        # Handle Optional[T] by extracting T
+        if get_origin(annotation) is type(int | None):
+            args = get_args(annotation)
+            if args:
+                # Get the non-None type
+                annotation = next((arg for arg in args if arg is not type(None)), annotation)
+
+        # Convert int (0/1) to bool
+        if annotation is bool and isinstance(value, int):
+            normalized[key] = bool(value)
+        # Convert str to Enum
+        elif isinstance(annotation, type) and issubclass(annotation, enum.Enum) and isinstance(value, str):
+            try:
+                normalized[key] = annotation(value)
+            except (ValueError, KeyError):
+                # If conversion fails, keep the original value
+                normalized[key] = value
+        else:
+            normalized[key] = value
+
+    return normalized
 
 
 def serialize_query[TModel: SQLModel](query: SelectOfScalar[TModel]) -> tuple[str, dict[str, Any]]:
@@ -110,8 +163,8 @@ def deserialize_result[TModel: SQLModel](data: dict[str, Any] | None, model_clas
     """
     Deserialize a dict back to a SQLModel instance.
 
-    Handles partial results (when queries select specific columns) by using
-    model_construct which bypasses validation for missing fields.
+    Handles type coercion (int → bool, str → Enum) while supporting partial models
+    by normalizing data types before using model_construct.
 
     Args:
         data: Dictionary with serialized data, or None
@@ -129,9 +182,13 @@ def deserialize_result[TModel: SQLModel](data: dict[str, Any] | None, model_clas
     if data is None:
         return None
 
+    # Normalize data types before constructing model
+    # This handles MySQL quirks: 0/1 → bool, str → Enum
+    normalized_data = _normalize_types(data, model_class)
+
     # Use model_construct to allow partial models (when queries select specific columns)
     # This bypasses Pydantic validation for missing required fields
-    return model_class.model_construct(**data)
+    return model_class.model_construct(**normalized_data)
 
 
 def deserialize_result_list[TModel: SQLModel](
@@ -140,8 +197,8 @@ def deserialize_result_list[TModel: SQLModel](
     """
     Deserialize a list of dicts back to SQLModel instances.
 
-    Handles partial results (when queries select specific columns) by using
-    model_construct which bypasses validation for missing fields.
+    Handles type coercion (int → bool, str → Enum) while supporting partial models
+    by normalizing data types before using model_construct.
 
     Args:
         data_list: List of dictionaries with serialized data
@@ -156,7 +213,12 @@ def deserialize_result_list[TModel: SQLModel](
         >>> resellers = deserialize_result_list(data_list, Reseller)
         >>> len(resellers)  # 2
     """
-    return [model_class.model_construct(**data) for data in data_list]
+    results: list[TModel] = []
+    for data in data_list:
+        # Normalize data types before constructing model
+        normalized_data = _normalize_types(data, model_class)
+        results.append(model_class.model_construct(**normalized_data))
+    return results
 
 
 def get_model_info[TModel: SQLModel](query: SelectOfScalar[TModel]) -> dict[str, str]:
